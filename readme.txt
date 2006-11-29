@@ -1,0 +1,1 @@
+Initial checkin for Atlanta project to demonstrate use of C-Sharp and NHibernate.
