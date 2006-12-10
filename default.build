@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<project name="Atlanta" default="build">
+
+    <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
+
+    <!-- global project settings -->
+    <property name="project.name"                       value="Atlatna" />
+    <property name="nant.settings.currentframework"     value="net-2.0" />
+
+    <property name="project.version" value="0.0.0.1" overwrite="false" />
+
+    <target name="build">
+    
+        <echo message="does nothing yet ..."/>
+        
+    </target>
+
+</project>
