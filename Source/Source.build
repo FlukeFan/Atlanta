@@ -3,6 +3,31 @@
 
     <include buildfile="${build.includes.file}" />
 
+
+    <target name="onSetup">
+
+        <!-- for generated assembly info file for version number -->
+        <property name="hasGeneratedCode" value="true"/>
+
+    </target>
+
+
+    <target name="onBuild">
+
+        <asminfo output="generated/AssemblyInfo.cs" language="CSharp">
+            <imports>
+                <import namespace="System.Reflection" />
+            </imports>
+            <attributes>
+                <attribute type="AssemblyVersionAttribute" value="${project.version}" />
+            </attributes>
+        </asminfo>
+
+        <property name="project.assemblyVersionFile" value="${directory::get-current-directory()}/generated/AssemblyInfo.cs" />
+
+    </target>
+
+
     <target name="onBuildChain">
 
         <nant buildfile="Application\Application.build"         inheritall="true"   target="build"/>
@@ -10,11 +35,13 @@
 
     </target>
 
+
     <target name="onClean">
 
         <nant buildfile="Presentation\Presentation.build"       inheritall="true"   target="clean"/>
         <nant buildfile="Application\Application.build"         inheritall="true"   target="clean"/>
 
     </target>
+
 
 </project>

@@ -17,15 +17,27 @@
     <call target="debug" />
 
 
+    <target name="onBuild">
+
+        <mkdir dir="${build.dir}/bin" />
+        <mkdir dir="${build.dir}/design" />
+        <mkdir dir="${build.dir}/web" />
+
+    </target>
+
+
     <target name="onBuildChain">
 
         <nant buildfile="Source\Source.build"           inheritall="true"   target="build"/>
 
     </target>
 
+
     <target name="onClean">
 
         <nant buildfile="Source\Source.build"           inheritall="true"   target="clean"/>
+
+        <delete dir="${build.dir}" failonerror="false" />
 
     </target>
 
