@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<project name="Domain" default="none">
+
+    <include buildfile="${build.includes.file}" />
+
+</project>

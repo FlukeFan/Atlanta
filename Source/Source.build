@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<project name="Source" default="none">
+
+    <include buildfile="${build.includes.file}" />
+
+    <target name="onBuildChain">
+
+        <nant buildfile="Application\Application.build"         inheritall="true"   target="build"/>
+        <nant buildfile="Presentation\Presentation.build"       inheritall="true"   target="build"/>
+
+    </target>
+
+    <target name="onClean">
+
+        <nant buildfile="Presentation\Presentation.build"       inheritall="true"   target="clean"/>
+        <nant buildfile="Application\Application.build"         inheritall="true"   target="clean"/>
+
+    </target>
+
+</project>

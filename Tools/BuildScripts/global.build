@@ -1,0 +1,37 @@
+<project>
+
+    <target name="setDefaultEnvironment">
+
+        <setenv name="PATH" value="${framework::get-sdk-directory(framework::get-target-framework())};%PATH%"/>
+
+        <!-- allows suppresion of running tests -->
+        <property name="notest" value="false" />
+
+        <!-- allows selective ignoring of buid files:
+                use NAnt -D:ignore=Database,Domain to skip the Database and Domain build projects -->
+        <property name="ignore" value="" />
+
+    </target>
+
+    <target name="debug" description="Setup a 'debug' build">
+        <property name="optimize" value="false" />
+        <property name="project.config" value="debug" />
+        <property name="build.debug" value="true" />
+        <property name="build.dir" value="${project::get-base-directory()}/build_${project.config}" />
+
+        <!-- turn off doc building by default in the debug build cos it's so damn slow -->
+        <property name="builddoc" value="false" />
+    </target>
+
+    <target name="release" description="Setup a 'release' build">
+        <property name="optimize" value="true" />
+        <property name="project.config" value="release" />
+        <property name="build.debug" value="false" />
+        <property name="build.dir" value="${project::get-base-directory()}/build_${project.config}" />
+
+        <property name="builddoc" value="true" />
+    </target>
+
+</project>
+
+

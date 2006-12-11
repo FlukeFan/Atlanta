@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<project name="Application" default="none">
+
+    <include buildfile="${build.includes.file}" />
+
+    <target name="onBuildChain">
+
+        <nant buildfile="Domain\Domain.build"           inheritall="true"   target="build"/>
+        <nant buildfile="Services\Services.build"       inheritall="true"   target="build"/>
+
+    </target>
+
+    <target name="onClean">
+
+        <nant buildfile="Services\Services.build"       inheritall="true"   target="clean"/>
+        <nant buildfile="Domain\Domain.build"           inheritall="true"   target="clean"/>
+
+    </target>
+
+</project>

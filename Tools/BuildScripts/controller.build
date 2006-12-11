@@ -1,0 +1,78 @@
+<project>
+
+    <!-- contains the main controller of all build files, and defines the build order for all build files -->
+
+    <property name="hasGeneratedCode"   value="false"/>
+    <property name="hasBuildTmp"        value="false"/>
+
+
+    <target name="build">
+
+        <if test="${not string::contains(ignore, project::get-name())}">
+
+            <if test="${target::exists('onSetup')}">
+                <call target="onSetup"/>
+            </if>
+
+            <!-- to have a 'generated' folder for code, set hasGeneratedCode=true in the onSetup target -->
+            <if test="${hasGeneratedCode}">
+                <mkdir dir="generated" />
+            </if>
+
+            <!-- to have a 'build_tmp' folder for code, set hasBuildTmp=true in the onSetup target -->
+            <if test="${hasBuildTmp}">
+                <mkdir dir="build_tmp" />
+            </if>
+
+            <if test="${target::exists('onBuild')}">
+                <call target="onBuild"/>
+            </if>
+
+            <if test="${target::exists('onBuildTest')}">
+                <call target="onBuildTest"/>
+            </if>
+
+            <if test="${target::exists('onTest')}">
+                <call target="onTest"/>
+            </if>
+
+            <if test="${target::exists('onInstall')}">
+                <call target="onInstall"/>
+            </if>
+
+            <if test="${target::exists('onBuildChain')}">
+                <call target="onBuildChain"/>
+            </if>
+
+            <if test="${target::exists('onPostChain')}">
+                <call target="onPostChain"/>
+            </if>
+
+        </if>
+
+    </target>
+
+
+    <target name="clean">
+
+        <if test="${target::exists('onSetup')}">
+            <call target="onSetup"/>
+        </if>
+
+        <if test="${target::exists('onClean')}">
+            <call target="onClean"/>
+        </if>
+
+        <if test="${hasGeneratedCode}">
+            <delete dir="generated" failonerror="false" />
+        </if>
+
+        <if test="${hasBuildTmp}">
+            <delete dir="build_tmp" failonerror="false" />
+        </if>
+
+    </target>
+
+</project>
+
+

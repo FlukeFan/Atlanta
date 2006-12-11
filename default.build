@@ -4,15 +4,29 @@
     <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
 
     <!-- global project settings -->
-    <property name="project.name"                       value="Atlatna" />
     <property name="nant.settings.currentframework"     value="net-2.0" />
 
     <property name="project.version" value="0.0.0.1" overwrite="false" />
 
-    <target name="build">
-    
-        <echo message="does nothing yet ..."/>
-        
+    <property name="build.includes.dir"     value="${project::get-base-directory()}/Tools/BuildScripts"/>
+    <property name="build.includes.file"    value="${build.includes.dir}/includes.build"/>
+    <include buildfile="${build.includes.file}" />
+    <call target="setDefaultEnvironment" />
+
+    <!-- debug build by default -->
+    <call target="debug" />
+
+
+    <target name="onBuildChain">
+
+        <nant buildfile="Source\Source.build"           inheritall="true"   target="build"/>
+
+    </target>
+
+    <target name="onClean">
+
+        <nant buildfile="Source\Source.build"           inheritall="true"   target="clean"/>
+
     </target>
 
 </project>
