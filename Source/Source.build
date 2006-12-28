@@ -23,7 +23,7 @@
             </attributes>
         </asminfo>
 
-        <property name="project.assemblyVersionFile" value="${directory::get-current-directory()}/generated/AssemblyInfo.cs" />
+        <property name="project.assemblyVersionFile" value="${project::get-base-directory()}/generated/AssemblyInfo.cs" />
 
     </target>
 

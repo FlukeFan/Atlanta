@@ -1,6 +1,8 @@
 <project>
 
     <include buildfile="${build.includes.dir}\global.build"/>
+    <include buildfile="${build.includes.dir}\build.build"/>
+    <include buildfile="${build.includes.dir}\test.build"/>
 
     <!-- the main controller for build files -->
     <include buildfile="${build.includes.dir}\controller.build"/>

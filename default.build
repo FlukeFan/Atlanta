@@ -23,6 +23,11 @@
         <mkdir dir="${build.dir}/design" />
         <mkdir dir="${build.dir}/web" />
 
+        <copy
+            file="${nant::get-base-directory()}lib\${framework::get-family(nant.settings.currentframework)}\${framework::get-version(nant.settings.currentframework)}\nunit.framework.dll"
+            todir="${build.dir}/bin"
+            />
+
     </target>
 
 

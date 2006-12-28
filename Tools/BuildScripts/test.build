@@ -1,0 +1,45 @@
+<project>
+
+    <target name="RunTest">
+
+        <property name="testSuccessFlagFileWithPath" value="${build.dir}/results/${testSuccessFlagFile}"/>
+
+        <echo message="checking flag file '${testSuccessFlagFile}' against dependencies"/>
+
+        <uptodate property="test.flg.uptodate">
+            <sourcefiles refid="testDependencies"/>
+            <targetfiles>
+                <include name="${testSuccessFlagFileWithPath}"/>
+            </targetfiles>
+        </uptodate>
+
+        <echo message="flag file up to date: ${test.flg.uptodate}"/>
+
+        <if test="${notest}">
+            <echo message="testing is disabled"/>
+        </if>
+
+        <if unless="${notest}" test="${not test.flg.uptodate}">
+
+            <echo message="running tests"/>
+
+            <nunit2>
+                <formatter  type="Plain" />
+                <formatter  type="Xml"
+                            usefile="true"
+                            extension=".xml"
+                            outputdir="${build.dir}/results" />
+                <test>
+                    <assemblies refid="testAssemblies"/>
+                </test>
+            </nunit2>
+
+            <touch file="${testSuccessFlagFileWithPath}" />
+
+        </if>
+
+    </target>
+
+</project>
+
+

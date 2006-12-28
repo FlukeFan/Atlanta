@@ -3,4 +3,60 @@
 
     <include buildfile="${build.includes.file}" />
 
+
+    <target name="onBuild">
+
+        <property name="output" value="Atlanta.Application.Domain"/>
+
+        <fileset id="references">
+        </fileset>
+
+        <fileset id="sources">
+            <include name="${project.assemblyVersionFile}" />
+
+            <include name="Lender/*.cs" />
+        </fileset>
+
+        <call target="cscLibrary"/>
+
+    </target>
+
+
+    <target name="onBuildTest">
+
+        <property name="output" value="Atlanta.Application.Domain.Test"/>
+
+        <fileset id="references">
+            <include name="${build.dir}/bin/nunit.framework.dll" />
+            <include name="${build.dir}/bin/Atlanta.Application.Domain.dll" />
+        </fileset>
+
+        <fileset id="sources">
+            <include name="${project.assemblyVersionFile}" />
+
+            <include name="Lender/Test/*.cs" />
+        </fileset>
+
+        <call target="cscLibraryTest"/>
+
+    </target>
+
+
+    <target name="onTest">
+
+        <fileset id="testDependencies">
+            <include name="${build.dir}/LendingLibrary.mdb" />
+            <include name="${build.dir}/bin/Atlanta.Application.Domain.Test.dll" />
+        </fileset>
+
+        <fileset id="testAssemblies">
+            <include name="${build.dir}/bin/Atlanta.Application.Domain.Test.dll" />
+        </fileset>
+
+        <property name="testSuccessFlagFile" value="test_domain.flg"/>
+
+        <call target="RunTest"/>
+
+    </target>
+
 </project>

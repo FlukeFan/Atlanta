@@ -1,0 +1,40 @@
+<project>
+
+    <target name="cscLibrary">
+
+        <echo message="Compiling library [${output}.dll]"/>
+
+        <csc    target="library"
+                debug="${build.debug}"
+                optimize="${optimize}"
+                output="${build.dir}/bin/${output}.dll"
+                warnaserror="true"
+                doc="${build.dir}/bin/${output}.xml">
+
+            <references     refid="references"  />
+            <sources        refid="sources"     />
+
+        </csc>
+
+    </target>
+
+    <target name="cscLibraryTest">
+
+        <echo message="Compiling library tests [${output}.dll]"/>
+
+        <csc    target="library"
+                debug="${build.debug}"
+                optimize="${optimize}"
+                output="${build.dir}/bin/${output}.dll"
+                warnaserror="true">
+
+            <references     refid="references"  />
+            <sources        refid="sources"     />
+
+        </csc>
+
+    </target>
+
+</project>
+
+
