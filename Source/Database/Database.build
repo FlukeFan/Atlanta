@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<project name="Database" default="none">
+
+    <include buildfile="${build.includes.file}" />
+
+    <target name="onBuild">
+
+        <copy
+            file="LendingLibrary.mdb"
+            todir="${build.dir}"
+            overwrite="true"
+            />
+
+    </target>
+
+</project>
