@@ -23,13 +23,26 @@
         <mkdir dir="${build.dir}/design" />
         <mkdir dir="${build.dir}/web" />
 
+        <!-- NHibernate binaries -->
+        <copy todir="${build.dir}/bin">
+            <fileset basedir="SDKs\NHibernate-1.2.0.Beta2-debug-net-2.0">
+                <exclude name="**/.svn/**" />
+                <include name="**" />
+            </fileset>
+        </copy>
+
+    </target>
+
+
+    <target name="onBuildTest">
+
+        <!-- NUnit binaries -->
         <copy
             file="${nant::get-base-directory()}lib\${framework::get-family(nant.settings.currentframework)}\${framework::get-version(nant.settings.currentframework)}\nunit.framework.dll"
             todir="${build.dir}/bin"
             />
 
     </target>
-
 
     <target name="onBuildChain">
 

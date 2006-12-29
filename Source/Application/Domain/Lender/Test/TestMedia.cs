@@ -1,6 +1,8 @@
 
 using System;
 
+using NHibernate.Cfg;
+
 using NUnit.Framework;
 
 namespace Atlanta.Application.Domain.Lender.Test
@@ -30,6 +32,13 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             Assert.AreEqual("test", media.Name);
             Assert.AreEqual("test description", media.Description);
+        }
+
+        [Test] [Ignore("RGB - WIP - left to get pissed, bbl")]
+        public void TestInsertLoad()
+        {
+            Configuration configuration = new Configuration();
+            configuration.AddAssembly("Atlanta.Application.Domain");
         }
 
     }

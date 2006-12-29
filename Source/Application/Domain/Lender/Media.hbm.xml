@@ -1,4 +1,4 @@
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
 
     <class
             name="Atlanta.Application.Domain.Lender.Media, Atlanta.Application.Domain"
