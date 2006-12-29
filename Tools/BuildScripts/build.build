@@ -2,7 +2,7 @@
 
     <target name="cscLibrary">
 
-        <echo message="Compiling library [${output}.dll]"/>
+        <echo message="Compiling library [${output}.dll]" />
 
         <csc    target="library"
                 debug="${build.debug}"
@@ -13,8 +13,15 @@
 
             <references     refid="references"  />
             <sources        refid="sources"     />
+            <resources      refid="resources"   />
 
         </csc>
+
+        <!-- clear the filesets in case someone forgets to supply one in the next call -->
+
+        <fileset id="references"    />
+        <fileset id="sources"       />
+        <fileset id="resources"     />
 
     </target>
 
@@ -32,6 +39,11 @@
             <sources        refid="sources"     />
 
         </csc>
+
+        <!-- clear the filesets in case someone forgets to supply one in the next call -->
+
+        <fileset id="references"    />
+        <fileset id="sources"       />
 
     </target>
 

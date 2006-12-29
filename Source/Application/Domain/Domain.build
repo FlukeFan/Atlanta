@@ -17,6 +17,10 @@
             <include name="Lender/*.cs" />
         </fileset>
 
+        <fileset id="resources">
+            <include name="Lender/*.hbm.xml" />
+        </fileset>
+
         <call target="cscLibrary"/>
 
     </target>

@@ -1,0 +1,9 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+
+    <class
+            name="Atlanta.Application.Domain.Lender.Media, Atlanta.Application.Domain"
+            table="Media">
+    </class>
+
+</hibernate-mapping>
+
