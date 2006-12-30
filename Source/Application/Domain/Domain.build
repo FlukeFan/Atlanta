@@ -15,6 +15,7 @@
         <fileset id="sources">
             <include name="${project.assemblyVersionFile}" />
 
+            <include name="DomainBase/*.cs" />
             <include name="Lender/*.cs" />
         </fileset>
 
@@ -40,10 +41,16 @@
         <fileset id="sources">
             <include name="${project.assemblyVersionFile}" />
 
+            <include name="DomainBase/Test/*.cs" />
             <include name="Lender/Test/*.cs" />
         </fileset>
 
         <call target="cscLibraryTest"/>
+
+        <copy
+            file="Atlanta.Application.Domain.Test.dll.config"
+            todir="${build.dir}/bin"
+            />
 
     </target>
 

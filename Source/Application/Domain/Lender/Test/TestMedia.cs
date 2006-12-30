@@ -34,7 +34,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             Assert.AreEqual("test description", media.Description);
         }
 
-        [Test] [Ignore("RGB - WIP - left to get pissed, bbl")]
+        [Test]
         public void TestInsertLoad()
         {
             Configuration configuration = new Configuration();

@@ -1,6 +1,8 @@
 
 using System;
 
+using Atlanta.Application.Domain.DomainBase;
+
 namespace Atlanta.Application.Domain.Lender
 {
 
@@ -8,7 +10,7 @@ namespace Atlanta.Application.Domain.Lender
     /// <summary>
     /// Class to represent Media
     /// </summary>
-    public class Media
+    public class Media : DomainObject
     {
 
         private string m_name;

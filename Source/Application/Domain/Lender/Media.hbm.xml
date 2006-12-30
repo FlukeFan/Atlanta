@@ -3,6 +3,11 @@
     <class
             name="Atlanta.Application.Domain.Lender.Media, Atlanta.Application.Domain"
             table="Media">
+
+        <id name="Id" column="Media_Id">
+            <generator class="native"/>
+        </id>
+
     </class>
 
 </hibernate-mapping>
