@@ -1,6 +1,7 @@
 
 using System;
 
+using NHibernate;
 using NHibernate.Cfg;
 
 using NUnit.Framework;
@@ -39,6 +40,8 @@ namespace Atlanta.Application.Domain.Lender.Test
         {
             Configuration configuration = new Configuration();
             configuration.AddAssembly("Atlanta.Application.Domain");
+            
+            ISessionFactory sessionFactory = configuration.BuildSessionFactory();
         }
 
     }

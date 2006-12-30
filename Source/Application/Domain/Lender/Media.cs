@@ -17,14 +17,14 @@ namespace Atlanta.Application.Domain.Lender
         private string m_description;
 
         /// <summary> Name </summary>
-        public string Name
+        virtual public string Name
         {
             get { return m_name; }
             set { m_name = value; }
         }
 
         /// <summary> Description </summary>
-        public string Description
+        virtual public string Description
         {
             get { return m_description; }
             set { m_description = value; }
