@@ -42,6 +42,11 @@ namespace Atlanta.Application.Domain.Lender.Test
             configuration.AddAssembly("Atlanta.Application.Domain");
             
             ISessionFactory sessionFactory = configuration.BuildSessionFactory();
+            ISession session = sessionFactory.OpenSession();
+            ITransaction transaction = session.BeginTransaction();
+            
+            transaction.Rollback();
+            session.Close();
         }
 
     }
