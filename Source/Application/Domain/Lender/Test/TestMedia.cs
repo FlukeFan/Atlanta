@@ -40,11 +40,27 @@ namespace Atlanta.Application.Domain.Lender.Test
         {
             Configuration configuration = new Configuration();
             configuration.AddAssembly("Atlanta.Application.Domain");
-            
+
             ISessionFactory sessionFactory = configuration.BuildSessionFactory();
             ISession session = sessionFactory.OpenSession();
             ITransaction transaction = session.BeginTransaction();
-            
+
+            Media media = new Media();
+
+            media.Name = "test";
+            media.Description = "test description";
+
+            session.Save(media);
+            Assert.IsTrue(media.Id != 0);
+
+            session.Flush();
+            session.Clear();
+
+            media = (Media) session.Load(typeof(Media), media.Id);
+
+            Assert.AreEqual("test", media.Name);
+            Assert.AreEqual("test description", media.Description);
+
             transaction.Rollback();
             session.Close();
         }

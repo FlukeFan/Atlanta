@@ -5,8 +5,11 @@
             table="Media">
 
         <id name="Id" column="Media_Id">
-            <generator class="native"/>
+            <generator class="increment"/>
         </id>
+
+        <property name="Name"           column="Name" />
+        <property name="Description"    column="Description" />
 
     </class>
 
