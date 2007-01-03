@@ -8,6 +8,7 @@
             <generator class="increment"/>
         </id>
 
+        <property name="Type"           column="Type" />
         <property name="Name"           column="Name" />
         <property name="Description"    column="Description" />
 
