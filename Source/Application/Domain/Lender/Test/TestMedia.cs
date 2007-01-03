@@ -20,9 +20,11 @@ namespace Atlanta.Application.Domain.Lender.Test
         {
             Media media = new Media();
 
+            media.Type = MediaType.Dvd;
             media.Name = "test";
             media.Description = "test description";
 
+            Assert.AreEqual(MediaType.Dvd, media.Type);
             Assert.AreEqual("test", media.Name);
             Assert.AreEqual("test description", media.Description);
         }

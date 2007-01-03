@@ -6,6 +6,20 @@ using Atlanta.Application.Domain.DomainBase;
 namespace Atlanta.Application.Domain.Lender
 {
 
+    /// <summary>
+    /// MediaType enumeration
+    /// </summary>
+    public enum MediaType
+    {
+        /// <summary> Book </summary>
+        Book,
+
+        /// <summary> Cd </summary>
+        Cd,
+
+        /// <summary> Dvd </summary>
+        Dvd,
+    }
 
     /// <summary>
     /// Class to represent Media
@@ -13,8 +27,16 @@ namespace Atlanta.Application.Domain.Lender
     public class Media : DomainObject
     {
 
-        private string m_name;
-        private string m_description;
+        private MediaType   m_type;
+        private string      m_name;
+        private string      m_description;
+
+        /// <summary> Type </summary>
+        virtual public MediaType Type
+        {
+            get { return m_type; }
+            set { m_type = value; }
+        }
 
         /// <summary> Name </summary>
         virtual public string Name
