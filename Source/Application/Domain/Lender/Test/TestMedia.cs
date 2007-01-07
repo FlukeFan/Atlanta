@@ -32,8 +32,12 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void TestInsertLoad()
         {
+            Library library = new Library();
+            library.Id = 1;
+
             Media media = new Media();
 
+            media.Library = library;
             media.Type = MediaType.Dvd;
             media.Name = "test";
             media.Description = "test description";

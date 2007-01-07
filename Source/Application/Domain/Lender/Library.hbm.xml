@@ -1,0 +1,13 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+
+    <class  name="Atlanta.Application.Domain.Lender.Library, Atlanta.Application.Domain"
+            table="Library">
+
+        <id name="Id" column="Library_Id">
+            <generator class="increment"/>
+        </id>
+
+    </class>
+
+</hibernate-mapping>
+

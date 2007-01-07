@@ -1,12 +1,15 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
 
-    <class
-            name="Atlanta.Application.Domain.Lender.Media, Atlanta.Application.Domain"
+    <class  name="Atlanta.Application.Domain.Lender.Media, Atlanta.Application.Domain"
             table="Media">
 
         <id name="Id" column="Media_Id">
             <generator class="increment"/>
         </id>
+
+        <many-to-one    name="Library"
+                        class="Atlanta.Application.Domain.Lender.Library, Atlanta.Application.Domain"
+                        column="Library_Id" />
 
         <property name="Type"           column="Type" />
         <property name="Name"           column="Name" />
