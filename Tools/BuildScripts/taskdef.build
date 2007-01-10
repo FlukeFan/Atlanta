@@ -1,0 +1,199 @@
+<project>
+
+    <script language="C#" >
+
+        <imports>
+            <import namespace="System.Xml" />
+        </imports>
+
+        <code> <![CDATA[
+
+            [ElementName("StringParam")]
+            public class StringParam : Element
+            {
+
+                private string _name = string.Empty;
+
+                [TaskAttribute("name", Required=true)]
+                public string Name {
+                    get { return _name; }
+                    set { _name = value; }
+                }
+            }
+
+
+            public class StringParamCollection : CollectionBase
+            {
+
+                public StringParam this[int idx] {
+                    get { return (StringParam) List[idx]; }
+                }
+
+                public void Add(StringParam stringParam) {
+                    List.Add(stringParam);
+                }
+
+                public void Add(StringParamCollection stringParams) {
+                    foreach (StringParam stringParam in stringParams) {
+                        this.Add(stringParam);
+                    }
+                }
+
+            }
+
+
+            [ElementName("NodeParam")]
+            public class NodeParam : Element
+            {
+
+                private string _name = string.Empty;
+
+                [TaskAttribute("name", Required=true)]
+                public string Name {
+                    get { return _name; }
+                    set { _name = value; }
+                }
+            }
+
+
+            public class NodeParamCollection : CollectionBase
+            {
+
+                public NodeParam this[int idx] {
+                    get { return (NodeParam) List[idx]; }
+                }
+
+                public void Add(NodeParam nodeParam) {
+                    List.Add(nodeParam);
+                }
+
+                public void Add(NodeParamCollection nodeParams) {
+                    foreach (NodeParam nodeParam in nodeParams) {
+                        this.Add(nodeParam);
+                    }
+                }
+
+            }
+
+
+            [TaskName("taskdef")]
+            public class TaskDef : TaskContainer
+            {
+
+                private string                  _name;
+                private StringParamCollection   _stringParams = new StringParamCollection();
+                private NodeParamCollection     _nodeParams = new NodeParamCollection();
+
+                [TaskAttribute("name", Required=true)]
+                public string Name
+                {
+                    get { return _name; }
+                    set { _name = value; }
+                }
+
+                [BuildElementCollection("stringparams", "stringparam")]
+                public StringParamCollection StringParams
+                {
+                    get { return _stringParams; }
+                }
+
+                [BuildElementCollection("nodeparams", "nodeparam")]
+                public NodeParamCollection NodeParams
+                {
+                    get { return _nodeParams; }
+                }
+
+                protected override void ExecuteTask()
+                {
+                    Log(Level.Info, "Creating task " + _name);
+
+                    // Generate code for the custom task as a script task ...
+                    Log(Level.Verbose, "*** Custom code start ***");
+                    string customTaskCode = "";
+                    customTaskCode +=  "<script language='C#' >\n";
+                    customTaskCode +=  "<imports> <import namespace=\"System.Xml\" /> <import namespace=\"NAnt.Core.Types\" /> </imports> <code> <![CDATA[\n";
+                    customTaskCode +=  "[TaskName(\"" + _name + "\")]\n";
+                    customTaskCode +=  "public class " + _name + " : Task\n";
+                    customTaskCode +=  "{\n";
+                    customTaskCode +=  "\n";
+                    customTaskCode +=  "    static private string _originalXml = XmlConvert.DecodeName(\"" + XmlConvert.EncodeLocalName(XmlNode.OuterXml) + "\");\n";
+                    customTaskCode +=  "\n";
+
+                    // generate named string parameters
+                    foreach (StringParam stringParam in StringParams)
+                    {
+                        customTaskCode +=  "    private string _" + stringParam.Name + ";\n";
+                        customTaskCode +=  "\n";
+                        customTaskCode +=  "    [TaskAttribute(\"" + stringParam.Name + "\", Required=true)]\n";
+                        customTaskCode +=  "    public string " + stringParam.Name + "\n";
+                        customTaskCode +=  "    {\n";
+                        customTaskCode +=  "        get { return _" + stringParam.Name + "; }\n";
+                        customTaskCode +=  "        set { _" + stringParam.Name + " = value; }\n";
+                        customTaskCode +=  "    }\n";
+                        customTaskCode +=  "\n";
+                    }
+
+                    // generate named xml-node parameters
+                    foreach (NodeParam nodeParam in NodeParams)
+                    {
+                        customTaskCode +=  "    private RawXml _" + nodeParam.Name + ";\n";
+                        customTaskCode +=  "\n";
+                        customTaskCode +=  "    [BuildElement(\"" + nodeParam.Name + "\", Required=true)]\n";
+                        customTaskCode +=  "    public RawXml " + nodeParam.Name + "\n";
+                        customTaskCode +=  "    {\n";
+                        customTaskCode +=  "        get { return _" + nodeParam.Name + "; }\n";
+                        customTaskCode +=  "        set { _" + nodeParam.Name + " = value; }\n";
+                        customTaskCode +=  "    }\n";
+                        customTaskCode +=  "\n";
+                    }
+
+                    customTaskCode +=  "    protected override void ExecuteTask()\n";
+                    customTaskCode +=  "    {\n";
+                    customTaskCode +=  "        Log(Level.Info, \"Running custom script\");\n";
+                    customTaskCode +=  "        Log(Level.Verbose, \"Original script : \" + _originalXml);\n";
+                    customTaskCode +=  "        string xml = _originalXml;\n";
+
+                    // generate string replacements for each stringParam
+                    foreach (StringParam stringParam in StringParams)
+                    {
+                        customTaskCode +=  "        xml = xml.Replace(\"__" + stringParam.Name + "__\", " + stringParam.Name + ");\n";
+                    }
+
+                    // generate string replacements for each nodeParam
+                    foreach (NodeParam nodeParam in NodeParams)
+                    {
+                        customTaskCode +=  "        xml = xml.Replace(\"<__" + nodeParam.Name + "__ />\", " + nodeParam.Name + ".Xml.InnerXml);\n";
+                    }
+
+                    customTaskCode +=  "        Log(Level.Verbose, \"Generated script: \" + xml);\n";
+                    customTaskCode +=  "        XmlDocument scriptDom = new XmlDocument();\n";
+                    customTaskCode +=  "        scriptDom.LoadXml(xml);\n";
+                    customTaskCode +=  "        foreach (XmlNode node in scriptDom.ChildNodes[0].ChildNodes)\n";
+                    customTaskCode +=  "        {\n";
+                    customTaskCode +=  "            if ((node.Name == \"stringparams\")\n";
+                    customTaskCode +=  "                    || (node.Name == \"nodeparams\")\n";
+                    customTaskCode +=  "                    || (node.Name == \"#comment\"))\n";
+                    customTaskCode +=  "                continue;\n";
+                    customTaskCode +=  "            Log(Level.Verbose, \"Running task: \" + node.OuterXml);\n";
+                    customTaskCode +=  "            Project.CreateTask(node).Execute();\n";
+                    customTaskCode +=  "        }\n";
+                    customTaskCode +=  "    }\n";
+                    customTaskCode +=  "}\n";
+
+                    customTaskCode += "]]" + "></code></script>";
+                    Log(Level.Verbose, customTaskCode);
+                    Log(Level.Verbose, "*** Custom code end ***");
+
+                    XmlDocument xmlScriptTask = new XmlDocument();
+                    xmlScriptTask.LoadXml(customTaskCode);
+                    Project.CreateTask(xmlScriptTask.ChildNodes[0]).Execute();
+                }
+
+            }
+
+          ]]>
+        </code>
+
+    </script>
+
+</project>
