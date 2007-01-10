@@ -2,6 +2,8 @@
 
     <include buildfile="${build.includes.dir}\taskdef.build"/>
 
+    <include buildfile="${build.includes.dir}\buildTasks.build"/>
+
 </project>
 
 

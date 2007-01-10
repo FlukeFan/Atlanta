@@ -1,0 +1,65 @@
+<project>
+
+    <taskdef name="cscLibrary">
+
+        <stringparams>
+            <stringparam name="output" />
+        </stringparams>
+
+        <nodeparams>
+            <nodeparam name="references" />
+            <nodeparam name="sources" />
+            <nodeparam name="resources" />
+        </nodeparams>
+
+
+        <echo message="Compiling library [__output__.dll]" />
+
+        <csc    target="library"
+                debug="${build.debug}"
+                optimize="${optimize}"
+                output="${build.dir}/bin/__output__.dll"
+                warnaserror="true"
+                doc="${build.dir}/bin/__output__.xml">
+
+            <__references__/>
+            <__sources__/>
+            <__resources__/>
+
+        </csc>
+
+    </taskdef>
+
+
+    <taskdef name="cscLibraryTest">
+
+        <stringparams>
+            <stringparam name="output" />
+        </stringparams>
+
+        <nodeparams>
+            <nodeparam name="references" />
+            <nodeparam name="sources" />
+            <nodeparam name="resources" />
+        </nodeparams>
+
+
+        <echo message="Compiling library tests [__output__.dll]"/>
+
+        <csc    target="library"
+                debug="${build.debug}"
+                optimize="${optimize}"
+                output="${build.dir}/bin/__output__.dll"
+                warnaserror="true">
+
+            <__references__/>
+            <__sources__/>
+            <__resources__/>
+
+        </csc>
+
+    </taskdef>
+
+</project>
+
+
