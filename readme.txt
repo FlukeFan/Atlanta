@@ -6,9 +6,7 @@ A project to demonstrate best use of NHibernate and Spring.Net to create an ente
 
 To build:
 
-1.  Open a command prompt at the root directory;
-2.  Type 'env'  (to set the environment to include NAnt in the path);
-3.  Type 'nant' (to create a default debug build).
+1.  Open Atlanta Command Prompt and type 'nant'
 
 That's it!
 
