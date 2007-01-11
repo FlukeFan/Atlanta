@@ -12,6 +12,9 @@ namespace Atlanta.Application.Domain.Lender
     public enum MediaType
     {
         /// <summary> Book </summary>
+        None,
+    
+        /// <summary> Book </summary>
         Book,
 
         /// <summary> Cd </summary>
@@ -26,41 +29,97 @@ namespace Atlanta.Application.Domain.Lender
     /// </summary>
     public class Media : DomainObject
     {
+        #region Fields
 
-        private Library     m_library;
+        private Library     _owningLibrary;
+        private MediaType   _type;
+        private string      _name;
+        private string      _description;
 
-        private MediaType   m_type;
-        private string      m_name;
-        private string      m_description;
+        #endregion
+        
+        #region Constructors
+        
+        /// <summary></summary>
+        protected Media()
+        {
+        }
+        
+        /// <summary></summary>
+        protected Media(Library owningLibrary, MediaType type, string name, string description)
+        {
+            OwningLibrary = owningLibrary;
+            Type = type;
+            Name = name;
+            Description = description;
+        }        
+        
+        #endregion 
+        
+        #region Factory Methods
+        
+        /// <summary></summary>
+        public static Media InstantiateOrphanedMedia(MediaType type, string name, string description)
+        {
+            return new Media(null, type, name, description);
+        }
+        
+        /// <summary></summary>        
+        public static Media InstantiateMedia(Library owningLibrary, MediaType type, string name, string description)
+        {
+            return new Media(owningLibrary, type, name, description);
+        }        
+        
+        #endregion
+        
+        #region Properties            
 
         /// <summary> Library </summary>
-        virtual public Library Library
+        public virtual Library OwningLibrary
         {
-            get { return m_library; }
-            set { m_library = value; }
+            get { return _owningLibrary; }
+            protected set { _owningLibrary = value; }
         }
 
         /// <summary> Type </summary>
-        virtual public MediaType Type
+        public virtual MediaType Type
         {
-            get { return m_type; }
-            set { m_type = value; }
+            get { return _type; }
+            protected set { _type = value; }
         }
 
         /// <summary> Name </summary>
-        virtual public string Name
+        public virtual string Name
         {
-            get { return m_name; }
-            set { m_name = value; }
+            get { return _name; }
+            protected set { _name = value; }
         }
 
         /// <summary> Description </summary>
-        virtual public string Description
+        public virtual string Description
         {
-            get { return m_description; }
-            set { m_description = value; }
+            get { return _description; }
+            protected set { _description = value; }
         }
 
+        #endregion
+        
+        #region Business Methods
+        
+        /// <summary>Update the details of this media.</summary>
+        public virtual void ModifyDetails(MediaType newType, string newName, string newDescription)
+        {
+            // Need to load here or else NHibernate won't know that when we change something it need to be persisted back... NPL to do
+            
+            Type = newType;
+            Name = newName;
+            Description = newDescription;
+
+            // Might want to call modify on data mapper here.  Whilst NHibernate disnae need it it'll make it easier to unit test... trust me! NPL to do.            
+        }
+        
+        #endregion
+        
     }
 
 }
