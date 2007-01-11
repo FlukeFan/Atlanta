@@ -22,9 +22,19 @@
                 warnaserror="true"
                 doc="${build.dir}/bin/__output__.xml">
 
-            <__references__/>
-            <__sources__/>
-            <__resources__/>
+            <references>
+                <__references__/>
+            </references>
+
+            <sources>
+                <include name="${project.assemblyVersionFile}" />
+
+                <__sources__/>
+            </sources>
+
+            <resources>
+                <__resources__/>
+            </resources>
 
         </csc>
 
@@ -52,9 +62,19 @@
                 output="${build.dir}/bin/__output__.dll"
                 warnaserror="true">
 
-            <__references__/>
-            <__sources__/>
-            <__resources__/>
+            <references>
+                <__references__/>
+            </references>
+
+            <sources>
+                <include name="${project.assemblyVersionFile}" />
+
+                <__sources__/>
+            </sources>
+
+            <resources>
+                <__resources__/>
+            </resources>
 
         </csc>
 
