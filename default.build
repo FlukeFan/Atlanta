@@ -40,6 +40,8 @@
 
     <target name="onBuildTest">
 
+        <mkdir dir="${build.dir}/results" />
+
         <!-- NUnit binaries -->
         <copy
             file="${nant::get-base-directory()}lib\${framework::get-family(nant.settings.currentframework)}\${framework::get-version(nant.settings.currentframework)}\nunit.framework.dll"

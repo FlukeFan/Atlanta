@@ -50,6 +50,73 @@
 
     </taskdef>
 
+
+    <taskdef name="runTestWithCoverage">
+
+        <stringparams>
+            <stringparam name="testAssembly" />
+            <stringparam name="testSuccessFlagFile" />
+            <stringparam name="testCoverageFile" />
+            <stringparam name="satisfactoryCoverage" />
+        </stringparams>
+
+        <nodeparams>
+            <nodeparam name="testDependencies" />
+            <nodeparam name="coverageAssemblies" />
+            <nodeparam name="exclusions" />
+        </nodeparams>
+
+
+        <property name="testSuccessFlagFileWithPath" value="${build.dir}/results/__testSuccessFlagFile__"/>
+
+        <echo message="checking flag file '__testSuccessFlagFile__' against dependencies"/>
+
+        <uptodate property="test.flg.uptodate">
+            <sourcefiles>
+                <__testDependencies__/>
+            </sourcefiles>
+            <targetfiles>
+                <include name="${testSuccessFlagFileWithPath}"/>
+            </targetfiles>
+        </uptodate>
+
+        <echo message="flag file up to date: ${test.flg.uptodate}"/>
+
+        <if test="${not test.flg.uptodate}">
+
+            <echo message="running tests with coverage"/>
+
+            <ncover commandLineExe="nunit-console.exe"
+                    commandLineArgs="__testAssembly__ /xml:${build.dir}/results/testCoverageResults.xml"
+                    coverageFile="__testCoverageFile__"
+                    logFile="${build.dir}/results/coverage.log"
+                    >
+                <assemblies>
+                    <__coverageAssemblies__/>
+                </assemblies>
+            </ncover>
+
+            <ncoverexplorer program="ncoverexplorer.console.exe"
+                            reportType="None"
+                            satisfactoryCoverage="__satisfactoryCoverage__"
+                            failMinimum="True">
+
+                <exclusions>
+                    <__exclusions__/>
+                </exclusions>
+
+                <fileset>
+                    <include name="__testCoverageFile__"/>
+                </fileset>
+
+            </ncoverexplorer>
+
+            <touch file="${testSuccessFlagFileWithPath}" />
+
+        </if>
+
+    </taskdef>
+
 </project>
 
 

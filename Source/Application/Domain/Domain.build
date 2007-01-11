@@ -55,18 +55,27 @@
 
     <target name="onTest">
 
-        <runTest testSuccessFlagFile="test_domain.flg">
+        <runTestWithCoverage
+                testAssembly="${build.dir}/bin/Atlanta.Application.Domain.Test.dll"
+                testSuccessFlagFile="test_domain.flg"
+                testCoverageFile="${build.dir}/results/DomainCoverage.xml"
+                satisfactoryCoverage="95"
+                >
 
             <testDependencies>
                 <include name="${build.dir}/LendingLibrary.mdb" />
                 <include name="${build.dir}/bin/Atlanta.Application.Domain.Test.dll" />
             </testDependencies>
 
-            <testAssemblies>
-                <include name="${build.dir}/bin/Atlanta.Application.Domain.Test.dll" />
-            </testAssemblies>
+            <coverageAssemblies>
+                <include name="${build.dir}/bin/Atlanta.Application.Domain.dll" />
+            </coverageAssemblies>
 
-        </runTest>
+            <exclusions>
+                <exclusion type="Namespace" pattern="Atlanta.Application.Domain.DomainBase" />
+            </exclusions>
+
+        </runTestWithCoverage>
 
     </target>
 
