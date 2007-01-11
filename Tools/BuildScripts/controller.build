@@ -28,11 +28,11 @@
                 <call target="onBuild"/>
             </if>
 
-            <if test="${target::exists('onBuildTest')}">
+            <if test="${target::exists('onBuildTest')}" unless="${notest}">
                 <call target="onBuildTest"/>
             </if>
 
-            <if test="${target::exists('onTest')}">
+            <if test="${target::exists('onTest')}" unless="${notest}">
                 <call target="onTest"/>
             </if>
 

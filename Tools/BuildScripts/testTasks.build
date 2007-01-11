@@ -27,11 +27,7 @@
 
         <echo message="flag file up to date: ${test.flg.uptodate}"/>
 
-        <if test="${notest}">
-            <echo message="testing is disabled"/>
-        </if>
-
-        <if unless="${notest}" test="${not test.flg.uptodate}">
+        <if test="${not test.flg.uptodate}">
 
             <echo message="running tests"/>
 
