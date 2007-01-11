@@ -1,7 +1,12 @@
 <project>
 
+    <!-- custom task to allow scripting of custom tasks -->
     <include buildfile="${build.includes.dir}\taskdef.build"/>
 
+    <!-- targets -->
+    <include buildfile="${build.includes.dir}\globalTargets.build"/>
+
+    <!-- custom tasks -->
     <include buildfile="${build.includes.dir}\buildTasks.build"/>
 
 </project>
