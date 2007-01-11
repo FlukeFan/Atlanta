@@ -1,13 +1,25 @@
 <project>
 
-    <target name="RunTest">
+    <taskdef name="runTest">
 
-        <property name="testSuccessFlagFileWithPath" value="${build.dir}/results/${testSuccessFlagFile}"/>
+        <stringparams>
+            <stringparam name="testSuccessFlagFile" />
+        </stringparams>
 
-        <echo message="checking flag file '${testSuccessFlagFile}' against dependencies"/>
+        <nodeparams>
+            <nodeparam name="testDependencies" />
+            <nodeparam name="testAssemblies" />
+        </nodeparams>
+
+
+        <property name="testSuccessFlagFileWithPath" value="${build.dir}/results/__testSuccessFlagFile__"/>
+
+        <echo message="checking flag file '__testSuccessFlagFile__' against dependencies"/>
 
         <uptodate property="test.flg.uptodate">
-            <sourcefiles refid="testDependencies"/>
+            <sourcefiles>
+                <__testDependencies__/>
+            </sourcefiles>
             <targetfiles>
                 <include name="${testSuccessFlagFileWithPath}"/>
             </targetfiles>
@@ -30,7 +42,9 @@
                             extension=".xml"
                             outputdir="${build.dir}/results" />
                 <test>
-                    <assemblies refid="testAssemblies"/>
+                    <assemblies>
+                        <__testAssemblies__/>
+                    </assemblies>
                 </test>
             </nunit2>
 
@@ -38,7 +52,7 @@
 
         </if>
 
-    </target>
+    </taskdef>
 
 </project>
 

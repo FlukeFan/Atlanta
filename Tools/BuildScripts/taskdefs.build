@@ -8,6 +8,7 @@
 
     <!-- custom tasks -->
     <include buildfile="${build.includes.dir}\buildTasks.build"/>
+    <include buildfile="${build.includes.dir}\testTasks.build"/>
 
 </project>
 

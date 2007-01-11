@@ -70,18 +70,18 @@
 
     <target name="onTest">
 
-        <fileset id="testDependencies">
-            <include name="${build.dir}/LendingLibrary.mdb" />
-            <include name="${build.dir}/bin/Atlanta.Application.Domain.Test.dll" />
-        </fileset>
+        <runTest testSuccessFlagFile="test_domain.flg">
 
-        <fileset id="testAssemblies">
-            <include name="${build.dir}/bin/Atlanta.Application.Domain.Test.dll" />
-        </fileset>
+            <testDependencies>
+                <include name="${build.dir}/LendingLibrary.mdb" />
+                <include name="${build.dir}/bin/Atlanta.Application.Domain.Test.dll" />
+            </testDependencies>
 
-        <property name="testSuccessFlagFile" value="test_domain.flg"/>
+            <testAssemblies>
+                <include name="${build.dir}/bin/Atlanta.Application.Domain.Test.dll" />
+            </testAssemblies>
 
-        <call target="RunTest"/>
+        </runTest>
 
     </target>
 
