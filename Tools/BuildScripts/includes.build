@@ -1,8 +1,0 @@
-<project>
-
-    <!-- the main controller for build files -->
-    <include buildfile="${build.includes.dir}\controller.build"/>
-
-</project>
-
-

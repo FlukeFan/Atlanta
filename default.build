@@ -9,10 +9,12 @@
     <property name="project.version" value="0.0.0.1" overwrite="false" />
 
     <property name="build.includes.dir"     value="${project::get-base-directory()}/Tools/BuildScripts"/>
-    <property name="build.includes.tasks"    value="${build.includes.dir}/taskdefs.build"/>
-    <property name="build.includes.file"    value="${build.includes.dir}/includes.build"/>
+    <property name="build.includes.tasks"   value="${build.includes.dir}/loadTasks.build"/>
+    <property name="build.includes.file"    value="${build.includes.dir}/controller.build"/>
+
     <include buildfile="${build.includes.tasks}" />
     <include buildfile="${build.includes.file}" />
+
     <call target="setDefaultEnvironment" />
 
     <!-- debug build by default -->
