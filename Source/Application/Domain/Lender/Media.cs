@@ -11,7 +11,7 @@ namespace Atlanta.Application.Domain.Lender
     /// </summary>
     public enum MediaType
     {
-        /// <summary> Book </summary>
+        /// <summary> None </summary>
         None,
     
         /// <summary> Book </summary>
@@ -40,12 +40,12 @@ namespace Atlanta.Application.Domain.Lender
         
         #region Constructors
         
-        /// <summary></summary>
+        /// <summary> constructor </summary>
         protected Media()
         {
         }
         
-        /// <summary></summary>
+        /// <summary> constructor </summary>
         protected Media(Library owningLibrary, MediaType type, string name, string description)
         {
             OwningLibrary = owningLibrary;
@@ -58,13 +58,13 @@ namespace Atlanta.Application.Domain.Lender
         
         #region Factory Methods
         
-        /// <summary></summary>
+        /// <summary> factory method </summary>
         public static Media InstantiateOrphanedMedia(MediaType type, string name, string description)
         {
             return new Media(null, type, name, description);
         }
         
-        /// <summary></summary>        
+        /// <summary> factory method </summary>
         public static Media InstantiateMedia(Library owningLibrary, MediaType type, string name, string description)
         {
             return new Media(owningLibrary, type, name, description);
@@ -106,11 +106,11 @@ namespace Atlanta.Application.Domain.Lender
         
         #region Business Methods
         
-        /// <summary>Update the details of this media.</summary>
+        /// <summary> Update the details of this media. </summary>
         public virtual void ModifyDetails(MediaType newType, string newName, string newDescription)
         {
             // Need to load here or else NHibernate won't know that when we change something it need to be persisted back... NPL to do
-            
+
             Type = newType;
             Name = newName;
             Description = newDescription;
