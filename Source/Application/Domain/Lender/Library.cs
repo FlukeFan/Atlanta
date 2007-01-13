@@ -12,6 +12,18 @@ namespace Atlanta.Application.Domain.Lender
     public class Library : DomainObjectBase
     {
 
+        /// <summary> constructor </summary>
+        protected Library()
+        {
+        }
+
+
+        /// <summary> factory method </summary>
+        public static Library InstantiateLibrary()
+        {
+            return new Library();
+        }
+
     }
 
 }
