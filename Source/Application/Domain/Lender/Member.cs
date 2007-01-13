@@ -35,12 +35,6 @@ namespace Atlanta.Application.Domain.Lender
         #region Constructors        
         
         /// <summary> constructor </summary>
-        protected Member()
-            : this(null, String.Empty, DateTime.MinValue, MemberStatus.None)
-        {
-        }
-        
-        /// <summary> constructor </summary>
         protected Member(   Library         owningLibrary,
                             string          name,
                             DateTime        dateOfBirth,
