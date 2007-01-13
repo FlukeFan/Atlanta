@@ -24,6 +24,7 @@ namespace Atlanta.Application.Domain.Lender
         Dvd,
     }
 
+
     /// <summary>
     /// Class to represent Media
     /// </summary>
@@ -46,7 +47,10 @@ namespace Atlanta.Application.Domain.Lender
         }
         
         /// <summary> constructor </summary>
-        protected Media(Library owningLibrary, MediaType type, string name, string description)
+        protected Media(Library     owningLibrary,
+                        MediaType   type,
+                        string      name,
+                        string      description)
         {
             OwningLibrary = owningLibrary;
             Type = type;
@@ -59,13 +63,18 @@ namespace Atlanta.Application.Domain.Lender
         #region Factory Methods
         
         /// <summary> factory method </summary>
-        public static Media InstantiateOrphanedMedia(MediaType type, string name, string description)
+        public static Media InstantiateOrphanedMedia(   MediaType   type,
+                                                        string      name,
+                                                        string      description)
         {
             return new Media(null, type, name, description);
         }
         
         /// <summary> factory method </summary>
-        public static Media InstantiateMedia(Library owningLibrary, MediaType type, string name, string description)
+        public static Media InstantiateMedia(   Library     owningLibrary,
+                                                MediaType   type,
+                                                string      name,
+                                                string      description)
         {
             return new Media(owningLibrary, type, name, description);
         }        
@@ -107,15 +116,19 @@ namespace Atlanta.Application.Domain.Lender
         #region Business Methods
         
         /// <summary> Update the details of this media. </summary>
-        public virtual void ModifyDetails(MediaType newType, string newName, string newDescription)
+        public virtual void ModifyDetails(  MediaType   newType,
+                                            string      newName,
+                                            string      newDescription)
         {
-            // Need to load here or else NHibernate won't know that when we change something it need to be persisted back... NPL to do
+            // Need to load here or else NHibernate won't know that when we change
+            //  something it need to be persisted back... NPL to do
 
             Type = newType;
             Name = newName;
             Description = newDescription;
 
-            // Might want to call modify on data mapper here.  Whilst NHibernate disnae need it it'll make it easier to unit test... trust me! NPL to do.            
+            // Might want to call modify on data mapper here.  Whilst NHibernate
+            //  disnae need it it'll make it easier to unit test... trust me! NPL to do.
         }
         
         #endregion
