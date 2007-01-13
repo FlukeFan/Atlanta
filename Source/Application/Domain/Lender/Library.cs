@@ -9,7 +9,7 @@ namespace Atlanta.Application.Domain.Lender
     /// <summary>
     /// Class to represent a Library
     /// </summary>
-    public class Library : DomainObject
+    public class Library : DomainObjectBase
     {
 
     }

@@ -8,7 +8,7 @@ namespace Atlanta.Application.Domain.DomainBase
     /// <summary>
     /// Base class for domain objects
     /// </summary>
-    public class DomainObject
+    abstract public class DomainObjectBase
     {
 
         private long _id;
