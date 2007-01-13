@@ -42,7 +42,8 @@ namespace Atlanta.Application.Domain.Lender
         #region Constructors
         
         /// <summary> constructor </summary>
-        protected Media()
+        protected Media() 
+            : this(null, MediaType.None, String.Empty, String.Empty)
         {
         }
         
@@ -51,6 +52,7 @@ namespace Atlanta.Application.Domain.Lender
                         MediaType   type,
                         string      name,
                         string      description)
+            : base()                        
         {
             OwningLibrary = owningLibrary;
             Type = type;
@@ -120,15 +122,9 @@ namespace Atlanta.Application.Domain.Lender
                                             string      newName,
                                             string      newDescription)
         {
-            // Need to load here or else NHibernate won't know that when we change
-            //  something it need to be persisted back... NPL to do
-
             Type = newType;
             Name = newName;
             Description = newDescription;
-
-            // Might want to call modify on data mapper here.  Whilst NHibernate
-            //  disnae need it it'll make it easier to unit test... trust me! NPL to do.
         }
         
         #endregion

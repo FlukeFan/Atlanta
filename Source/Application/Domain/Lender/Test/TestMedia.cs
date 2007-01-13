@@ -1,4 +1,3 @@
-
 using System;
 
 using NHibernate;
@@ -14,7 +13,6 @@ namespace Atlanta.Application.Domain.Lender.Test
     [TestFixture]
     public class TestMedia : DomainTestBase
     {
-
         [Test]
         public void InstantiateOrphanedMedia_Ok()
         {
@@ -40,6 +38,5 @@ namespace Atlanta.Application.Domain.Lender.Test
         }
         
     }
-
 }
 
