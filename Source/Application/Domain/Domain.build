@@ -28,7 +28,8 @@
 
     <target name="onBuildTest">
 
-        <cscLibraryTest output="Atlanta.Application.Domain.Test">
+        <cscLibraryTest output="Atlanta.Application.Domain.Test"
+                        configFile="DomainBase/Test/Atlanta.Application.Domain.Test.dll.config">
 
             <references>
                 <include name="${build.dir}/bin/NHibernate.dll" />
@@ -44,11 +45,6 @@
             <resources/>
 
         </cscLibraryTest>
-
-        <copy
-            file="Atlanta.Application.Domain.Test.dll.config"
-            todir="${build.dir}/bin"
-            />
 
     </target>
 

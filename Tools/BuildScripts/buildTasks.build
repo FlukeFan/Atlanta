@@ -45,6 +45,7 @@
 
         <stringparams>
             <stringparam name="output" />
+            <stringparam name="configFile" />
         </stringparams>
 
         <nodeparams>
@@ -77,6 +78,11 @@
             </resources>
 
         </csc>
+
+        <copy
+            file="__configFile__"
+            todir="${build.dir}/bin"
+            />
 
     </taskdef>
 
