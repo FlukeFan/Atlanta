@@ -11,13 +11,13 @@ namespace Atlanta.Application.Domain.DomainBase
     public class DomainObject
     {
 
-        private long m_id;
+        private long _id;
 
         /// <summary> Id </summary>
         virtual public long Id
         {
-            get { return m_id; }
-            set { m_id = value; }
+            get { return _id; }
+            set { _id = value; }
         }
 
     }

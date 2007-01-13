@@ -13,25 +13,25 @@ namespace Atlanta.Application.Domain.DomainBase.Test
     public class DomainTestBase
     {
 
-        static private Configuration    s_configuration;
-        static private ISessionFactory  s_sessionFactory;
+        static private Configuration    _configuration;
+        static private ISessionFactory  _sessionFactory;
 
-        private ISession m_session;
-        private ITransaction m_transaction;
+        private ISession        _session;
+        private ITransaction    _transaction;
 
         private ISessionFactory SessionFactory
         {
             get
             {
-                if (s_sessionFactory == null)
+                if (_sessionFactory == null)
                 {
-                    s_configuration = new Configuration();
-                    s_configuration.AddAssembly("Atlanta.Application.Domain");
+                    _configuration = new Configuration();
+                    _configuration.AddAssembly("Atlanta.Application.Domain");
 
-                    s_sessionFactory = s_configuration.BuildSessionFactory();
+                    _sessionFactory = _configuration.BuildSessionFactory();
                 }
 
-                return s_sessionFactory;
+                return _sessionFactory;
             }
         }
 
@@ -39,13 +39,13 @@ namespace Atlanta.Application.Domain.DomainBase.Test
         {
             get
             {
-                if (m_session == null)
+                if (_session == null)
                 {
-                    m_session = SessionFactory.OpenSession();
-                    m_transaction = m_session.BeginTransaction();
+                    _session = SessionFactory.OpenSession();
+                    _transaction = _session.BeginTransaction();
                 }
 
-                return m_session;
+                return _session;
             }
         }
 
@@ -57,16 +57,16 @@ namespace Atlanta.Application.Domain.DomainBase.Test
         [TearDown]
         virtual public void TearDown()
         {
-            if (m_transaction != null)
+            if (_transaction != null)
             {
-                m_transaction.Rollback();
-                m_transaction = null;
+                _transaction.Rollback();
+                _transaction = null;
             }
 
-            if (m_session != null)
+            if (_session != null)
             {
-                m_session.Close();
-                m_session = null;
+                _session.Close();
+                _session = null;
             }
         }
 
