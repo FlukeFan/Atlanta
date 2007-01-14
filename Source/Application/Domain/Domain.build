@@ -61,6 +61,7 @@
             <testDependencies>
                 <include name="${build.dir}/LendingLibrary.mdb" />
                 <include name="${build.dir}/bin/Atlanta.Application.Domain.Test.dll" />
+                <include name="${build.dir}/bin/Atlanta.Application.Domain.Test.dll.config" />
             </testDependencies>
 
             <coverageAssemblies>
