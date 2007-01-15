@@ -7,6 +7,11 @@
             <generator class="increment"/>
         </id>
 
+        <bag name="Media">
+            <key column="Library_Id" />
+            <one-to-many class="Atlanta.Application.Domain.Lender.Media, Atlanta.Application.Domain"/>
+        </bag>
+
     </class>
 
 </hibernate-mapping>
