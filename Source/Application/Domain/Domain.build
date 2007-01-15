@@ -70,6 +70,7 @@
 
             <exclusions>
                 <exclusion type="Namespace" pattern="Atlanta.Application.Domain.DomainBase" />
+                <exclusion type="Class"     pattern=".*Criteria"    isRegex="true"/>
             </exclusions>
 
         </runTestWithCoverage>
