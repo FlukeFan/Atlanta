@@ -4,7 +4,7 @@
             table="Library">
 
         <id name="Id" column="Library_Id">
-            <generator class="increment"/>
+            <generator class="native"/>
         </id>
 
         <bag name="Media">

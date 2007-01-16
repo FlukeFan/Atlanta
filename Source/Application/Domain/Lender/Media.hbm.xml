@@ -3,7 +3,7 @@
     <class  name="Atlanta.Application.Domain.Lender.Media, Atlanta.Application.Domain" table="Media">
 
         <id name="Id" column="Media_Id">
-            <generator class="increment"/>
+            <generator class="native"/>
         </id>
 
         <many-to-one    name="OwningLibrary"    column="Library_Id"     class="Atlanta.Application.Domain.Lender.Library, Atlanta.Application.Domain"/>
