@@ -40,7 +40,9 @@ namespace Atlanta.Application.Domain.DomainBase
 
 
         /// <summary> Returns true if the value passes the filter </summary>
-        protected bool CompareStringFilter(string check, string filter, FilterCondition condition)
+        protected bool CompareStringFilter( string          check,
+                                            string          filter,
+                                            FilterCondition condition)
         {
             if (condition == FilterCondition.Equal)
             {
@@ -73,15 +75,43 @@ namespace Atlanta.Application.Domain.DomainBase
             }
             else
             {
-                throw new Exception("Unsupported filter type");
+                throw new Exception("Unsupported filter condition");
             }
         }
 
-
         /// <summary> Returns true if the value passes the filter </summary>
-        protected bool CompareIntFilter(int check, int filter, FilterCondition condition)
+        protected bool CompareIntFilter(int             check, 
+                                        int             filter,
+                                        FilterCondition condition)
         {
-            return false;
+            if (condition == FilterCondition.Equal)
+            {
+                return (check == filter);
+            }
+            else if (condition == FilterCondition.NotEqual)
+            {
+                return (check != filter);
+            }
+            else if (condition == FilterCondition.GreaterThan)
+            {
+                return (check > filter);
+            }
+            else if (condition == FilterCondition.GreaterThanOrEqual)
+            {
+                return (check >= filter);
+            }
+            else if (condition == FilterCondition.LessThan)
+            {
+                return (check < filter);
+            }
+            else if (condition == FilterCondition.LessThanOrEqual)
+            {
+                return (check <= filter);
+            }
+            else
+            {
+                throw new Exception("Unsupported filter condition");
+            }
         }
 
 

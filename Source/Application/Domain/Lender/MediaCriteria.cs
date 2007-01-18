@@ -50,15 +50,15 @@ namespace Atlanta.Application.Domain.Lender
         /// <summary> Set the Type filter, and return the modified filter object </summary>
         public MediaCriteria SetTypeFilter(MediaType type, FilterCondition filterCondition)
         {
-            FilterCondition[] newCondition = new FilterCondition[_nameConditions.Length + 1];
-            _nameConditions.CopyTo(newCondition, 1);
-            _nameConditions = newCondition;
+            FilterCondition[] newConditions = new FilterCondition[_typeConditions.Length + 1];
+            _typeConditions.CopyTo(newConditions, 1);
+            _typeConditions = newConditions;
 
             MediaType[] newValue = new MediaType[_typeValues.Length + 1];
             _typeValues.CopyTo(newValue, 1);
             _typeValues = newValue;
 
-            _nameConditions[0] = filterCondition;
+            _typeConditions[0] = filterCondition;
             _typeValues[0] = type;
             return this;
         }
@@ -92,9 +92,9 @@ namespace Atlanta.Application.Domain.Lender
         /// <summary> Set the Name filter, and return the modified filter object </summary>
         public MediaCriteria SetNameFilter(string name, FilterCondition filterCondition)
         {
-            FilterCondition[] newCondition = new FilterCondition[_nameConditions.Length + 1];
-            _nameConditions.CopyTo(newCondition, 1);
-            _nameConditions = newCondition;
+            FilterCondition[] newConditions = new FilterCondition[_nameConditions.Length + 1];
+            _nameConditions.CopyTo(newConditions, 1);
+            _nameConditions = newConditions;
 
             string[] newValue = new string[_nameValues.Length + 1];
             _nameValues.CopyTo(newValue, 1);

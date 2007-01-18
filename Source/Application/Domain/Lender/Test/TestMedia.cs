@@ -54,6 +54,23 @@ namespace Atlanta.Application.Domain.Lender.Test
             Assert.AreEqual("test name 2", filteredList[0].Name);
         }
 
+        [Test]
+        public void FilterEnumProperty_Ok()
+        {
+            IList<Media> mediaList = new DomainList<Media>();
+
+            mediaList.Add(Media.InstantiateOrphanedMedia(MediaType.Cd,      "test name", "test description"));
+            mediaList.Add(Media.InstantiateOrphanedMedia(MediaType.Book,    "test name", "test description"));
+            mediaList.Add(Media.InstantiateOrphanedMedia(MediaType.Dvd,     "test name", "test description"));
+
+            IList<Media> filteredList = new MediaCriteria()
+                                            .SetTypeFilter(MediaType.Book)
+                                            .List(mediaList);
+
+            Assert.AreEqual(1, filteredList.Count);
+            Assert.AreEqual(MediaType.Book, filteredList[0].Type);
+        }
+
     }
 }
 
