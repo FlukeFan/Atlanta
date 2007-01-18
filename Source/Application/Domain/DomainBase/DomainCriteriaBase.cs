@@ -1,11 +1,15 @@
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
+using NHibernate;
+using NHibernate.Type;
+
 namespace Atlanta.Application.Domain.DomainBase
 {
-    
+
     /// <summary>
     /// Condition types for filters.
     /// </summary>
@@ -33,11 +37,117 @@ namespace Atlanta.Application.Domain.DomainBase
     abstract public class DomainCriteriaBase<T, D>
     {
 
+        private List<object>    _queryParameterValues;
+        private string          _whereOrAnd;
+        private string          _queryString;
+
+        private IList<D> ListFromInMemoryList(IList<D> sourceList)
+        {
+            DomainList<D> resultList = new DomainList<D>();
+
+            foreach (D domainObject in sourceList)
+            {
+                if (PassesFilter(domainObject))
+                    resultList.Add(domainObject);
+            }
+
+            return resultList;
+        }
+
+        private IList<D> ListFromPersistentList(IList<D> sourceList)
+        {
+            DomainList<D> resultList = new DomainList<D>();
+
+            InitialiseQueryParameters();
+            CreateQueryParameters();
+
+            IQuery query = Registry.Session.CreateFilter(sourceList, _queryString);
+            SetQueryParameters(query);
+            IList queryList = query.List();
+
+            foreach (D domainObject in queryList)
+            {
+                resultList.Add(domainObject);
+            }
+
+            return resultList;
+        }
+
+        private void InitialiseQueryParameters()
+        {
+            _queryParameterValues = new List<object>();
+            _whereOrAnd = "where";
+            _queryString = "";
+        }
+
+        private void SetQueryParameters(IQuery query)
+        {
+            for (int i=0; i<_queryParameterValues.Count; i++)
+            {
+                query.SetParameter(i, _queryParameterValues[i]);
+            }
+        }
+
+        private string GetSqlOperator(  string          parameterName,
+                                        FilterCondition condition)
+        {
+            switch (condition)
+            {
+                case FilterCondition.Equal:
+                    return parameterName + " = ?";
+
+                case FilterCondition.NotEqual:
+                    return "not " + parameterName + " = ?";
+
+                case FilterCondition.GreaterThan:
+                    return parameterName + " > ?";
+
+                case FilterCondition.GreaterThanOrEqual:
+                    return parameterName + " >= ?";
+
+                case FilterCondition.LessThan:
+                    return parameterName + " < ?";
+
+                case FilterCondition.LessThanOrEqual:
+                    return parameterName + " <= ?";
+
+                case FilterCondition.Like:
+                    return parameterName + " like ?";
+
+                default:
+                    throw new Exception("filter not recognised");
+            }
+        }
+
+        private void AddToQuery(string          parameterName,
+                                FilterCondition parameterCondition)
+        {
+            string sql = _whereOrAnd + " ( " + GetSqlOperator(parameterName, parameterCondition) + " ) ";
+            _whereOrAnd = "and";
+
+            _queryString += sql;
+        }
+
         /// <summary>
         ///  Return true if the supplied domain object passes the filters
         /// </summary>
         abstract protected bool PassesFilter(D domainObject);
 
+
+        /// <summary>
+        ///  Override to create the custom HQL for the criteria
+        /// </summary>
+        abstract protected void CreateQueryParameters();
+
+
+        /// <summary> Adds a single filter to a query </summary>
+        protected void AddToQuery(  string          parameterName,
+                                    FilterCondition parameterCondition,
+                                    object          parameterValue)
+        {
+            AddToQuery(parameterName, parameterCondition);
+            _queryParameterValues.Add(parameterValue);
+        }
 
         /// <summary> Returns true if the value passes the filter </summary>
         protected bool CompareStringFilter( string          check,
@@ -80,7 +190,7 @@ namespace Atlanta.Application.Domain.DomainBase
         }
 
         /// <summary> Returns true if the value passes the filter </summary>
-        protected bool CompareIntFilter(int             check, 
+        protected bool CompareIntFilter(int             check,
                                         int             filter,
                                         FilterCondition condition)
         {
@@ -122,20 +232,11 @@ namespace Atlanta.Application.Domain.DomainBase
         {
             if (sourceList is DomainList<D>)
             {
-                // in-memory list
-                DomainList<D> resultList = new DomainList<D>();
-
-                foreach (D domainObject in sourceList)
-                {
-                    if (PassesFilter(domainObject))
-                        resultList.Add(domainObject);
-                }
-
-                return resultList;
+                return ListFromInMemoryList(sourceList);
             }
             else
             {
-                throw new Exception("TODO - handle persistent lists");
+                return ListFromPersistentList(sourceList);
             }
         }
     }

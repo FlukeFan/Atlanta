@@ -37,7 +37,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             Assert.AreEqual(3, library.Media.Count);
         }
 
-        [Test] [Ignore("RGB - WIP - need to add criteria to persisted collectons")]
+        [Test]
         public void FilterStringProperty_Ok()
         {
             Library library = (Library) Session.Load(typeof(Library), 1L);

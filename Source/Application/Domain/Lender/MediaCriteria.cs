@@ -13,8 +13,8 @@ namespace Atlanta.Application.Domain.Lender
     /// </summary>
     public class MediaCriteria : DomainCriteriaBase<MediaCriteria, Media>
     {
-        
-        /// <summary> Check for number of Type filters </summary>
+
+        /// <summary> Overriden to check a domain object passes the filters </summary>
         override protected bool PassesFilter(Media media)
         {
             // check Type
@@ -32,6 +32,23 @@ namespace Atlanta.Application.Domain.Lender
             }
 
             return true;
+        }
+
+
+        /// <summary> Override to create query parameters for NHibernate </summary>
+        override protected void CreateQueryParameters()
+        {
+            // type
+            for (int i=0; i<_typeValues.Length; i++)
+            {
+                AddToQuery("Type", _typeConditions[i], _typeValues[i]);
+            }
+
+            // name
+            for (int i=0; i<_nameValues.Length; i++)
+            {
+                AddToQuery("Name", _nameConditions[i], _nameValues[i]);
+            }
         }
 
 

@@ -42,6 +42,8 @@ namespace Atlanta.Application.Domain.DomainBase.Test
                 if (_session == null)
                 {
                     _session = SessionFactory.OpenSession();
+                    Registry.Session = _session;
+
                     _transaction = _session.BeginTransaction();
                 }
 
