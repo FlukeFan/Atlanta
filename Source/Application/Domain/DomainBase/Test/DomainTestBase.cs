@@ -13,42 +13,6 @@ namespace Atlanta.Application.Domain.DomainBase.Test
     public class DomainTestBase
     {
 
-        static private Configuration    _configuration;
-        static private ISessionFactory  _sessionFactory;
-
-        private ISession        _session;
-        private ITransaction    _transaction;
-
-        private ISessionFactory SessionFactory
-        {
-            get
-            {
-                if (_sessionFactory == null)
-                {
-                    _configuration = new Configuration();
-                    _configuration.AddAssembly("Atlanta.Application.Domain");
-
-                    _sessionFactory = _configuration.BuildSessionFactory();
-                }
-
-                return _sessionFactory;
-            }
-        }
-
-        protected ISession Session
-        {
-            get
-            {
-                if (_session == null)
-                {
-                    _session = SessionFactory.OpenSession();
-                    _transaction = _session.BeginTransaction();
-                }
-
-                return _session;
-            }
-        }
-
         [SetUp]
         virtual public void SetUp()
         {
@@ -57,17 +21,6 @@ namespace Atlanta.Application.Domain.DomainBase.Test
         [TearDown]
         virtual public void TearDown()
         {
-            if (_transaction != null)
-            {
-                _transaction.Rollback();
-                _transaction = null;
-            }
-
-            if (_session != null)
-            {
-                _session.Close();
-                _session = null;
-            }
         }
 
     }

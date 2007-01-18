@@ -12,7 +12,7 @@ namespace Atlanta.Application.Domain.Lender.Test
 {
 
     [TestFixture]
-    public class TestMediaPersistence : DomainTestBase
+    public class TestMediaPersistence : DomainPersistenceTestBase
     {
 
         [Test]
