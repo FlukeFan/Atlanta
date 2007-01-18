@@ -4,6 +4,27 @@ using System.Collections.Generic;
 
 namespace Atlanta.Application.Domain.DomainBase
 {
+    
+    /// <summary>
+    /// Condition types for filters.
+    /// </summary>
+    public enum FilterCondition
+    {
+        /// <summary>Equality condition</summary>
+        Equal,
+        /// <summary>Inequality condition</summary>
+        NotEqual,
+        /// <summary>GreaterThan</summary>
+        GreaterThan,
+        /// <summary>GreaterThan or equal to</summary>
+        GreaterThanOrEqual,
+        /// <summary>LessThan</summary>
+        LessThan,
+        /// <summary>LessThan or equal to</summary>
+        LessThanOrEqual,
+        /// <summary>Like condition</summary>
+        Like
+    };
 
     /// <summary>
     /// Base class for domain criteria objects
