@@ -37,7 +37,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             Assert.AreEqual("new description", media.Description);
         }
 
-        [Test] [Ignore("RGB - WIP")]
+        [Test]
         public void FilterStringProperty_Ok()
         {
             IList<Media> mediaList = new DomainList<Media>();

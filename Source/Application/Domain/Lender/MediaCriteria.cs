@@ -13,6 +13,27 @@ namespace Atlanta.Application.Domain.Lender
     /// </summary>
     public class MediaCriteria : DomainCriteriaBase<MediaCriteria, Media>
     {
+        
+        /// <summary> Check for number of Type filters </summary>
+        override protected bool PassesFilter(Media media)
+        {
+            // check Type
+            for (int i=0; i<_typeValues.Length; i++)
+            {
+                if (!CompareIntFilter((int) media.Type, (int) _typeValues[i], _typeConditions[i]))
+                    return false;
+            }
+
+            // check Name
+            for (int i=0; i<_nameValues.Length; i++)
+            {
+                if (!CompareStringFilter(media.Name, _nameValues[i], _nameConditions[i]))
+                    return false;
+            }
+
+            return true;
+        }
+
 
         FilterCondition[]   _typeConditions = new FilterCondition[0];
         MediaType[]         _typeValues = new MediaType[0];
