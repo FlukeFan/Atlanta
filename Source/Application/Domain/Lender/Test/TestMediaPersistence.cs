@@ -1,9 +1,6 @@
 
 using System;
 
-using NHibernate;
-using NHibernate.Cfg;
-
 using NUnit.Framework;
 
 using Atlanta.Application.Domain.DomainBase.Test;
@@ -20,7 +17,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         {
             Library library = Library.InstantiateLibrary();
             library.Id = 1;
-            
+
             Media media = Media.InstantiateMedia(library, MediaType.Dvd, "test", "test description");
 
             Session.Save(media);
