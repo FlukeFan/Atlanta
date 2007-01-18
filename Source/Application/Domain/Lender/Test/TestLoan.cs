@@ -1,8 +1,5 @@
 using System;
 
-using NHibernate;
-using NHibernate.Cfg;
-
 using NUnit.Framework;
 
 using Atlanta.Application.Domain.DomainBase.Test;
@@ -22,6 +19,6 @@ namespace Atlanta.Application.Domain.Lender.Test
             Assert.AreEqual(null, loan.LoanedMedia);            
             Assert.AreEqual(new DateTime(2006,1,1), loan.StartDate);            
             Assert.AreEqual(new DateTime(2006,1,2), loan.EndDate);                    
-        }                
+        }
     }
 }    

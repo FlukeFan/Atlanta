@@ -1,9 +1,6 @@
 
 using System;
 
-using NHibernate;
-using NHibernate.Cfg;
-
 using NUnit.Framework;
 
 using Atlanta.Application.Domain.DomainBase.Test;

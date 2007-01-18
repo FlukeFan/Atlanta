@@ -11,7 +11,7 @@ namespace Atlanta.Application.Domain.Lender
     ///
     ///  TODO: Need to code-generate these classes
     /// </summary>
-    public class MediaCriteria : DomainCriteriaBase<MediaCriteria>
+    public class MediaCriteria : DomainCriteriaBase<MediaCriteria, Media>
     {
 
         // Begin Media.Type filter
