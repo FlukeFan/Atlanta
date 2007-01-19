@@ -37,6 +37,20 @@ namespace Atlanta.Application.Domain.Lender
         }
 
 
+        private void ValidateNoMediaWithNameAndType(Media media)
+        {
+            IList<Media> mediaWithNameAndType = new MediaCriteria()
+                                                    .SetTypeFilter(media.Type)
+                                                    .SetNameFilter(media.Name)
+                                                    .List(OwnedMedia);
+
+            if (mediaWithNameAndType.Count != 0)
+            {
+                throw new DuplicationException(mediaWithNameAndType[0]);
+            }
+        }
+
+
         /// <summary>
         ///  Add new Media to the library.  The combination of Media.Name and Media.Type
         ///   need to be unique within the Library.  Throws DuplicationException if they are not.
@@ -44,6 +58,8 @@ namespace Atlanta.Application.Domain.Lender
         /// </summary>
         virtual public Media Add(Media media)
         {
+            ValidateNoMediaWithNameAndType(media);
+
             Media newMedia = Media.InstantiateMedia(this, media.Type, media.Name, media.Description);
             OwnedMedia.Add(newMedia);
 
