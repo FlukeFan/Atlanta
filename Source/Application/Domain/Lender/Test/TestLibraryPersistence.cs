@@ -54,6 +54,21 @@ namespace Atlanta.Application.Domain.Lender.Test
             Assert.AreEqual(4, library.Media.Count);
         }
 
+        [Test]
+        public void DeleteChildMedia_Ok()
+        {
+            Library library = (Library) Session.Load(typeof(Library), 1L);
+            Media media = (Media) Session.Load(typeof(Media), 1L);
+
+            library.Media.Remove(media);
+
+            Session.Flush();
+            Session.Clear();
+
+            library = (Library) Session.Load(typeof(Library), 1L);
+            Assert.AreEqual(2, library.Media.Count);
+        }
+
     }
 
 }
