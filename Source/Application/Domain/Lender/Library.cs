@@ -33,7 +33,7 @@ namespace Atlanta.Application.Domain.Lender
         virtual public IList<Media> Media
         {
             get { return _media; }
-            set { _media = value; }
+            protected set { _media = value; }
         }
     }
 

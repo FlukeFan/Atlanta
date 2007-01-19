@@ -15,8 +15,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void Insert_Load_Ok()
         {
-            Library library = Library.InstantiateLibrary();
-            library.Id = 1;
+            Library library = (Library) Session.Load(typeof(Library), 1L);
 
             Media media = Media.InstantiateMedia(library, MediaType.Dvd, "test", "test description");
 

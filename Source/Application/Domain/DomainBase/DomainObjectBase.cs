@@ -17,7 +17,7 @@ namespace Atlanta.Application.Domain.DomainBase
         virtual public long Id
         {
             get { return _id; }
-            set { _id = value; }
+            protected set { _id = value; }
         }
 
     }
