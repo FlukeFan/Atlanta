@@ -23,7 +23,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             {
                 filteredList = new MediaCriteria()
                                     .SetNameFilter("CD")
-                                    .List(library.Media);
+                                    .List(library.OwnedMedia);
 
                 Assert.AreEqual(1, filteredList.Count);
                 Assert.AreEqual("CD", filteredList[0].Name);
@@ -32,7 +32,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             {
                 filteredList = new MediaCriteria()
                                     .SetTypeFilter(MediaType.Dvd)
-                                    .List(library.Media);
+                                    .List(library.OwnedMedia);
 
                 Assert.AreEqual(1, filteredList.Count);
                 Assert.AreEqual("DVD", filteredList[0].Name);
@@ -42,7 +42,7 @@ namespace Atlanta.Application.Domain.Lender.Test
                 filteredList = new MediaCriteria()
                                     .SetTypeFilter(MediaType.Dvd)
                                     .SetNameFilter("CD")
-                                    .List(library.Media);
+                                    .List(library.OwnedMedia);
 
                 Assert.AreEqual(0, filteredList.Count);
             }
@@ -50,7 +50,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             {
                 filteredList = new MediaCriteria()
                                     .SetTypeFilter(MediaType.Dvd, FilterCondition.NotEqual)
-                                    .List(library.Media);
+                                    .List(library.OwnedMedia);
 
                 Assert.AreEqual(2, filteredList.Count);
                 Assert.AreEqual("Book", filteredList[0].Name);

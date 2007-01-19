@@ -27,7 +27,7 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             library = (Library) Session.Load(typeof(Library), library.Id);
 
-            Assert.AreEqual(0, library.Media.Count);
+            Assert.AreEqual(0, library.OwnedMedia.Count);
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         {
             Library library = (Library) Session.Load(typeof(Library), 1L);
 
-            Assert.AreEqual(3, library.Media.Count);
+            Assert.AreEqual(3, library.OwnedMedia.Count);
         }
 
         [Test]
@@ -45,13 +45,13 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             Media media = Media.InstantiateMedia(library, MediaType.Dvd, "test", "test description");
 
-            library.Media.Add(media);
+            library.OwnedMedia.Add(media);
 
             Session.Flush();
             Session.Clear();
 
             library = (Library) Session.Load(typeof(Library), 1L);
-            Assert.AreEqual(4, library.Media.Count);
+            Assert.AreEqual(4, library.OwnedMedia.Count);
         }
 
         [Test]
@@ -60,13 +60,13 @@ namespace Atlanta.Application.Domain.Lender.Test
             Library library = (Library) Session.Load(typeof(Library), 1L);
             Media media = (Media) Session.Load(typeof(Media), 1L);
 
-            library.Media.Remove(media);
+            library.OwnedMedia.Remove(media);
 
             Session.Flush();
             Session.Clear();
 
             library = (Library) Session.Load(typeof(Library), 1L);
-            Assert.AreEqual(2, library.Media.Count);
+            Assert.AreEqual(2, library.OwnedMedia.Count);
         }
 
     }
