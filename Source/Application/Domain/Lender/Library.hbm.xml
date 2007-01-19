@@ -7,7 +7,7 @@
             <generator class="native"/>
         </id>
 
-        <bag name="Media">
+        <bag name="Media" cascade="all">
             <key column="Library_Id" />
             <one-to-many class="Atlanta.Application.Domain.Lender.Media, Atlanta.Application.Domain"/>
         </bag>

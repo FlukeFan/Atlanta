@@ -38,6 +38,22 @@ namespace Atlanta.Application.Domain.Lender.Test
             Assert.AreEqual(3, library.Media.Count);
         }
 
+        [Test]
+        public void InsertChildMedia_Ok()
+        {
+            Library library = (Library) Session.Load(typeof(Library), 1L);
+
+            Media media = Media.InstantiateMedia(library, MediaType.Dvd, "test", "test description");
+
+            library.Media.Add(media);
+
+            Session.Flush();
+            Session.Clear();
+
+            library = (Library) Session.Load(typeof(Library), 1L);
+            Assert.AreEqual(4, library.Media.Count);
+        }
+
     }
 
 }
