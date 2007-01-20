@@ -47,7 +47,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             try
             {
                 Media newMedia = library.Create(media);
-                Assert.Fail("execption not thrown");
+                Assert.Fail("exception not thrown");
             }
             catch(DuplicationException e)
             {
@@ -72,6 +72,45 @@ namespace Atlanta.Application.Domain.Lender.Test
             Assert.AreEqual(MediaType.Cd, modifiedMedia.Type);
             Assert.AreEqual("test name changed", modifiedMedia.Name);
             Assert.AreEqual("test description changed", modifiedMedia.Description);
+        }
+
+        [Test]
+        public void ModifyMedia_FailDuplicate()
+        {
+            Library library = Library.InstantiateLibrary();
+            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Cd,  "test",  "test object 1"));
+            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Cd,  "test2", "test object 2"));
+            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Dvd, "test",  "test object 3"));
+
+            Media existingMedia = library.OwnedMedia[0];
+            Media mediaClientCopy = (Media) MakeCopy(existingMedia);
+
+            Media modifiedMedia = library.Modify(existingMedia, mediaClientCopy);
+            Assert.AreEqual(modifiedMedia, existingMedia);
+
+            try
+            {
+                mediaClientCopy = (Media) MakeCopy(existingMedia);
+                mediaClientCopy.ModifyDetails(MediaType.Dvd, mediaClientCopy.Name, mediaClientCopy.Description);
+                modifiedMedia = library.Modify(existingMedia, mediaClientCopy);
+                Assert.Fail("exception not thrown");
+            }
+            catch(DuplicationException e)
+            {
+                Assert.AreEqual(library.OwnedMedia[2], e.Duplicate);
+            }
+
+            try
+            {
+                mediaClientCopy = (Media) MakeCopy(existingMedia);
+                mediaClientCopy.ModifyDetails(mediaClientCopy.Type, "test2", mediaClientCopy.Description);
+                modifiedMedia = library.Modify(existingMedia, mediaClientCopy);
+                Assert.Fail("exception not thrown");
+            }
+            catch(DuplicationException e)
+            {
+                Assert.AreEqual(library.OwnedMedia[1], e.Duplicate);
+            }
         }
 
     }

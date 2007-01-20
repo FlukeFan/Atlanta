@@ -75,6 +75,11 @@ namespace Atlanta.Application.Domain.Lender
         virtual public Media Modify(Media existingMedia,
                                     Media modifiedMedia)
         {
+            if ((modifiedMedia.Name != existingMedia.Name) || (modifiedMedia.Type != existingMedia.Type))
+            {
+                ValidateNoMediaWithNameAndType(modifiedMedia);
+            }
+
             existingMedia.ModifyDetails(modifiedMedia.Type, modifiedMedia.Name, modifiedMedia.Description);
             return existingMedia;
         }
