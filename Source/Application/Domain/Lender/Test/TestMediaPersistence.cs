@@ -62,6 +62,35 @@ namespace Atlanta.Application.Domain.Lender.Test
             Assert.AreEqual("Book", ((Media) bookMediaInLibrary[0]).Name);
         }
 
+        [Test]
+        public void ExampleByFilter_Paging()
+        {
+            Library library = Library.InstantiateLibrary();
+
+            for (int i=0; i<20; i++)
+            {
+                library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Book, "book " + i.ToString(), "book description"));
+            }
+
+            Session.Save(library);
+            Session.Flush();
+            Session.Clear();
+
+            library = (Library) Session.Load(typeof(Library), library.Id);
+
+            IList secondPage5Books = Session.CreateFilter(library.OwnedMedia, "")
+                                            .SetFirstResult(5)
+                                            .SetMaxResults(5)
+                                            .List();
+
+            Assert.AreEqual(5, secondPage5Books.Count);
+            Assert.AreEqual("book 5", ((Media) secondPage5Books[0]).Name);
+            Assert.AreEqual("book 6", ((Media) secondPage5Books[1]).Name);
+            Assert.AreEqual("book 7", ((Media) secondPage5Books[2]).Name);
+            Assert.AreEqual("book 8", ((Media) secondPage5Books[3]).Name);
+            Assert.AreEqual("book 9", ((Media) secondPage5Books[4]).Name);
+        }
+
     }
 
 }
