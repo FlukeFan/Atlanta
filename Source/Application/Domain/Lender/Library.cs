@@ -56,7 +56,7 @@ namespace Atlanta.Application.Domain.Lender
         ///   need to be unique within the Library.  Throws DuplicationException if they are not.
         ///   Returns the newly create media object.
         /// </summary>
-        virtual public Media Add(Media media)
+        virtual public Media Create(Media media)
         {
             ValidateNoMediaWithNameAndType(media);
 

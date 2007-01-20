@@ -22,13 +22,13 @@ namespace Atlanta.Application.Domain.Lender.Test
         }
 
         [Test]
-        public void AddMedia_Ok()
+        public void CreateMedia_Ok()
         {
             Library library = Library.InstantiateLibrary();
 
             Media media = Media.InstantiateOrphanedMedia(MediaType.Dvd, "test dvd", "test description");
 
-            Media newMedia = library.Add(media);
+            Media newMedia = library.Create(media);
 
             Assert.AreEqual(1, library.OwnedMedia.Count);
             Assert.AreEqual(newMedia, library.OwnedMedia[0]);
@@ -37,7 +37,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         }
 
         [Test]
-        public void AddMedia_FailDuplicate()
+        public void CreateMedia_FailDuplicate()
         {
             Library library = Library.InstantiateLibrary();
             library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Dvd, "test dvd", "test description"));
@@ -46,7 +46,7 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             try
             {
-                Media newMedia = library.Add(media);
+                Media newMedia = library.Create(media);
                 Assert.Fail("execption not thrown");
             }
             catch(DuplicationException e)
