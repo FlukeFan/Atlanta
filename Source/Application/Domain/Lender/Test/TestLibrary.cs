@@ -113,6 +113,18 @@ namespace Atlanta.Application.Domain.Lender.Test
             }
         }
 
+        [Test]
+        public void DeleteMedia_Ok()
+        {
+            Library library = Library.InstantiateLibrary();
+            Media media = Media.InstantiateMedia(library, MediaType.Dvd, "test dvd", "test description");
+            library.OwnedMedia.Add(media);
+
+            library.Delete(media);
+
+            Assert.AreEqual(0, library.OwnedMedia.Count);
+        }
+
     }
 }
 

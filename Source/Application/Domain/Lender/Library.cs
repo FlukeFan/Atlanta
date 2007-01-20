@@ -84,6 +84,14 @@ namespace Atlanta.Application.Domain.Lender
             return existingMedia;
         }
 
+        /// <summary>
+        ///  Delete the media from the library.
+        /// </summary>
+        virtual public void Delete(Media media)
+        {
+            OwnedMedia.Remove(media);
+        }
+
     }
 
 }
