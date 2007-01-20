@@ -7,6 +7,7 @@ namespace Atlanta.Application.Domain.Lender
     /// <summary>
     /// Class to represent a Loan
     /// </summary>
+    [Serializable]
     public class Loan : DomainObjectBase
     {
         #region Fields

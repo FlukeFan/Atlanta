@@ -55,6 +55,25 @@ namespace Atlanta.Application.Domain.Lender.Test
             }
         }
 
+        [Test]
+        public void ModifyMedia_Ok()
+        {
+            Library library = Library.InstantiateLibrary();
+            Media existingMedia = Media.InstantiateMedia(library, MediaType.Dvd, "test dvd", "test description");
+            library.OwnedMedia.Add(existingMedia);
+
+            Media mediaClientCopy = (Media) MakeCopy(existingMedia);
+            mediaClientCopy.ModifyDetails(MediaType.Cd, "test name changed", "test description changed");
+
+            Media modifiedMedia = library.Modify(existingMedia, mediaClientCopy);
+
+            Assert.AreEqual(1, library.OwnedMedia.Count);
+            Assert.AreEqual(existingMedia, modifiedMedia);
+            Assert.AreEqual(MediaType.Cd, modifiedMedia.Type);
+            Assert.AreEqual("test name changed", modifiedMedia.Name);
+            Assert.AreEqual("test description changed", modifiedMedia.Description);
+        }
+
     }
 }
 

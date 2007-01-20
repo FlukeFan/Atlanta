@@ -1,5 +1,7 @@
 
 using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 using NHibernate;
 using NHibernate.Cfg;
@@ -21,6 +23,22 @@ namespace Atlanta.Application.Domain.DomainBase.Test
         [TearDown]
         virtual public void TearDown()
         {
+        }
+
+        public object MakeCopy(object sourceObject)
+        {
+            object copy;
+
+            BinaryFormatter formatter = new BinaryFormatter();
+            MemoryStream stream = new MemoryStream();
+
+            formatter.Serialize(stream, sourceObject);
+            stream.Seek(0, SeekOrigin.Begin);
+
+            copy = formatter.Deserialize(stream);
+            stream.Close();
+
+            return copy;
         }
 
     }

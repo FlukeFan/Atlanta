@@ -10,6 +10,7 @@ namespace Atlanta.Application.Domain.Lender
     /// <summary>
     /// Class to represent a Library
     /// </summary>
+    [Serializable]
     public class Library : DomainObjectBase
     {
 
@@ -64,6 +65,18 @@ namespace Atlanta.Application.Domain.Lender
             OwnedMedia.Add(newMedia);
 
             return newMedia;
+        }
+
+        /// <summary>
+        ///  Modify existing media in the Library.  The combination of Media.Name and Media.Type
+        ///   need to be unique within the Library.  Throws DuplicationException if they are not.
+        ///   Returns the modified media object.
+        /// </summary>
+        virtual public Media Modify(Media existingMedia,
+                                    Media modifiedMedia)
+        {
+            existingMedia.ModifyDetails(modifiedMedia.Type, modifiedMedia.Name, modifiedMedia.Description);
+            return existingMedia;
         }
 
     }

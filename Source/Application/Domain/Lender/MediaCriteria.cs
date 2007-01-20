@@ -11,6 +11,7 @@ namespace Atlanta.Application.Domain.Lender
     ///
     ///  TODO: Need to code-generate these classes
     /// </summary>
+    [Serializable]
     public class MediaCriteria : DomainCriteriaBase<MediaCriteria, Media>
     {
 

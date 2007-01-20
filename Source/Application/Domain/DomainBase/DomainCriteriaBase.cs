@@ -34,6 +34,7 @@ namespace Atlanta.Application.Domain.DomainBase
     /// <summary>
     /// Base class for domain criteria objects
     /// </summary>
+    [Serializable]
     abstract public class DomainCriteriaBase<T, D>
     {
 

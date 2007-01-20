@@ -28,6 +28,7 @@ namespace Atlanta.Application.Domain.Lender
     /// <summary>
     /// Class to represent Media
     /// </summary>
+    [Serializable]
     public class Media : DomainObjectBase
     {
         #region Fields
