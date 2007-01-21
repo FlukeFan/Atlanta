@@ -38,6 +38,9 @@ namespace Atlanta.Application.Domain.DomainBase
     abstract public class DomainCriteriaBase<T, D>
     {
 
+        private Dictionary<string, List<object>>            _filterValues       = new Dictionary<string, List<object>>();
+        private Dictionary<string, List<FilterCondition>>   _filterConditions   = new Dictionary<string, List<FilterCondition>>();
+
         private List<object>    _queryParameterValues;
         private string          _whereOrAnd;
         private string          _queryString;
@@ -129,16 +132,30 @@ namespace Atlanta.Application.Domain.DomainBase
             _queryString += sql;
         }
 
+        private void CreateQueryParameters()
+        {
+            foreach (string filterName in _filterValues.Keys)
+            {
+                for (int i=0; i<_filterValues[filterName].Count; i++)
+                {
+                    AddToQuery(filterName, _filterConditions[filterName][i], _filterValues[filterName][i]);
+                }
+            }
+        }
+
+        private void CheckNamedFilterCreated(string filterName)
+        {
+            if (!_filterValues.ContainsKey(filterName))
+            {
+                _filterValues[filterName] = new List<object>();
+                _filterConditions[filterName] = new List<FilterCondition>();
+            }
+        }
+
         /// <summary>
         ///  Return true if the supplied domain object passes the filters
         /// </summary>
         abstract protected bool PassesFilter(D domainObject);
-
-
-        /// <summary>
-        ///  Override to create the custom HQL for the criteria
-        /// </summary>
-        abstract protected void CreateQueryParameters();
 
 
         /// <summary> Adds a single filter to a query </summary>
@@ -223,6 +240,74 @@ namespace Atlanta.Application.Domain.DomainBase
             {
                 throw new Exception("Unsupported filter condition");
             }
+        }
+
+        /// <summary> Returns true if the value passes the filter </summary>
+        protected bool CompareIntFilters(   string  filterName,
+                                            int     operand)
+        {
+            CheckNamedFilterCreated(filterName);
+            for (int i=0; i<_filterValues[filterName].Count; i++)
+            {
+                if (!CompareIntFilter(operand, (int) _filterValues[filterName][i], _filterConditions[filterName][i]))
+                    return false;
+            }
+
+            return true;
+        }
+
+
+        /// <summary> Returns true if the value passes the filter </summary>
+        protected bool CompareStringFilters(string  filterName,
+                                            string  operand)
+        {
+            CheckNamedFilterCreated(filterName);
+            for (int i=0; i<_filterValues[filterName].Count; i++)
+            {
+                if (!CompareStringFilter(operand, (string) _filterValues[filterName][i], _filterConditions[filterName][i]))
+                    return false;
+            }
+
+            return true;
+        }
+
+
+        /// <summary> Get the number of filters with the name </summary>
+        protected int GetFilterCount(string filterName)
+        {
+            CheckNamedFilterCreated(filterName);
+            return _filterValues[filterName].Count;
+        }
+
+        /// <summary> Get the value of the named filter with index </summary>
+        protected object GetFilterValue(string  filterName,
+                                        int     index)
+        {
+            return _filterValues[filterName][index];
+        }
+
+        /// <summary> Get the condition of the named filter with index </summary>
+        protected FilterCondition GetFilterCondition(   string  filterName,
+                                                        int     index)
+        {
+            return _filterConditions[filterName][index];
+        }
+
+        /// <summary> Sets a named filter </summary>
+        protected void SetFilter(   string          filterName,
+                                    FilterCondition condition,
+                                    object          operand)
+        {
+            CheckNamedFilterCreated(filterName);
+            _filterValues[filterName].Add(operand);
+            _filterConditions[filterName].Add(condition);
+        }
+
+        /// <summary> Clear all filters with name </summary>
+        protected void ClearFilter(string filterName)
+        {
+            _filterValues.Remove(filterName);
+            _filterConditions.Remove(filterName);
         }
 
 
