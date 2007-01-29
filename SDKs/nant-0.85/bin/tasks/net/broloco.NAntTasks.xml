@@ -1,0 +1,250 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>broloco.NAntTasks</name>
+    </assembly>
+    <members>
+        <member name="T:broloco.NAntTasks.NodeParam">
+            <summary>
+            Describes an XML-Node parameter to a custom scripted task.
+            </summary>
+        </member>
+        <member name="P:broloco.NAntTasks.NodeParam.ParameterName">
+            <summary>
+            The parameter name.
+            </summary>
+        </member>
+        <member name="P:broloco.NAntTasks.NodeParam.Required">
+            <summary>
+            Specifies if the parameter is required (default is true)
+            </summary>
+        </member>
+        <member name="T:broloco.NAntTasks.NodeParamCollection">
+            <summary>
+            A typed NodeParam collection.
+            </summary>
+        </member>
+        <member name="M:broloco.NAntTasks.NodeParamCollection.Add(broloco.NAntTasks.NodeParam)">
+            <summary>
+            Type safe Add
+            </summary>
+        </member>
+        <member name="M:broloco.NAntTasks.NodeParamCollection.Add(broloco.NAntTasks.NodeParamCollection)">
+            <summary>
+            Type safe Add
+            </summary>
+        </member>
+        <member name="P:broloco.NAntTasks.NodeParamCollection.Item(System.Int32)">
+            <summary>
+            Type safe indexer
+            </summary>
+        </member>
+        <member name="T:broloco.NAntTasks.StringParam">
+            <summary>
+            Describes a string parameter to a custom scripted task.
+            </summary>
+        </member>
+        <member name="P:broloco.NAntTasks.StringParam.ParameterName">
+            <summary>
+            The parameter name.
+            </summary>
+        </member>
+        <member name="P:broloco.NAntTasks.StringParam.Required">
+            <summary>
+            Specifies if the parameter is required (default is true)
+            </summary>
+        </member>
+        <member name="T:broloco.NAntTasks.StringParamCollection">
+            <summary>
+            A typed StringParam collection.
+            </summary>
+        </member>
+        <member name="M:broloco.NAntTasks.StringParamCollection.Add(broloco.NAntTasks.StringParam)">
+            <summary>
+            Type safe Add
+            </summary>
+        </member>
+        <member name="M:broloco.NAntTasks.StringParamCollection.Add(broloco.NAntTasks.StringParamCollection)">
+            <summary>
+            Type safe Add
+            </summary>
+        </member>
+        <member name="P:broloco.NAntTasks.StringParamCollection.Item(System.Int32)">
+            <summary>
+            Type safe indexer
+            </summary>
+        </member>
+        <member name="T:broloco.NAntTasks.TaskDefTask">
+             <summary>
+             Creates a custom task containing NAnt tasks.
+             </summary>
+             <remarks>
+               <para>
+                 Define a task by specifying a name, a list of string parameters (attributes), and
+                   a lits of node parameters (child elements).  A custom task is created that
+                   runs each of the tasks in the &lt;do/&gt; parameter replacing string parameters and
+                   node parameters before execution.
+               </para>
+               <para>
+                 String parameters are referenced in the &lt;do/&gt; section using the syntax <i>__parameter name__</i>.
+               </para>
+               <para>
+                 Node parameters are referenced in the &lt;do/&gt; section using the syntax <i>&lt;__parameter name__/&gt;</i>.
+               </para>
+             </remarks>
+             <example>
+               <para>
+                 Create a custom task that takes two parameters.  Parameter 1 can be set to 'echo' or 'fail', and
+                   parameter 2 is the message to echo/fail.
+               <code>
+                 <![CDATA[
+                   <taskdef name="echoFail" >
+            
+                     <stringparams>
+                       <stringparam name="task" />
+                       <stringparam name="message" required="false" />
+                     </stringparams>
+            
+                     <do>
+                       <property name="customMessage" value="__message__" />
+                       <if test="${customMessage == ''}" >
+                         <property name="customMessage" value="this is a default message" />
+                       </if>
+                       <__task__ message="${customMessage}" />
+                     </do>
+            
+                   </taskdef>
+                   ...
+                   <!-- echos the default message -->
+                   <echoFail task="echo" />
+                   ...
+                   <echoFail task="fail" message="this will fail the build" />
+                 ]]>
+               </code>
+               </para>
+             </example>
+             <example>
+               <para>
+                 Create a custom task that takes a list of source files, target files, and
+                   a list of tasks to execute when the target files are not up to date.
+               <code>
+                 <![CDATA[
+                   <taskdef name="execIfNotUpToDate" >
+            
+                     <nodeparams>
+                       <nodeparam name="sourceFiles" />
+                       <nodeparam name="targetFiles" />
+                       <nodeparam name="do" />
+                     </nodeparams>
+            
+                     <do>
+                       <uptodate property="execIfNotUpToDate.uptodate">
+                         <sourcefiles>
+                           <__sourceFiles__/>
+                         </sourcefiles>
+                         <targetfiles>
+                           <__targetFiles__/>
+                         </targetfiles>
+                       </uptodate>
+                       <if test="${not execIfNotUpToDate.uptodate}" >
+                         <__do__/>
+                       </if>
+                     </do>
+            
+                   </taskdef>
+                   ...
+                   <!-- echos the a message if the files are not up to date -->
+                   <execIfNotUpToDate>
+            
+                     <sourceFiles>
+                       <include name="*.cs" />
+                     </sourceFiles>
+            
+                     <targetFiles>
+                       <include name="myAssembly.dll" />
+                     </targetFiles>
+            
+                     <do>
+                       <echo message="work needs done" />
+                     </do>
+            
+                   </execIfNotUpToDate>
+                 ]]>
+               </code>
+               </para>
+             </example>
+        </member>
+        <member name="M:broloco.NAntTasks.TaskDefTask.GenerateCSharpCode">
+            <summary>
+            Generates C# code for the task
+            </summary>
+        </member>
+        <member name="M:broloco.NAntTasks.TaskDefTask.ExecuteTask">
+            <summary>
+            Executes the taskdef task.
+            </summary>
+        </member>
+        <member name="P:broloco.NAntTasks.TaskDefTask.TagName">
+            <summary>
+            The name for the custom task.
+            </summary>
+        </member>
+        <member name="P:broloco.NAntTasks.TaskDefTask.StringParams">
+            <summary>
+            A list of <see cref="T:broloco.NAntTasks.StringParam"/> (attribute) parameters.
+            </summary>
+        </member>
+        <member name="P:broloco.NAntTasks.TaskDefTask.NodeParams">
+            <summary>
+            A list of <see cref="T:broloco.NAntTasks.NodeParam"/> (xml node) parameters.
+            </summary>
+        </member>
+        <member name="P:broloco.NAntTasks.TaskDefTask.Tasks">
+            <summary>
+            The tasks to script
+            </summary>
+        </member>
+        <member name="T:broloco.NAntTasks.TdcTask">
+            <summary>
+            Compiles a collection of taskdef files into an assembly.
+            </summary>
+            <remarks>
+              <para>
+                Compiles a collection of build files containing <see cref="T:broloco.NAntTasks.TaskDefTask"/> definitions.
+                  Each build file should contain a &lt;project&gt; top-level node, with taskdef nodes
+                  as child elements.
+                  The compiled assembly's tasks are loaded.
+              </para>
+            </remarks>
+            <example>
+              <para>
+                Compile all .taskdef files to an assembly in a temporary directory, and load the compiled tasks.
+              <code>
+                <![CDATA[
+                  <tdc output="${path::get-temp-path()}/myTemporaryBuildAssembly.dll" >
+                    <sources>
+                      <include name="*.taskdef" />
+                    </sources>
+                  </tdc>
+                ]]>
+              </code>
+              </para>
+            </example>
+        </member>
+        <member name="M:broloco.NAntTasks.TdcTask.ExecuteTask">
+            <summary>
+            Executes the tdc task.
+            </summary>
+        </member>
+        <member name="P:broloco.NAntTasks.TdcTask.Output">
+            <summary>
+            The output for the compiled library.
+            </summary>
+        </member>
+        <member name="P:broloco.NAntTasks.TdcTask.Sources">
+            <summary>
+            The <see cref="T:NAnt.Core.Types.FileSet"/> of source files for compilation.
+            </summary>
+        </member>
+    </members>
+</doc>

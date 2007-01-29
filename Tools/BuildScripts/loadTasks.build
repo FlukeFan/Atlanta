@@ -1,14 +1,15 @@
 <project>
 
-    <!-- custom task to allow scripting of custom tasks -->
-    <include buildfile="${build.includes.dir}\taskdef.build"/>
+    <!-- custom tasks -->
+    <tdc output="${path::get-temp-path()}/AtlantaBuildTasks.dll" >
+        <sources>
+            <include name="Tools/BuildScripts/buildTasks.taskdef" />
+            <include name="Tools/BuildScripts/testTasks.taskdef" />
+        </sources>
+    </tdc>
 
     <!-- targets -->
     <include buildfile="${build.includes.dir}\globalTargets.build"/>
-
-    <!-- custom tasks -->
-    <include buildfile="${build.includes.dir}\buildTasks.build"/>
-    <include buildfile="${build.includes.dir}\testTasks.build"/>
 
 </project>
 
