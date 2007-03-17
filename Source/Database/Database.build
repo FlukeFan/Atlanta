@@ -5,11 +5,45 @@
 
     <target name="onBuild">
 
-        <copy
-            file="LendingLibrary.mdb"
-            todir="${build.dir}"
-            overwrite="true"
-            />
+        <uptodate property="database.flg.uptodate">
+            <sourcefiles>
+                <include name="Create.ddl" />
+                <include name="Populate.dml" />
+            </sourcefiles>
+            <targetfiles>
+                <include name="${build.dir}/results/database.flg"/>
+            </targetfiles>
+        </uptodate>
+
+        <echo message="flag file up to date: ${database.flg.uptodate}"/>
+
+        <if test="${not database.flg.uptodate}">
+
+            <echo message="Bulding database"/>
+
+            <call target="onClean" />
+
+            <exec   program="isql.exe"
+                    commandline="-b -i Create.ddl" />
+
+            <exec   program="isql.exe"
+                    commandline="-b -i Populate.dml -u SYSDBA -p masterkey LendingLibrary.fdb" />
+
+            <copy
+                file="LendingLibrary.fdb"
+                todir="${build.dir}"
+                overwrite="true"
+                />
+
+            <touch file="${build.dir}/results/database.flg" />
+
+        </if>
+
+    </target>
+
+    <target name="onClean">
+
+        <delete file="LendingLibrary.fdb" />
 
     </target>
 

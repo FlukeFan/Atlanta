@@ -35,6 +35,14 @@
             </fileset>
         </copy>
 
+        <!-- Firebird embedded client binaries -->
+        <copy todir="${build.dir}/bin">
+            <fileset basedir="SDKs\Firebird\net-2.0">
+                <exclude name="**/.svn/**" />
+                <include name="**" />
+            </fileset>
+        </copy>
+
     </target>
 
 
