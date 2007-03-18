@@ -26,14 +26,14 @@
             <exec   program="isql.exe"
                     commandline="-b -i Create.ddl" />
 
-            <exec   program="isql.exe"
-                    commandline="-b -i Populate.dml -u SYSDBA -p masterkey LendingLibrary.fdb" />
-
-            <copy
+            <move
                 file="LendingLibrary.fdb"
                 todir="${build.dir}"
                 overwrite="true"
                 />
+
+            <exec   program="isql.exe"
+                    commandline="-b -i Populate.dml -u SYSDBA -p masterkey ${build.dir}/LendingLibrary.fdb" />
 
             <touch file="${build.dir}/results/database.flg" />
 
