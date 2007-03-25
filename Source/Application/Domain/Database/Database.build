@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<project name="Database" default="none">
+
+    <include buildfile="${build.includes.file}" />
+
+
+    <target name="onBuild">
+
+        <uptodate property="database.flg.uptodate">
+            <sourcefiles>
+                <include name="${build.dir}/bin/Atlanta.Application.Domain.dll" />
+                <include name="CustomPreCreate.ddl" />
+                <include name="CustomPostCreate.ddl" />
+                <include name="Populate.dml" />
+            </sourcefiles>
+            <targetfiles>
+                <include name="${build.dir}/results/database.flg"/>
+            </targetfiles>
+        </uptodate>
+
+        <echo message="flag file up to date: ${database.flg.uptodate}"/>
+
+        <if test="${not database.flg.uptodate}">
+
+            <echo message="Bulding database"/>
+
+            <call target="onClean" />
+
+
+            <exec   program="isql.exe"
+                    commandline="-b -i CustomPreCreate.ddl" />
+
+            <loadtasks assembly="${build.dir}/bin/NHibernate.Tasks.dll" />
+
+            <move
+                file="LendingLibrary.fdb"
+                todir="${build.dir}"
+                overwrite="true"
+                />
+
+            <hbm2ddl    connectionprovider="NHibernate.Connection.DriverConnectionProvider"
+                        dialect="NHibernate.Dialect.FirebirdDialect"
+                        connectiondriverclass="NHibernate.Driver.FirebirdClientDriver"
+                        connectionstring="User=SYSDBA;Password=masterkey;Database=${build.dir}/LendingLibrary.fdb;ServerType=1;Pooling=false;"
+                        delimiter=";"
+                        outputtoconsole="false"
+                        exportonly="true"
+                        formatnice="true"
+                        outputfilename="${build.dir}/design/Database.ddl">
+                <assemblies>
+                    <include name="${build.dir}/bin/Atlanta.Application.Domain.dll" />
+                </assemblies>
+            </hbm2ddl>
+
+            <exec   program="isql.exe"
+                    commandline="-b -i ${build.dir}/design/Database.ddl -u SYSDBA -p masterkey ${build.dir}/LendingLibrary.fdb" />
+
+            <exec   program="isql.exe"
+                    commandline="-b -i CustomPostCreate.ddl -u SYSDBA -p masterkey ${build.dir}/LendingLibrary.fdb" />
+
+            <exec   program="isql.exe"
+                    commandline="-b -i Populate.dml -u SYSDBA -p masterkey ${build.dir}/LendingLibrary.fdb" />
+
+            <touch file="${build.dir}/results/database.flg" />
+
+        </if>
+
+    </target>
+
+
+    <target name="onClean">
+
+        <delete file="LendingLibrary.fdb" />
+
+    </target>
+
+</project>

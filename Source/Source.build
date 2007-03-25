@@ -30,7 +30,6 @@
 
     <target name="onBuildChain">
 
-        <nant buildfile="Database\Database.build"               inheritall="true"   target="build"/>
         <nant buildfile="Application\Application.build"         inheritall="true"   target="build"/>
         <nant buildfile="Presentation\Presentation.build"       inheritall="true"   target="build"/>
 
@@ -41,7 +40,6 @@
 
         <nant buildfile="Presentation\Presentation.build"       inheritall="true"   target="clean"/>
         <nant buildfile="Application\Application.build"         inheritall="true"   target="clean"/>
-        <nant buildfile="Database\Database.build"               inheritall="true"   target="clean"/>
 
     </target>
 

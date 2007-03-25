@@ -46,6 +46,9 @@
 
         </cscLibraryTest>
 
+        <!-- build the database for the tests -->
+        <nant buildfile="Database\Database.build"               inheritall="true"   target="build"/>
+
     </target>
 
 
@@ -74,6 +77,13 @@
             </exclusions>
 
         </runTestWithCoverage>
+
+    </target>
+    
+
+    <target name="onClean">
+
+        <nant buildfile="Database\Database.build"               inheritall="true"   target="clean"/>
 
     </target>
 
