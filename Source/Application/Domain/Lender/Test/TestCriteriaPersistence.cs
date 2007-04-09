@@ -14,10 +14,29 @@ namespace Atlanta.Application.Domain.Lender.Test
     public class TestCriteriaPersistence : DomainPersistenceTestBase
     {
 
+        private long _libraryId;
+
+        override public void SetUp()
+        {
+            base.SetUp();
+
+            Library library = Library.InstantiateLibrary();
+            Session.Save(library);
+
+            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Book,  "Book", "A test book"));
+            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Cd,    "CD", "A test cd"));
+            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Dvd,   "DVD", "A test dvd"));
+
+            Session.Flush();
+            Session.Clear();
+
+            _libraryId = library.Id;
+        }
+
         [Test]
         public void FilterStringAndEnumProperty_Ok()
         {
-            Library library = (Library) Session.Load(typeof(Library), 1L);
+            Library library = (Library) Session.Load(typeof(Library), _libraryId);
 
             IList<Media> filteredList;
             {

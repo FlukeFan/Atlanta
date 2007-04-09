@@ -58,9 +58,6 @@
             <exec   program="isql.exe"
                     commandline="-b -i CustomPostCreate.ddl -u SYSDBA -p masterkey ${build.dir}/LendingLibrary.fdb" />
 
-            <exec   program="isql.exe"
-                    commandline="-b -i Populate.dml -u SYSDBA -p masterkey ${build.dir}/LendingLibrary.fdb" />
-
             <touch file="${build.dir}/results/database.flg" />
 
         </if>

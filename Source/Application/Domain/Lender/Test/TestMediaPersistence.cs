@@ -15,10 +15,29 @@ namespace Atlanta.Application.Domain.Lender.Test
     public class TestMediaPersistence : DomainPersistenceTestBase
     {
 
+        private long _libraryId;
+
+        override public void SetUp()
+        {
+            base.SetUp();
+
+            Library library = Library.InstantiateLibrary();
+            Session.Save(library);
+
+            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Book,  "Book", "A test book"));
+            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Cd,    "CD", "A test cd"));
+            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Dvd,   "DVD", "A test dvd"));
+
+            Session.Flush();
+            Session.Clear();
+
+            _libraryId = library.Id;
+        }
+
         [Test]
         public void Insert_Load_Ok()
         {
-            Library library = (Library) Session.Load(typeof(Library), 1L);
+            Library library = (Library) Session.Load(typeof(Library), _libraryId);
 
             Media media = Media.InstantiateMedia(library, MediaType.Dvd, "test", "test description");
 
@@ -38,7 +57,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void ExampleByFilter_LoadAllBooks()
         {
-            Library library = (Library) Session.Load(typeof(Library), 1L);
+            Library library = (Library) Session.Load(typeof(Library), _libraryId);
 
             IList bookMediaInLibrary = Session.CreateFilter(library.OwnedMedia, "where type = ?")
                                         .SetParameter(0, MediaType.Book)
@@ -51,7 +70,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void ExampleByCriteria_LoadAllBooks()
         {
-            Library library = (Library) Session.Load(typeof(Library), 1L);
+            Library library = (Library) Session.Load(typeof(Library), _libraryId);
 
             IList bookMediaInLibrary = Session.CreateCriteria(typeof(Media))
                                             .Add(Expression.Eq("OwningLibrary", library))
