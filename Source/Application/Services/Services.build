@@ -12,7 +12,7 @@
             </references>
 
             <sources>
-                <include name="**/*.cs" />
+                <include name="*/*.cs" />
             </sources>
 
             <resources>
