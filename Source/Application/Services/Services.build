@@ -22,4 +22,56 @@
 
     </target>
 
+
+    <target name="onBuildTest">
+
+        <cscLibraryTest output="Atlanta.Application.Services.Test"
+                        configFile="ServiceBase/Test/Atlanta.Application.Services.Test.dll.config">
+
+            <references>
+                <include name="${build.dir}/bin/NHibernate.dll" />
+                <include name="${build.dir}/bin/nunit.framework.dll" />
+                <include name="${build.dir}/bin/Atlanta.Application.Domain.dll" />
+                <include name="${build.dir}/bin/Atlanta.Application.Services.dll" />
+            </references>
+
+            <sources>
+                <include name="*/Test/*.cs" />
+            </sources>
+
+            <resources/>
+
+        </cscLibraryTest>
+
+    </target>
+
+
+    <target name="onTest">
+
+        <runTestWithCoverage
+                testAssembly="${build.dir}/bin/Atlanta.Application.Services.Test.dll"
+                testSuccessFlagFile="test_service.flg"
+                testCoverageFile="${build.dir}/results/ServicesCoverage.xml"
+                satisfactoryCoverage="95"
+                >
+
+            <testDependencies>
+                <include name="${build.dir}/LendingLibrary.fdb" />
+                <include name="${build.dir}/bin/Atlanta.Application.Services.Test.dll" />
+                <include name="${build.dir}/bin/Atlanta.Application.Services.Test.dll.config" />
+            </testDependencies>
+
+            <coverageAssemblies>
+                <include name="${build.dir}/bin/Atlanta.Application.Services.dll" />
+            </coverageAssemblies>
+
+            <exclusions>
+                <exclusion type="Namespace" pattern="Atlanta.Application.Services.ServiceBase" />
+            </exclusions>
+
+        </runTestWithCoverage>
+
+    </target>
+
+
 </project>
