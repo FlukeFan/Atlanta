@@ -12,7 +12,7 @@
             </references>
 
             <sources>
-                <include name="Interfaces/*.cs" />
+                <include name="**/*.cs" />
             </sources>
 
             <resources>

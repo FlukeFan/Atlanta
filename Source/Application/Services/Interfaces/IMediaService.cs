@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 using Atlanta.Application.Domain.Lender;
 
-namespace Atlanta.Application.Service.Interfaces
+namespace Atlanta.Application.Services.Interfaces
 {
 
     /// <summary>
     /// Interface for Media service
     /// </summary>
-    public interface MediaService
+    public interface IMediaService
     {
 
         /// <summary>
