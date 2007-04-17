@@ -43,6 +43,14 @@
             </fileset>
         </copy>
 
+        <!-- Spring.Net binaries -->
+        <copy todir="${build.dir}/bin">
+            <fileset basedir="SDKs\Spring1.1P3">
+                <exclude name="**/.svn/**" />
+                <include name="**" />
+            </fileset>
+        </copy>
+
     </target>
 
 

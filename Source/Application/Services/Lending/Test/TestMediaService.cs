@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 
 using NUnit.Framework;
 
@@ -26,29 +27,32 @@ namespace Atlanta.Application.Services.Lending.Test
         [Test]
         public void TestGetMediaList_Ok()
         {
-            MediaService mediaService = new MediaService();
-            mediaService.GetMediaList(_user, new MediaCriteria());
+            IList<Media> mediaList =
+                AtlantaServices.MediaService
+                    .GetMediaList(_user, new MediaCriteria());
         }
 
         [Test]
         public void TestCreate_Ok()
         {
-            MediaService mediaService = new MediaService();
-            mediaService.Create(_user, Media.InstantiateOrphanedMedia(MediaType.Cd, "test name", "test description"));
+            Media media =
+                AtlantaServices.MediaService
+                    .Create(_user, Media.InstantiateOrphanedMedia(MediaType.Cd, "test name", "test description"));
         }
 
         [Test]
         public void TestModify_Ok()
         {
-            MediaService mediaService = new MediaService();
-            mediaService.Modify(_user, Media.InstantiateOrphanedMedia(MediaType.Cd, "test name", "test description"));
+            Media media =
+                AtlantaServices.MediaService
+                    .Modify(_user, Media.InstantiateOrphanedMedia(MediaType.Cd, "test name", "test description"));
         }
 
         [Test]
         public void TestDelete_Ok()
         {
-            MediaService mediaService = new MediaService();
-            mediaService.Delete(_user, Media.InstantiateOrphanedMedia(MediaType.Cd, "test name", "test description"));
+            AtlantaServices.MediaService
+                .Delete(_user, Media.InstantiateOrphanedMedia(MediaType.Cd, "test name", "test description"));
         }
 
     }

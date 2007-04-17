@@ -8,10 +8,12 @@
         <cscLibrary output="Atlanta.Application.Services">
 
             <references>
+                <include name="${build.dir}/bin/Spring.Core.dll" />
                 <include name="${build.dir}/bin/Atlanta.Application.Domain.dll" />
             </references>
 
             <sources>
+                <include name="*.cs" />
                 <include name="*/*.cs" />
             </sources>
 
