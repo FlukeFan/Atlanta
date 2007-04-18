@@ -9,6 +9,7 @@
 
             <references>
                 <include name="${build.dir}/bin/Spring.Core.dll" />
+                <include name="${build.dir}/bin/Spring.Aop.dll" />
                 <include name="${build.dir}/bin/Atlanta.Application.Domain.dll" />
             </references>
 

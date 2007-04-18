@@ -1,8 +1,4 @@
 
-using System;
-
-using Atlanta.Application.Services.ServiceBase;
-
 namespace Atlanta.Application.Services.ServiceBase
 {
 
