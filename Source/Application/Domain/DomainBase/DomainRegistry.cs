@@ -8,9 +8,9 @@ namespace Atlanta.Application.Domain.DomainBase
 
 
     /// <summary>
-    /// Registry class to allow the domain/application to find system settings and objects
+    /// Registry class to allow the domain to find system settings and objects
     /// </summary>
-    public class Registry
+    public class DomainRegistry
     {
 
         [ThreadStatic]

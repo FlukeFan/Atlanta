@@ -65,7 +65,7 @@ namespace Atlanta.Application.Domain.DomainBase
             InitialiseQueryParameters();
             CreateQueryParameters();
 
-            IQuery query = Registry.Session.CreateFilter(sourceList, _queryString);
+            IQuery query = DomainRegistry.Session.CreateFilter(sourceList, _queryString);
             SetQueryParameters(query);
             IList queryList = query.List();
 
