@@ -16,7 +16,7 @@ namespace Atlanta.Application.Domain.Common
         /// Convert the specified object.
         /// </summary>    
         /// <remarks>    
-        /// Requires to be optimised to use the StringBuilder class.
+        /// Reflection based implementation.
         /// </remarks>    
         public static string Convert(object objectToConvert)
         {
