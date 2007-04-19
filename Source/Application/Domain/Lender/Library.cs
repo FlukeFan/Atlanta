@@ -26,7 +26,9 @@ namespace Atlanta.Application.Domain.Lender
         /// <summary> factory method </summary>
         public static Library InstantiateLibrary()
         {
-            return new Library();
+            Library library = new Library();
+            DomainRegistry.Library = library;
+            return library;
         }
 
 

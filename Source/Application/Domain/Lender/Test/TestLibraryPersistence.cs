@@ -30,6 +30,7 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             Session.Flush();
             Session.Clear();
+            DomainRegistry.Library = null;
 
             _libraryId = library.Id;
             _mediaId = library.OwnedMedia[0].Id;
@@ -49,6 +50,53 @@ namespace Atlanta.Application.Domain.Lender.Test
             library = (Library) Session.Load(typeof(Library), library.Id);
 
             Assert.AreEqual(0, library.OwnedMedia.Count);
+        }
+
+        [Test]
+        public void LibraryRegistry_Ok()
+        {
+            Library library = (Library) Session.Load(typeof(Library), _libraryId);
+
+            Assert.AreEqual(library.Id, DomainRegistry.Library.Id);
+            Assert.AreEqual(library, DomainRegistry.Library);
+        }
+
+        [Test]
+        public void LibraryRegistry_FailMissingLibrary()
+        {
+            Library library = (Library) Session.Load(typeof(Library), _libraryId);
+            Session.Delete(library);
+
+            try
+            {
+                library = DomainRegistry.Library;
+                Assert.Fail("no exception thrown");
+            }
+            catch (Exception exception)
+            {
+                Assert.AreEqual("no library found in database", exception.Message);
+            }
+        }
+
+        [Test]
+        public void LibraryRegistry_FailTooManyLibrary()
+        {
+            Library library = Library.InstantiateLibrary();
+            Session.Save(library);
+
+            Session.Flush();
+            Session.Clear();
+            DomainRegistry.Library = null;
+
+            try
+            {
+                library = DomainRegistry.Library;
+                Assert.Fail("no exception thrown");
+            }
+            catch (Exception exception)
+            {
+                Assert.AreEqual("more than 1 library found in database", exception.Message);
+            }
         }
 
         [Test]
