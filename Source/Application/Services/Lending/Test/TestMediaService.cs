@@ -21,6 +21,16 @@ namespace Atlanta.Application.Services.Lending.Test
         {
             base.SetUp();
 
+            Library library = Library.InstantiateLibrary();
+            Session.Save(library);
+
+            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Book,  "Book", "A test book"));
+            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Cd,    "CD", "A test cd"));
+            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Dvd,   "DVD", "A test dvd"));
+
+            Session.Flush();
+            Session.Clear();
+
             _user = User.InstantiateUser("testServiceUser");
         }
 
@@ -30,6 +40,8 @@ namespace Atlanta.Application.Services.Lending.Test
             IList<Media> mediaList =
                 AtlantaServices.MediaService
                     .GetMediaList(_user, new MediaCriteria());
+
+            //Assert.AreEqual(3, mediaList.Count);
         }
 
         [Test]

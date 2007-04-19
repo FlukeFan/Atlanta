@@ -35,6 +35,7 @@
                 <include name="${build.dir}/bin/NHibernate.dll" />
                 <include name="${build.dir}/bin/nunit.framework.dll" />
                 <include name="${build.dir}/bin/Atlanta.Application.Domain.dll" />
+                <include name="${build.dir}/bin/Atlanta.Application.Domain.Test.dll" />
                 <include name="${build.dir}/bin/Atlanta.Application.Services.dll" />
             </references>
 
@@ -59,7 +60,7 @@
                 >
 
             <testDependencies>
-                <include name="${build.dir}/LendingLibrary.fdb" />
+                <include name="${build.dir}/results/database.flg" />
                 <include name="${build.dir}/bin/Atlanta.Application.Services.Test.dll" />
                 <include name="${build.dir}/bin/Atlanta.Application.Services.Test.dll.config" />
             </testDependencies>

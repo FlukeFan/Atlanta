@@ -60,7 +60,7 @@
                 >
 
             <testDependencies>
-                <include name="${build.dir}/LendingLibrary.fdb" />
+                <include name="${build.dir}/results/database.flg" />
                 <include name="${build.dir}/bin/Atlanta.Application.Domain.Test.dll" />
                 <include name="${build.dir}/bin/Atlanta.Application.Domain.Test.dll.config" />
             </testDependencies>
