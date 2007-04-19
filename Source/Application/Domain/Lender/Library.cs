@@ -53,6 +53,14 @@ namespace Atlanta.Application.Domain.Lender
 
 
         /// <summary>
+        ///  Get a list of Media in the Library using the specified criteria.
+        /// </summary>
+        virtual public IList<Media> GetMediaList(MediaCriteria mediaCriteria)
+        {
+            return mediaCriteria.List(OwnedMedia);
+        }
+
+        /// <summary>
         ///  Add new Media to the library.  The combination of Media.Name and Media.Type
         ///   need to be unique within the Library.  Throws DuplicationException if they are not.
         ///   Returns the newly create media object.

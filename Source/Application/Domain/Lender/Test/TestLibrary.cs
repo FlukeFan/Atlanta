@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 
 using NUnit.Framework;
 
@@ -19,6 +20,19 @@ namespace Atlanta.Application.Domain.Lender.Test
             Library library = Library.InstantiateLibrary();
 
             Assert.AreEqual(0, library.OwnedMedia.Count);
+        }
+
+        [Test]
+        public void GetMedaList_Ok()
+        {
+            Library library = Library.InstantiateLibrary();
+            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Dvd, "test dvd1", "test description"));
+            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Cd,  "test cd1",  "test description"));
+            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Dvd, "test dvd2", "test description"));
+            
+            IList<Media> mediaList = library.GetMediaList(new MediaCriteria().SetTypeFilter(MediaType.Dvd));
+
+            Assert.AreEqual(2, mediaList.Count);
         }
 
         [Test]
