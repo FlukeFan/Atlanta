@@ -63,6 +63,7 @@ namespace Atlanta.Application.Domain.DomainBase.Test
             {
                 _session.Close();
                 _session = null;
+                DomainRegistry.Session = null;
             }
         }
 
