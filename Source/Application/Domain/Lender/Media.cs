@@ -1,6 +1,7 @@
 
 using System;
 
+using Atlanta.Application.Domain.Common;
 using Atlanta.Application.Domain.DomainBase;
 
 namespace Atlanta.Application.Domain.Lender
@@ -87,6 +88,7 @@ namespace Atlanta.Application.Domain.Lender
         #region Properties            
 
         /// <summary> Library </summary>
+        [StringVisible(true)]        
         public virtual Library OwningLibrary
         {
             get { return _owningLibrary; }
@@ -94,6 +96,7 @@ namespace Atlanta.Application.Domain.Lender
         }
 
         /// <summary> Type </summary>
+        [StringVisible(true)]
         public virtual MediaType Type
         {
             get { return _type; }
@@ -101,6 +104,7 @@ namespace Atlanta.Application.Domain.Lender
         }
 
         /// <summary> Name </summary>
+        [StringVisible(true)]
         public virtual string Name
         {
             get { return _name; }
@@ -108,6 +112,7 @@ namespace Atlanta.Application.Domain.Lender
         }
 
         /// <summary> Description </summary>
+        [StringVisible(true)]
         public virtual string Description
         {
             get { return _description; }

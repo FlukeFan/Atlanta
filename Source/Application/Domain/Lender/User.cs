@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 
+using Atlanta.Application.Domain.Common;
 using Atlanta.Application.Domain.DomainBase;
 
 namespace Atlanta.Application.Domain.Lender
@@ -29,6 +30,7 @@ namespace Atlanta.Application.Domain.Lender
         }
 
         /// <summary> Login </summary>
+        [StringVisible(true)]
         public virtual string Login
         {
             get { return _login; }

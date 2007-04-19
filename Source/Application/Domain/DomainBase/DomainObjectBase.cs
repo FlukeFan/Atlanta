@@ -1,6 +1,8 @@
 
 using System;
 
+using Atlanta.Application.Domain.Common;
+
 namespace Atlanta.Application.Domain.DomainBase
 {
 
@@ -15,6 +17,7 @@ namespace Atlanta.Application.Domain.DomainBase
         private long _id;
 
         /// <summary> Id </summary>
+        [StringVisible(true)]        
         virtual public long Id
         {
             get { return _id; }

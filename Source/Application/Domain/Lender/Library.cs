@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 
 using Atlanta.Application.Domain.DomainBase;
+using Atlanta.Application.Domain.Common;
 
 namespace Atlanta.Application.Domain.Lender
 {
