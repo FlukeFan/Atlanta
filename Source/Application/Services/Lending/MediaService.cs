@@ -42,7 +42,8 @@ namespace Atlanta.Application.Services.Lending
         public Media Modify(User    user,
                             Media   modifiedMediaCopy)
         {
-            return null;
+            Media loadedMedia = (Media) Session.Load(typeof(Media), modifiedMediaCopy.Id);
+            return loadedMedia.OwningLibrary.Modify(loadedMedia, modifiedMediaCopy);
         }
 
         /// <summary>

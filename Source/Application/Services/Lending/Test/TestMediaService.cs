@@ -88,9 +88,18 @@ namespace Atlanta.Application.Services.Lending.Test
         [Test]
         public void TestModify_Ok()
         {
-            Media media =
+            Media mediaCopy =
                 AtlantaServices.MediaService
-                    .Modify(_user, Media.InstantiateOrphanedMedia(MediaType.Cd, "test name", "test description"));
+                    .GetMediaList(_user, new MediaCriteria()
+                                            .SetNameFilter("CD"))[0];
+
+            mediaCopy.ModifyDetails(mediaCopy.Type, "modified CD name", "new description");
+
+            mediaCopy = AtlantaServices.MediaService.Modify(_user, mediaCopy);
+
+            Media modifiedMedia = (Media) Session.Load(typeof(Media), mediaCopy.Id);
+            Assert.AreEqual("modified CD name", modifiedMedia.Name);
+            Assert.AreEqual("new description", modifiedMedia.Description);
         }
 
         [Test]

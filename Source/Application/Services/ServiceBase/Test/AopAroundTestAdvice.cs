@@ -21,6 +21,8 @@ namespace Atlanta.Application.Services.ServiceBase.Test
         {
             ISession session = ServiceTestBase.GetSession();
 
+            (invocation.This as ServiceObjectBase).Session = session;
+
             DomainRegistry.Session = session;
             DomainRegistry.Library = null;
 
