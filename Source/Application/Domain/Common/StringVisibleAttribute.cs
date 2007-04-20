@@ -10,10 +10,8 @@ namespace Atlanta.Application.Domain.Common
     /// <summary>
     /// Class to representing a custom attribute to indicate whether a property is included in string conversion functionality
     /// </summary>
-    public class StringVisibleAttribute : Attribute
+    public class StringVisibleAttribute : BooleanAttributeBase
     {
-        bool _value = false;
-    
         /// <summary>
         /// Constructor
         /// </summary>    
@@ -26,20 +24,8 @@ namespace Atlanta.Application.Domain.Common
         /// Constructor
         /// </summary>    
         public StringVisibleAttribute(bool value)
+            : base(value)
         {
-            _value = value;    
         }
-        
-        /// <summary>
-        /// The value.
-        /// </summary>            
-        public bool Value
-        {
-            get
-            {
-                return _value;
-            }
-        }
-    
     }
 }    
