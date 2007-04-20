@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using NUnit.Framework;
 
+using Atlanta.Application.Domain.DomainBase;
 using Atlanta.Application.Domain.Lender;
 
 using Atlanta.Application.Services.ServiceBase.Test;
@@ -60,9 +61,28 @@ namespace Atlanta.Application.Services.Lending.Test
         [Test]
         public void TestCreate_Ok()
         {
+            try
+            {
+                Media media =
+                    AtlantaServices.MediaService
+                        .Create(_user, Media.InstantiateOrphanedMedia(MediaType.Cd, "CD", "test description"));
+
+                Assert.Fail("exception not thrown");
+            }
+            catch (DuplicationException duplicationException)
+            {
+                Assert.AreEqual("A test cd", (duplicationException.Duplicate as Media).Description);
+            }
+        }
+
+        [Test]
+        public void TestCreate_FailDuplicateName()
+        {
             Media media =
                 AtlantaServices.MediaService
                     .Create(_user, Media.InstantiateOrphanedMedia(MediaType.Cd, "test name", "test description"));
+
+            Assert.AreEqual(4, Session.CreateCriteria(typeof(Media)).List().Count);
         }
 
         [Test]

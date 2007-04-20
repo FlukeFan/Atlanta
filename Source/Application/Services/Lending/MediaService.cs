@@ -33,7 +33,7 @@ namespace Atlanta.Application.Services.Lending
         public Media Create(User    user,
                             Media   orphanedMedia)
         {
-            return null;
+            return DomainRegistry.Library.Create(orphanedMedia);
         }
 
         /// <summary>
