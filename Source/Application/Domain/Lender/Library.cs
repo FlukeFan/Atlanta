@@ -34,6 +34,7 @@ namespace Atlanta.Application.Domain.Lender
 
 
         /// <summary> Media collection </summary>
+        [StringVisible(false)]
         virtual public IList<Media> OwnedMedia
         {
             get { return _ownedMedia; }

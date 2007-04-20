@@ -12,6 +12,14 @@ namespace Atlanta.Application.Domain.Common.Test
     public class StringVisibleAttributeTest
     {
         [Test]
+        public void Constructor_Default()
+        {
+            StringVisibleAttribute attribute = new StringVisibleAttribute();
+            
+            Assert.AreEqual(true, attribute.Value);
+        }      
+    
+        [Test]
         public void Constructor_True()
         {
             StringVisibleAttribute attribute = new StringVisibleAttribute(true);

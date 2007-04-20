@@ -20,6 +20,17 @@ namespace Atlanta.Application.Domain.Common
         /// </remarks>    
         public static string Convert(object objectToConvert)
         {
+            return Convert(objectToConvert, typeof(DomainObjectBase));
+        }
+    
+        /// <summary>
+        /// Convert the specified object.
+        /// </summary>    
+        /// <remarks>    
+        /// Reflection based implementation.
+        /// </remarks>    
+        public static string Convert(object objectToConvert, Type superclass)
+        {
             StringBuilder convertedObject = new StringBuilder();
         
             PropertyInfo[] propertyInfo = objectToConvert.GetType().GetProperties();            
@@ -32,7 +43,7 @@ namespace Atlanta.Application.Domain.Common
 
                     if (propertyInfo[i].GetValue(objectToConvert, null) != null)
                     {
-                        if (propertyInfo[i].PropertyType.IsSubclassOf(typeof(DomainObjectBase)))
+                        if (propertyInfo[i].PropertyType.IsSubclassOf(superclass))
                         {
                             currentPropertyStringValue = Convert(propertyInfo[i].GetValue(objectToConvert, null));
                         }                    
@@ -55,7 +66,7 @@ namespace Atlanta.Application.Domain.Common
         
         private static bool IsPropertyStringVisible(PropertyInfo property)
         {
-            bool visible = false;
+            bool visible = true;
         
             object[] attributes = property.GetCustomAttributes(typeof(StringVisibleAttribute), false);
 

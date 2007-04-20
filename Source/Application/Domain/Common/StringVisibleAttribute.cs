@@ -17,6 +17,14 @@ namespace Atlanta.Application.Domain.Common
         /// <summary>
         /// Constructor
         /// </summary>    
+        public StringVisibleAttribute()
+            : this(true)
+        {
+        }    
+    
+        /// <summary>
+        /// Constructor
+        /// </summary>    
         public StringVisibleAttribute(bool value)
         {
             _value = value;    
