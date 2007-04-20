@@ -9,7 +9,7 @@ namespace Atlanta.Application.Services.Interfaces
     /// <summary>
     /// Interface for Media service
     /// </summary>
-    public interface IMediaService
+    public interface IMediaService : IServiceBase
     {
 
         /// <summary>

@@ -5,6 +5,8 @@ using AopAlliance.Intercept;
 
 using Atlanta.Application.Domain.DomainBase;
 
+using Atlanta.Application.Services.Interfaces;
+
 namespace Atlanta.Application.Services.ServiceBase.Test
 {
 
@@ -21,7 +23,7 @@ namespace Atlanta.Application.Services.ServiceBase.Test
         {
             ISession session = ServiceTestBase.GetSession();
 
-            (invocation.This as ServiceObjectBase).Session = session;
+            ((IServiceBase) invocation.This).Session = session;
 
             DomainRegistry.Session = session;
             DomainRegistry.Library = null;
