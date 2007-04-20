@@ -23,6 +23,7 @@ namespace Atlanta.Application.Domain.DomainBase.Test
         [TearDown]
         virtual public void TearDown()
         {
+            DomainRegistry.Library = null;
         }
 
         public object MakeCopy(object sourceObject)

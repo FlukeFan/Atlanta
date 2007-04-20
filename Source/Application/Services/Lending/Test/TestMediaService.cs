@@ -24,9 +24,9 @@ namespace Atlanta.Application.Services.Lending.Test
             Library library = Library.InstantiateLibrary();
             Session.Save(library);
 
-            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Book,  "Book", "A test book"));
-            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Cd,    "CD", "A test cd"));
-            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Dvd,   "DVD", "A test dvd"));
+            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Book,  "Book 1",   "A test book"));
+            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Cd,    "CD",       "A test cd"));
+            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Book,  "Book 2",   "A test book"));
 
             Session.Flush();
             Session.Clear();
@@ -39,9 +39,22 @@ namespace Atlanta.Application.Services.Lending.Test
         {
             IList<Media> mediaList =
                 AtlantaServices.MediaService
-                    .GetMediaList(_user, new MediaCriteria());
+                    .GetMediaList(_user, new MediaCriteria()
+                                            .SetTypeFilter(MediaType.Book));
 
-            //Assert.AreEqual(3, mediaList.Count);
+            Assert.AreEqual(2, mediaList.Count);
+
+            Media media1 = mediaList[0];
+
+            // check that we get a new session for each service call
+            //  (i.e., the returned objects are disconnected)
+            IList<Media> mediaList2 =
+                AtlantaServices.MediaService
+                    .GetMediaList(_user, new MediaCriteria()
+                                            .SetNameFilter(media1.Name));
+
+            Assert.AreEqual(1, mediaList2.Count);
+            Assert.AreNotEqual(media1, mediaList2[0], "objects from different session matched");
         }
 
         [Test]

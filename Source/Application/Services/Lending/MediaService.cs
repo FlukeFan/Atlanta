@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 
+using Atlanta.Application.Domain.DomainBase;
 using Atlanta.Application.Domain.Lender;
 
 using Atlanta.Application.Services.Interfaces;
@@ -23,7 +24,7 @@ namespace Atlanta.Application.Services.Lending
         public IList<Media> GetMediaList(   User            user,
                                             MediaCriteria   criteria)
         {
-            return null;
+            return DomainRegistry.Library.GetMediaList(criteria);
         }
 
         /// <summary>

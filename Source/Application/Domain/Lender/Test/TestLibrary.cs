@@ -20,7 +20,6 @@ namespace Atlanta.Application.Domain.Lender.Test
             Library library = Library.InstantiateLibrary();
 
             Assert.AreEqual(0, library.OwnedMedia.Count);
-            Assert.AreEqual(library, DomainRegistry.Library);
         }
 
         [Test]
