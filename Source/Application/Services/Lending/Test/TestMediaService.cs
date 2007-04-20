@@ -105,8 +105,15 @@ namespace Atlanta.Application.Services.Lending.Test
         [Test]
         public void TestDelete_Ok()
         {
+            Media mediaCopy =
+                AtlantaServices.MediaService
+                    .GetMediaList(_user, new MediaCriteria()
+                                            .SetNameFilter("CD"))[0];
+
             AtlantaServices.MediaService
-                .Delete(_user, Media.InstantiateOrphanedMedia(MediaType.Cd, "test name", "test description"));
+                .Delete(_user, mediaCopy);
+
+            Assert.AreEqual(2, Session.CreateCriteria(typeof(Media)).List().Count);
         }
 
     }

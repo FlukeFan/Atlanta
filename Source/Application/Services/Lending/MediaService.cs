@@ -52,6 +52,8 @@ namespace Atlanta.Application.Services.Lending
         public void Delete( User    user,
                             Media   mediaCopy)
         {
+            Media loadedMedia = (Media) Session.Load(typeof(Media), mediaCopy.Id);
+            loadedMedia.OwningLibrary.Delete(loadedMedia);
         }
 
     }
