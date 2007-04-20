@@ -20,17 +20,6 @@ namespace Atlanta.Application.Domain.Common
         /// </remarks>    
         public static string Convert(object objectToConvert)
         {
-            return Convert(objectToConvert, typeof(DomainObjectBase));
-        }
-    
-        /// <summary>
-        /// Convert the specified object.
-        /// </summary>    
-        /// <remarks>    
-        /// Reflection based implementation.
-        /// </remarks>    
-        public static string Convert(object objectToConvert, Type superclass)
-        {
             StringBuilder convertedObject = new StringBuilder();
         
             PropertyInfo[] propertyInfo = objectToConvert.GetType().GetProperties();            
@@ -43,7 +32,7 @@ namespace Atlanta.Application.Domain.Common
 
                     if (propertyInfo[i].GetValue(objectToConvert, null) != null)
                     {
-                        if (propertyInfo[i].PropertyType.IsSubclassOf(superclass))
+                        if (IsTypeStringConvertable(propertyInfo[i].PropertyType))
                         {
                             currentPropertyStringValue = Convert(propertyInfo[i].GetValue(objectToConvert, null));
                         }                    
@@ -64,16 +53,34 @@ namespace Atlanta.Application.Domain.Common
             return convertedObject.ToString();
         } 
         
-        private static bool IsPropertyStringVisible(PropertyInfo property)
+        private static bool IsTypeStringConvertable(Type toCheck)
+        {
+            bool convertable = false;
+        
+            object[] attributes = toCheck.GetCustomAttributes(true);
+            foreach(object attribute in attributes)
+            {
+                if (attribute is StringConvertableAttribute)
+                {
+                    convertable = ((StringConvertableAttribute)attribute).Value; 
+                }
+            }
+            
+            return convertable;
+        }
+        
+        private static bool IsPropertyStringVisible(PropertyInfo toCheck)
         {
             bool visible = true;
         
-            object[] attributes = property.GetCustomAttributes(typeof(StringVisibleAttribute), false);
-
-            if (attributes.Length > 0)
+            object[] attributes = toCheck.GetCustomAttributes(typeof(StringVisibleAttribute), false);
+            foreach(object attribute in attributes)
             {
-                visible = ((StringVisibleAttribute)attributes[0]).Value; 
-            }
+                if (attribute is StringVisibleAttribute)
+                {
+                    visible = ((StringVisibleAttribute)attribute).Value; 
+                }
+            }            
 
             return visible;       
         }

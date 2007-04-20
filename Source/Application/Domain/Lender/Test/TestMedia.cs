@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 using NUnit.Framework;
 
@@ -36,6 +37,19 @@ namespace Atlanta.Application.Domain.Lender.Test
             Assert.AreEqual("new name", media.Name);
             Assert.AreEqual("new description", media.Description);
         }
+        
+        [Test]
+        public void XmlSerialization_Ok()
+        {
+            Media toSerialize = Media.InstantiateOrphanedMedia(MediaType.Dvd, "test", "test description");
+
+   
+        
+        
+        
+        
+        }
+        
 
     }
 }

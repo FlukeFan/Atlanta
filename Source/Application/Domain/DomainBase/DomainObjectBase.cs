@@ -10,7 +10,7 @@ namespace Atlanta.Application.Domain.DomainBase
     /// <summary>
     /// Base class for domain objects
     /// </summary>
-    [Serializable]
+    [Serializable, StringConvertable]    
     abstract public class DomainObjectBase
     {
 
