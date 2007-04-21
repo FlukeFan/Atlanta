@@ -20,37 +20,45 @@ namespace Atlanta.Application.Domain.Common
         /// </remarks>    
         public static string Convert(object objectToConvert)
         {
-            StringBuilder convertedObject = new StringBuilder();
+            string convertedObject = objectToConvert.ToString();
         
-            PropertyInfo[] propertyInfo = objectToConvert.GetType().GetProperties();            
-            for(int i=0; i<propertyInfo.Length; i++)
-            {
-                if (IsPropertyStringVisible(propertyInfo[i]))
-                {            
-                    string currentPropertyName = propertyInfo[i].Name;
-                    string currentPropertyStringValue = "null";
+            if (IsTypeStringConvertable(objectToConvert.GetType()))
+            {        
+                StringBuilder convertedObjectBuilder = new StringBuilder();
 
-                    if (propertyInfo[i].GetValue(objectToConvert, null) != null)
-                    {
-                        if (IsTypeStringConvertable(propertyInfo[i].PropertyType))
+                PropertyInfo[] propertyInfo = objectToConvert.GetType().GetProperties();            
+                for(int i=0; i<propertyInfo.Length; i++)
+                {
+                    if (IsPropertyStringVisible(propertyInfo[i]))
+                    {            
+                        string currentPropertyName = propertyInfo[i].Name;
+                        string currentPropertyStringValue = "null";
+
+                        if (propertyInfo[i].GetValue(objectToConvert, null) != null)
                         {
-                            currentPropertyStringValue = Convert(propertyInfo[i].GetValue(objectToConvert, null));
-                        }                    
-                        else
-                        {
-                            currentPropertyStringValue = propertyInfo[i].GetValue(objectToConvert, null).ToString();                
+                            if (IsTypeStringConvertable(propertyInfo[i].PropertyType))
+                            {
+                                currentPropertyStringValue = Convert(propertyInfo[i].GetValue(objectToConvert, null));
+                            }                    
+                            else
+                            {
+                                currentPropertyStringValue = propertyInfo[i].GetValue(objectToConvert, null).ToString();                
+                            }
                         }
-                    }
 
-                    convertedObject.Append(String.Format("{0}=<{1}>", currentPropertyName, currentPropertyStringValue));  
-                    if (i < propertyInfo.Length - 1)
-                    {
-                        convertedObject.Append(",");
-                    }
-                }                    
-            }                  
-            
-            return convertedObject.ToString();
+                        convertedObjectBuilder.Append(String.Format("{0}=<{1}>", currentPropertyName, currentPropertyStringValue));  
+                        if (i < propertyInfo.Length - 1)
+                        {
+                            convertedObjectBuilder.Append(",");
+                        }
+                    }                    
+                }
+                   
+                convertedObject = convertedObjectBuilder.ToString();                   
+                  
+            }      
+           
+            return convertedObject;
         } 
         
         private static bool IsTypeStringConvertable(Type toCheck)
