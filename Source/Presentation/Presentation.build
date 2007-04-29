@@ -3,4 +3,23 @@
 
     <include buildfile="${build.includes.file}" />
 
+    <target name="onBuild">
+
+        <cscLibrary output="Atlanta.Application.Presentation">
+
+            <references>
+                <include name="${build.dir}/bin/Atlanta.Application.Services.dll" />
+            </references>
+
+            <sources>
+                <include name="*/*.cs" />
+            </sources>
+
+            <resources>
+            </resources>
+
+        </cscLibrary>
+
+    </target>
+
 </project>
