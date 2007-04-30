@@ -51,6 +51,12 @@
             </fileset>
         </copy>
 
+        <servicecontroller action="Start" service="w3svc" />
+
+        <mkiisdir   dirpath="${build.dir}"
+                    vdirname="atlanta"
+                    enabledirbrowsing="true"
+                    />
     </target>
 
 

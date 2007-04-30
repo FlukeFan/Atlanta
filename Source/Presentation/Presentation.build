@@ -5,7 +5,7 @@
 
     <target name="onBuild">
 
-        <cscLibrary output="Atlanta.Application.Presentation">
+        <cscLibrary output="Atlanta.Presentation">
 
             <references>
                 <include name="${build.dir}/bin/Atlanta.Application.Services.dll" />
@@ -21,5 +21,20 @@
         </cscLibrary>
 
     </target>
+
+
+    <target name="onBuildTest">
+
+        <mkdir dir="${build.dir}/web/test" />
+
+        <copy todir="${build.dir}/web/test">
+            <fileset basedir="WebControls/Test">
+                <exclude name="**/.svn/**" />
+                <include name="**" />
+            </fileset>
+        </copy>
+
+    </target>
+
 
 </project>
