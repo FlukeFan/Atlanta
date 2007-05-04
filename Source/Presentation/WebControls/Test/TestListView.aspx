@@ -15,6 +15,9 @@
     {
         if (!IsPostBack)
         {
+            testList1.AddPercentageColumn("Column 1", 30);
+            testList1.AddPercentageColumn("Column 2", 30);
+            testList1.AddRemainderColumn("Column 3");
         }
     }
 
@@ -39,6 +42,12 @@
             <atlanta:ListView
                 id="testList1"
                 runat="server"
+                />
+
+            <asp:Button
+                id="button1"
+                runat="server"
+                text="Press for postback"
                 />
 
         </form>
