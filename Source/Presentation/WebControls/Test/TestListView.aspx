@@ -18,6 +18,12 @@
             testList1.AddPercentageColumn("Column 1", 30);
             testList1.AddPercentageColumn("Column 2", 30);
             testList1.AddRemainderColumn("Column 3");
+
+            testList1.AddListItem("Value 1", "Value 2", "Value 3");
+            testList1.AddListItem("Value 2", "Value 3", "Value 4");
+            testList1.AddListItem("Value 3", "Value 4", "Value 5");
+            testList1.AddListItem("Value 4", "Value 5", "Value 6");
+            testList1.AddListItem("Value 5", "Value 6", "Value 7");
         }
     }
 

@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 
 using System.Web.UI;
@@ -13,21 +14,21 @@ namespace Atlanta.Presentation.WebControls
     public class ListView : WebControl
     {
 
-        private IList<string>   _columnTexts = new List<string>();
+        private IList<string>       _columnTexts = new List<string>();
+        private IList<string []>    _items = new List<string []>();
 
-        private void RenderListHeaders(HtmlTextWriter writer)
+        private void RenderListHeader(HtmlTextWriter writer)
         {
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, "listViewColumnTable");
-            writer.RenderBeginTag(HtmlTextWriterTag.Table);
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "listViewTableHeader");
+            writer.RenderBeginTag(HtmlTextWriterTag.Thead);
 
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "listViewColumnRow");
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "listViewHeaderRow");
                 writer.RenderBeginTag(HtmlTextWriterTag.Tr);
                     for (int i=0; i<_columnTexts.Count; i++)
                     {
                         string columnText = _columnTexts[i];
 
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "listViewColumnText");
-                        writer.AddAttribute(HtmlTextWriterAttribute.Nowrap, null);
+                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "listViewHeaderText");
                         writer.AddAttribute(HtmlTextWriterAttribute.Title, columnText);
                         writer.RenderBeginTag(HtmlTextWriterTag.Td);
                             writer.Write(columnText);
@@ -38,12 +39,41 @@ namespace Atlanta.Presentation.WebControls
             writer.RenderEndTag();
         }
 
+        private void RenderListBody(HtmlTextWriter writer)
+        {
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "listViewTableBody");
+            writer.RenderBeginTag(HtmlTextWriterTag.Tbody);
+
+                foreach (string[] itemTexts in _items)
+                {
+                    writer.AddAttribute(HtmlTextWriterAttribute.Class, "listViewBodyRow");
+                    writer.RenderBeginTag(HtmlTextWriterTag.Tr);
+                        foreach (string itemText in itemTexts)
+                        {
+                            writer.AddAttribute(HtmlTextWriterAttribute.Class, "listViewBodyText");
+                            writer.AddAttribute(HtmlTextWriterAttribute.Title, itemText);
+                            writer.RenderBeginTag(HtmlTextWriterTag.Td);
+                                writer.Write(itemText);
+                            writer.RenderEndTag();
+                        }
+                    writer.RenderEndTag();
+                }
+
+            writer.RenderEndTag();
+        }
+
         /// <summary>
         /// Renders the control
         /// </summary>
         protected override void RenderContents(HtmlTextWriter writer)
         {
-            RenderListHeaders(writer);
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "listViewColumnTable");
+            writer.RenderBeginTag(HtmlTextWriterTag.Table);
+
+                RenderListHeader(writer);
+                RenderListBody(writer);
+
+            writer.RenderEndTag();
         }
 
         /// <summary>
@@ -51,9 +81,10 @@ namespace Atlanta.Presentation.WebControls
         /// </summary>
         protected override object SaveViewState()
         {
-            object[] state = new object[1];
+            object[] state = new object[2];
 
             state[0] = _columnTexts;
+            state[1] = _items;
 
             return state;
         }
@@ -68,6 +99,7 @@ namespace Atlanta.Presentation.WebControls
                 object[] state = (object []) savedState;
 
                 _columnTexts = (IList<string>) state[0];
+                _items = (IList<string []>) state[1];
             }
         }
 
@@ -86,6 +118,17 @@ namespace Atlanta.Presentation.WebControls
         public void AddRemainderColumn(string columnText)
         {
             _columnTexts.Add(columnText);
+        }
+
+        /// <summary>
+        /// Adds an item to the end of the list
+        /// </summary>
+        public void AddListItem(params string[] itemTexts)
+        {
+            if (itemTexts.Length != _columnTexts.Count)
+                throw new Exception("List item does not match list columns");
+
+            _items.Add(itemTexts);
         }
 
     }
