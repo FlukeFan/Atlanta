@@ -5,27 +5,31 @@ namespace Atlanta.Presentation.PresentationBase
     /// <summary>
     ///  Controller base class
     /// </summary>
-    public class ControllerBase
+    public abstract class ControllerBase<V>
     {
 
+        private V _view;
+
         /// <summary>
-        ///  OnInit - where dynamic controls are instatiated, and events are wired up
+        ///  Access to the view
         /// </summary>
-        virtual public void OnInit()
+        protected V View
+        {
+            get { return _view; }
+            set { _view = value; }
+        }
+
+        /// <summary>
+        ///  OnWireUp - where events are wired up
+        /// </summary>
+        virtual public void OnWireUp()
         {
         }
 
         /// <summary>
-        ///  OnLoad - where the initial presentation of the view is handled
+        ///  OnFirstLoad - where the initial presentation of the view is handled
         /// </summary>
-        virtual public void OnLoad()
-        {
-        }
-
-        /// <summary>
-        ///  OnRender - where preparation for rendering of the view is handled
-        /// </summary>
-        virtual public void OnRender()
+        virtual public void OnFirstLoad()
         {
         }
 

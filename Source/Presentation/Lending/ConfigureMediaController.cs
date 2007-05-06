@@ -1,36 +1,37 @@
 
 using Atlanta.Presentation.PresentationBase;
+using Atlanta.Presentation.WebControls;
 
 namespace Atlanta.Presentation.Lending
 {
 
+
+    /// <summary>
+    ///  Interface for ConfigureMedia view
+    /// </summary>
+    public interface IConfigureMediaView
+    {
+
+        /// <summary> MediaList </summary>
+        ListView MediaList { get; }
+
+    }
+
+
     /// <summary>
     ///  Controller for ConfigureMedia view
     /// </summary>
-    public class ConfigureMediaController : ControllerBase
+    public class ConfigureMediaController : ControllerBase<IConfigureMediaView>
     {
 
         /// <summary>
-        ///  OnInit
+        ///  OnFirstLoad
         /// </summary>
-        override public void OnInit()
-        {
-        }
-
-        /// <summary>
-        ///  OnLoad
-        /// </summary>
-        override public void OnLoad()
-        {
-        }
-
-        /// <summary>
-        ///  OnRender
-        /// </summary>
-        override public void OnRender()
+        override public void OnFirstLoad()
         {
         }
 
     }
+
 
 }

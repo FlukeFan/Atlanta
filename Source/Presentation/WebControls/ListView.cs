@@ -102,6 +102,14 @@ namespace Atlanta.Presentation.WebControls
                 _items = (IList<string []>) state[1];
             }
         }
+        
+        /// <summary>
+        ///  The number of items in the list
+        /// </summary>
+        public int ItemCount
+        {
+            get { return _items.Count; }
+        }
 
         /// <summary>
         ///  Add a column based on a percentage of the width of the control
