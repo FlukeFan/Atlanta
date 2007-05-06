@@ -9,7 +9,7 @@ namespace Atlanta.Presentation.Lending
     /// <summary>
     ///  Interface for ConfigureMedia view
     /// </summary>
-    public interface IConfigureMediaView
+    public interface IConfigureMediaView : IViewBase
     {
 
         /// <summary> MediaList </summary>

@@ -6,6 +6,7 @@ namespace Atlanta.Presentation.PresentationBase
     ///  Controller base class
     /// </summary>
     public abstract class ControllerBase<V>
+                                where V : IViewBase
     {
 
         private V _view;
