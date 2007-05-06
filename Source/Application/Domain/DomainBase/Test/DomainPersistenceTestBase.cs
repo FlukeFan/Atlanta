@@ -54,7 +54,7 @@ namespace Atlanta.Application.Domain.DomainBase.Test
         override public void TearDown()
         {
             base.TearDown();
-            
+
             if (_transaction != null)
             {
                 _transaction.Rollback();

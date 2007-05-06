@@ -58,6 +58,14 @@
             <exec   program="isql.exe"
                     commandline="-b -i CustomPostCreate.ddl -u SYSDBA -p masterkey ${build.dir}/LendingLibrary.fdb" />
 
+            <!-- create an integration test database with some standing data to integration test through the front-end -->
+            <copy   file="${build.dir}/LendingLibrary.fdb"
+                    tofile="${build.dir}/LendingLibraryIntegrationTest.fdb"
+                    />
+
+            <exec   program="isql.exe"
+                    commandline="-b -i Populate.dml -u SYSDBA -p masterkey ${build.dir}/LendingLibraryIntegrationTest.fdb" />
+
             <touch file="${build.dir}/results/database.flg" />
 
         </if>
