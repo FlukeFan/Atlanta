@@ -15,7 +15,29 @@ namespace Atlanta.Presentation.WebControls
     {
 
         private IList<string>       _columnTexts = new List<string>();
+        private IList<string>       _columnWidths = new List<string>();
         private IList<string []>    _items = new List<string []>();
+
+        /// <summary>
+        ///  Constructor
+        /// </summary>
+        public ListView() : base(HtmlTextWriterTag.Div)
+        {
+        }
+
+        private void RenderListColumns(HtmlTextWriter writer)
+        {
+            writer.RenderBeginTag(HtmlTextWriterTag.Colgroup);
+
+                foreach (string columnWidth in _columnWidths)
+                {
+                    writer.AddAttribute(HtmlTextWriterAttribute.Width, columnWidth);
+                    writer.RenderBeginTag(HtmlTextWriterTag.Col);
+                    writer.RenderEndTag();
+                }
+
+            writer.RenderEndTag();
+        }
 
         private void RenderListHeader(HtmlTextWriter writer)
         {
@@ -24,10 +46,8 @@ namespace Atlanta.Presentation.WebControls
 
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "listViewHeaderRow");
                 writer.RenderBeginTag(HtmlTextWriterTag.Tr);
-                    for (int i=0; i<_columnTexts.Count; i++)
+                    foreach (string columnText in _columnTexts)
                     {
-                        string columnText = _columnTexts[i];
-
                         writer.AddAttribute(HtmlTextWriterAttribute.Class, "listViewHeaderText");
                         writer.AddAttribute(HtmlTextWriterAttribute.Title, columnText);
                         writer.RenderBeginTag(HtmlTextWriterTag.Td);
@@ -63,15 +83,31 @@ namespace Atlanta.Presentation.WebControls
         }
 
         /// <summary>
+        /// Override the attributes on the outer HTML element
+        /// </summary>
+        protected override void AddAttributesToRender(HtmlTextWriter writer)
+        {
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "listViewOuterDiv");
+            writer.AddStyleAttribute(HtmlTextWriterStyle.Width, Width.ToString());
+        }
+
+        /// <summary>
         /// Renders the control
         /// </summary>
         protected override void RenderContents(HtmlTextWriter writer)
         {
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, "listViewColumnTable");
-            writer.RenderBeginTag(HtmlTextWriterTag.Table);
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "listViewInnerDiv");
+            writer.AddStyleAttribute(HtmlTextWriterStyle.Height, Height.ToString());
+            writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
-                RenderListHeader(writer);
-                RenderListBody(writer);
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "listViewColumnTable");
+                writer.RenderBeginTag(HtmlTextWriterTag.Table);
+
+                    RenderListColumns(writer);
+                    RenderListHeader(writer);
+                    RenderListBody(writer);
+
+                writer.RenderEndTag();
 
             writer.RenderEndTag();
         }
@@ -81,10 +117,11 @@ namespace Atlanta.Presentation.WebControls
         /// </summary>
         protected override object SaveViewState()
         {
-            object[] state = new object[2];
+            object[] state = new object[3];
 
             state[0] = _columnTexts;
-            state[1] = _items;
+            state[1] = _columnWidths;
+            state[2] = _items;
 
             return state;
         }
@@ -99,7 +136,8 @@ namespace Atlanta.Presentation.WebControls
                 object[] state = (object []) savedState;
 
                 _columnTexts = (IList<string>) state[0];
-                _items = (IList<string []>) state[1];
+                _columnWidths = (IList<string>) state[1];
+                _items = (IList<string []>) state[2];
             }
         }
         
@@ -118,6 +156,7 @@ namespace Atlanta.Presentation.WebControls
                                         int     percentageWidth)
         {
             _columnTexts.Add(columnText);
+            _columnWidths.Add(percentageWidth.ToString() + "%");
         }
 
         /// <summary>
@@ -126,6 +165,7 @@ namespace Atlanta.Presentation.WebControls
         public void AddRemainderColumn(string columnText)
         {
             _columnTexts.Add(columnText);
+            _columnWidths.Add("*");
         }
 
         /// <summary>

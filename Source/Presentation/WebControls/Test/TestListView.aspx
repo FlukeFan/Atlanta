@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <%@
     Page
     language="c#"
@@ -15,8 +16,8 @@
     {
         if (!IsPostBack)
         {
-            testList1.AddPercentageColumn("Column 1", 30);
-            testList1.AddPercentageColumn("Column 2", 30);
+            testList1.AddPercentageColumn("Column 1", 20);
+            testList1.AddPercentageColumn("Column 2", 40);
             testList1.AddRemainderColumn("Column 3");
 
             testList1.AddListItem("Value 1", "Value 2", "Value 3");
@@ -46,6 +47,8 @@
             <div>testList1:</div>
 
             <atlanta:ListView
+                width="400"
+                height="250"
                 id="testList1"
                 runat="server"
                 />
