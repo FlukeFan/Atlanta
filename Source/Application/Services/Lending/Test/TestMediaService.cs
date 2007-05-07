@@ -34,6 +34,14 @@ namespace Atlanta.Application.Services.Lending.Test
 
             _user = User.InstantiateUser("testServiceUser");
         }
+        
+        [Test]
+        public void TestSetService()
+        {
+            Assert.IsNotNull(AtlantaServices.MediaService);
+            AtlantaServices.MediaService = null;
+            Assert.IsNotNull(AtlantaServices.MediaService);
+        }
 
         [Test]
         public void TestGetMediaList_Ok()
