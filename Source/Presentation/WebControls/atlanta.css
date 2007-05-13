@@ -19,10 +19,17 @@ BODY
 
 /* ListView control */
 
+.listViewOuterDiv
+{
+    cursor: default;
+}
+
 .listViewInnerDiv
 {
     background: Window;
     border: 1px solid Highlight;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .listViewColumnTable
