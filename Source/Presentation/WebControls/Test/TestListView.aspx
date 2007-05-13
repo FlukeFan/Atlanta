@@ -17,7 +17,7 @@
         if (!IsPostBack)
         {
             testList1.AddPercentageColumn("Column 1", 20);
-            testList1.AddPercentageColumn("Column 2", 40);
+            testList1.AddPercentageColumn("Column 2", 30);
             testList1.AddRemainderColumn("Column 3");
 
             testList1.AddListItem("Value 1", "Value 2", "Value 3");
@@ -48,7 +48,7 @@
 
             <atlanta:ListView
                 width="400"
-                height="250"
+                height="200"
                 id="testList1"
                 runat="server"
                 />

@@ -20,6 +20,8 @@
 
         </cscLibrary>
 
+        <copy todir="${build.dir}/web/styles" file="WebControls/atlanta.css" />
+
     </target>
 
 
