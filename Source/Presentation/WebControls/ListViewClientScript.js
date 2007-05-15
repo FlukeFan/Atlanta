@@ -1,6 +1,4 @@
 
-alert("I got included!");
-
 // Initialises all Atlanta server ListView controls
 function InitialiseAtlantaListViewControls()
 {

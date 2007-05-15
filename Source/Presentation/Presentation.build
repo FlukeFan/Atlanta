@@ -5,6 +5,14 @@
 
     <target name="onBuild">
 
+        <servicecontroller action="Start" service="w3svc" />
+        <servicecontroller action="Start" service="aspnet_state" />
+
+        <mkiisdir   dirpath="${build.dir}"
+                    vdirname="atlanta"
+                    enabledirbrowsing="true"
+                    />
+
         <cscLibrary output="Atlanta.Presentation">
 
             <references>
@@ -19,6 +27,8 @@
             </resources>
 
         </cscLibrary>
+
+        <copy todir="${build.dir}" file="WebControls/Web.config" />
 
         <copy todir="${build.dir}/web/style" file="WebControls/atlanta.css" />
 

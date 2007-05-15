@@ -1,9 +1,10 @@
 
 using System;
 using System.Collections.Generic;
-
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
+using Atlanta.Presentation.PresentationBase;
 
 namespace Atlanta.Presentation.WebControls
 {
@@ -78,6 +79,16 @@ namespace Atlanta.Presentation.WebControls
                 }
 
             writer.RenderEndTag();
+        }
+
+        /// <summary>
+        /// Registers the required client script block
+        /// </summary>
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+
+            Page.ClientScript.RegisterClientScriptInclude(GetType().ToString(), PresentationRegistry.WebScriptDirectory + "ListViewClientScript.js");
         }
 
         /// <summary>
