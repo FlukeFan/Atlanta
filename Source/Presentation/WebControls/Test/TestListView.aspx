@@ -35,7 +35,7 @@
         <title>Test ListView Harness</title>
         <link
             rel="stylesheet"
-            href="<%=Request.ApplicationPath.TrimEnd('/')%>/web/styles/atlanta.css"
+            href="<%=Request.ApplicationPath.TrimEnd('/')%>/web/style/atlanta.css"
             type="text/css"
             />
         <meta http-equiv="Page-Enter" content="progid:DXImageTransform.Microsoft.RandomDissolve(duration=0)" />

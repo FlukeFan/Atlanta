@@ -49,7 +49,6 @@ namespace Atlanta.Presentation.WebControls
                     foreach (string columnText in _columnTexts)
                     {
                         writer.AddAttribute(HtmlTextWriterAttribute.Class, "listViewHeaderText");
-                        writer.AddAttribute(HtmlTextWriterAttribute.Title, columnText);
                         writer.RenderBeginTag(HtmlTextWriterTag.Td);
                             writer.Write(columnText);
                         writer.RenderEndTag();
@@ -71,7 +70,6 @@ namespace Atlanta.Presentation.WebControls
                         foreach (string itemText in itemTexts)
                         {
                             writer.AddAttribute(HtmlTextWriterAttribute.Class, "listViewBodyText");
-                            writer.AddAttribute(HtmlTextWriterAttribute.Title, itemText);
                             writer.RenderBeginTag(HtmlTextWriterTag.Td);
                                 writer.Write(itemText);
                             writer.RenderEndTag();

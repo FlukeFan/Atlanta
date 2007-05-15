@@ -20,7 +20,14 @@
 
         </cscLibrary>
 
-        <copy todir="${build.dir}/web/styles" file="WebControls/atlanta.css" />
+        <copy todir="${build.dir}/web/style" file="WebControls/atlanta.css" />
+
+        <copy todir="${build.dir}/web/script">
+            <fileset basedir="WebControls">
+                <exclude name="**/.svn/**" />
+                <include name="*.js" />
+            </fileset>
+        </copy>
 
     </target>
 
