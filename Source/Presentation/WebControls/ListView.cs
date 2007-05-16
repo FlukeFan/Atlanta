@@ -88,7 +88,9 @@ namespace Atlanta.Presentation.WebControls
         {
             base.OnPreRender(e);
 
+            Page.ClientScript.RegisterArrayDeclaration("_atlantaListViewControls", "'" + ClientID + "'");
             Page.ClientScript.RegisterClientScriptInclude(GetType().ToString(), PresentationRegistry.WebScriptDirectory + "ListViewClientScript.js");
+            Page.ClientScript.RegisterStartupScript(GetType(), GetType().ToString(), "InitialiseAtlantaListViewControls();", true);
         }
 
         /// <summary>
@@ -96,6 +98,12 @@ namespace Atlanta.Presentation.WebControls
         /// </summary>
         protected override void AddAttributesToRender(HtmlTextWriter writer)
         {
+            // prevent height being applied until inner-div
+            Unit tempHeight = Height;
+            Height = Unit.Empty;
+            base.AddAttributesToRender(writer);
+            Height = tempHeight;
+
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "listViewOuterDiv");
             writer.AddStyleAttribute(HtmlTextWriterStyle.Width, Width.ToString());
         }

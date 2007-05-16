@@ -4,9 +4,9 @@ function InitialiseAtlantaListViewControls()
 {
     for (var listViewIndex in _atlantaListViewControls)
     {
-        var listView = _atlantaListViewControls[listViewIndex];
+        var listViewName = _atlantaListViewControls[listViewIndex];
 
-        alert(listView.outerHTML);
+        var listView = document.getElementById(listViewName);
     }
 }
 
