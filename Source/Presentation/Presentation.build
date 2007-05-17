@@ -56,4 +56,11 @@
     </target>
 
 
+    <target name="onClean">
+
+        <deliisdir vdirname="atlanta" />
+
+    </target>
+
+
 </project>
