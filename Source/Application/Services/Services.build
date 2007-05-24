@@ -5,9 +5,17 @@
 
     <target name="onBuild">
 
+        <servicecontroller action="Start" service="w3svc" />
+
+        <mkiisdir   dirpath="${build.dir}"
+                    vdirname="atlanta"
+                    enabledirbrowsing="true"
+                    />
+
         <cscLibrary output="Atlanta.Application.Services">
 
             <references>
+                <include name="${build.dir}/bin/System.ServiceModel.dll" />
                 <include name="${build.dir}/bin/NHibernate.dll" />
                 <include name="${build.dir}/bin/Spring.Core.dll" />
                 <include name="${build.dir}/bin/Spring.Aop.dll" />
@@ -23,6 +31,15 @@
             </resources>
 
         </cscLibrary>
+
+        <copy todir="${build.dir}/web/services">
+            <fileset basedir="Remote">
+                <exclude name="**/.svn/**" />
+                <include name="*.svc" />
+            </fileset>
+        </copy>
+
+        <copy todir="${build.dir}" file="Remote/web.config" />
 
     </target>
 

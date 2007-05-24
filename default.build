@@ -27,6 +27,14 @@
         <mkdir dir="${build.dir}/design" />
         <mkdir dir="${build.dir}/web" />
 
+        <!-- Wcf binaries -->
+        <copy todir="${build.dir}/bin">
+            <fileset basedir="SDKs\Wcf">
+                <exclude name="**/.svn/**" />
+                <include name="**" />
+            </fileset>
+        </copy>
+
         <!-- NHibernate binaries -->
         <copy todir="${build.dir}/bin">
             <fileset basedir="SDKs\NHibernate-1.2.0.CR1">
