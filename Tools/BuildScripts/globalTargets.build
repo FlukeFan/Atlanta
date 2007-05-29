@@ -2,6 +2,7 @@
 
     <target name="setDefaultEnvironment">
 
+        <setenv name="PATH" value="${nant::get-base-directory()};%PATH%"/>
         <setenv name="PATH" value="${framework::get-sdk-directory(framework::get-target-framework())};%PATH%"/>
         <setenv name="PATH" value="${nant::get-base-directory()}/../../NCover;%PATH%"/>
         <setenv name="PATH" value="${nant::get-base-directory()}/../../NCoverExplorer;%PATH%"/>

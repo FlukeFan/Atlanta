@@ -48,7 +48,7 @@
 
     <target name="onClean">
 
-        <deliisdir vdirname="atlanta" />
+        <deliisdir vdirname="atlanta" failonerror="false" />
 
     </target>
 

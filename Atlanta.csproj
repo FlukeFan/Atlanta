@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="NAntBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <OutputPath>build_debug\bin</OutputPath>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ProjectGuid>{DE5C3E73-F3B6-4A8F-8AE5-BD10BF0B8C4F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="**\*.build" />
+    <None Include="**\*.cs" />
+    <None Include="**\*.xml" />
+  </ItemGroup>
+  <Target Name="NAntBuild">
+    <Message Text="Start NAnt build ..." />
+    <Exec Command="SDKs\nant-0.85\bin\NAnt.exe" />
+    <Message Text="NAnt complete" />
+  </Target>
+</Project>
