@@ -15,7 +15,7 @@
   <ItemGroup>
     <None Include="**\*.build" />
     <None Include="**\*.cs" />
-    <None Include="**\*.xml" />
+    <None Include="**\*.xml" Exclude="build_debug\**" />
   </ItemGroup>
   <Target Name="NAntBuild">
     <Message Text="Start NAnt build ..." />
