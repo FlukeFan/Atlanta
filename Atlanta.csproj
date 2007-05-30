@@ -14,9 +14,10 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="**\*.build" />
-    <None Include="**\*.cs" />
+    <Compile Include="**\*.cs" />
     <None Include="**\*.xml" Exclude="build_debug\**" />
   </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <Target Name="NAntBuild">
     <Message Text="Start NAnt build ..." />
     <Exec Command="SDKs\nant-0.85\bin\NAnt.exe" />
