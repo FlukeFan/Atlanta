@@ -15,12 +15,41 @@
   <ItemGroup>
     <None Include="**\*.build" />
     <Compile Include="**\*.cs" />
-    <None Include="**\*.xml" Exclude="build_debug\**" />
+    <Compile Include="**\*.js" Exclude="build_debug\**" />
+    <Compile Include="**\*.aspx" Exclude="build_debug\**" />
+    <Compile Include="**\*.asax" Exclude="build_debug\**" />
+    <Compile Include="**\*.master" Exclude="build_debug\**" />
+    <Compile Include="**\*.css" Exclude="build_debug\**" />
+    <Compile Include="**\*.ddl" Exclude="build_debug\**" />
+    <Compile Include="**\*.dml" Exclude="build_debug\**" />
+    <None Include="**\*.config" Exclude="build_debug\**;SDKs\**" />
+    <None Include="**\*.xml" Exclude="build_debug\**;SDKs\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="log4net" />
+    <Reference Include="NHibernate" />
+    <Reference Include="nunit.framework" />
+    <Reference Include="Atlanta.Application.Domain" />
+    <Reference Include="Atlanta.Application.Domain.Test" />
+    <Reference Include="Atlanta.Application.Services" />
+    <Reference Include="Atlanta.Application.Services.Test" />
+    <Reference Include="Atlanta.Presentation" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <Target Name="NAntBuild">
-    <Message Text="Start NAnt build ..." />
+    <Message Text="Start NAnt debug build ..." />
     <Exec Command="SDKs\nant-0.85\bin\NAnt.exe" />
     <Message Text="NAnt complete" />
+  </Target>
+  <Target Name="Clean">
+    <Message Text="Start NAnt debug clean ..." />
+    <Exec Command="SDKs\nant-0.85\bin\NAnt.exe clean" />
+    <Message Text="NAnt complete" />
+  </Target>
+  <Target Name="Rebuild">
+    <CallTarget Targets="Clean"/>
+    <CallTarget Targets="NAntBuild"/>
   </Target>
 </Project>
