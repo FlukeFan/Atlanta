@@ -56,6 +56,12 @@ namespace Atlanta.Application.Services.Lending
             loadedMedia.OwningLibrary.Delete(loadedMedia);
         }
 
+        /// <summary> RGB - temp method - to be removed</summary>
+        public string TempMethodToTestWebServices()
+        {
+            return "a simple test";
+        }
+
     }
 
 

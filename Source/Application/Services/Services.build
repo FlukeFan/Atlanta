@@ -76,7 +76,7 @@
                 testAssembly="${build.dir}/bin/Atlanta.Application.Services.Test.dll"
                 testSuccessFlagFile="test_service.flg"
                 testCoverageFile="${build.dir}/results/ServicesCoverage.xml"
-                satisfactoryCoverage="95"
+                satisfactoryCoverage="90"
                 >
 
             <testDependencies>

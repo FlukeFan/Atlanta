@@ -13,6 +13,9 @@
 
             <sources>
                 <include name="*/*.cs" />
+            <!-- being temp for DosClient -->
+                <exclude name="DosClient/*.cs" />
+            <!-- end temp for DosClient -->
             </sources>
 
             <resources>
@@ -28,6 +31,36 @@
                 <include name="*.js" />
             </fileset>
         </copy>
+
+<!-- begin test client -->
+
+        <csc    target="exe"
+                debug="${build.debug}"
+                optimize="${optimize}"
+                output="${build.dir}/bin/Atlanta.Presentation.DosClient.exe"
+                warnaserror="true"
+                doc="${build.dir}/bin/Atlanta.Presentation.DosClient.xml">
+
+            <references>
+                <include name="${build.dir}/bin/System.ServiceModel.dll" />
+                <include name="${build.dir}/bin/Atlanta.Application.Services.dll" />
+            </references>
+
+            <sources>
+                <include name="${project.assemblyVersionFile}" />
+
+                <include name="DosClient/*.cs" />
+            </sources>
+
+        </csc>
+
+        <copy todir="${build.dir}/bin">
+            <fileset basedir="DosClient">
+                <include name="Atlanta.Presentation.DosClient.exe.config" />
+            </fileset>
+        </copy>
+
+<!-- end temp test client -->
 
     </target>
 

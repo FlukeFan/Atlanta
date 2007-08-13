@@ -42,5 +42,10 @@ namespace Atlanta.Application.Services.Interfaces
         void Delete(User    user,
                     Media   mediaCopy);
 
+        /// <summary>
+        ///  TempMethodToTestWebServices
+        /// </summary>
+        [OperationContract]
+        string TempMethodToTestWebServices();
     }
 }
