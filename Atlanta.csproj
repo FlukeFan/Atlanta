@@ -15,6 +15,7 @@
   <ItemGroup>
     <None Include="**\*.build" />
     <Compile Include="**\*.cs" />
+    <Compile Include="**\*.svc" Exclude="build_debug\**" />
     <Compile Include="**\*.js" Exclude="build_debug\**" />
     <Compile Include="**\*.aspx" Exclude="build_debug\**" />
     <Compile Include="**\*.asax" Exclude="build_debug\**" />
@@ -31,6 +32,8 @@
     <Reference Include="log4net" />
     <Reference Include="NHibernate" />
     <Reference Include="nunit.framework" />
+    <Reference Include="Spring.Aop" />
+    <Reference Include="Spring.Core" />
     <Reference Include="Atlanta.Application.Domain" />
     <Reference Include="Atlanta.Application.Domain.Test" />
     <Reference Include="Atlanta.Application.Services" />

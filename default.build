@@ -8,6 +8,7 @@
 
     <property name="project.version" value="0.0.0.1" overwrite="false" />
 
+    <property name="project.dir"            value="${project::get-base-directory()}" />
     <property name="build.includes.dir"     value="${project::get-base-directory()}/Tools/BuildScripts"/>
     <property name="build.includes.tasks"   value="${build.includes.dir}/loadTasks.build"/>
     <property name="build.includes.file"    value="${build.includes.dir}/controller.build"/>
@@ -50,10 +51,16 @@
                 <include name="**" />
             </fileset>
         </copy>
+        <copy todir="${build.dir}/bin">
+            <fileset basedir="SDKs\Firebird\bin">
+                <exclude name="**/.svn/**" />
+                <include name="ic*.dll" />
+            </fileset>
+        </copy>
 
         <!-- Spring.Net binaries -->
         <copy todir="${build.dir}/bin">
-            <fileset basedir="SDKs\Spring1.1P3">
+            <fileset basedir="SDKs\Spring1.1RC1">
                 <exclude name="**/.svn/**" />
                 <include name="**" />
             </fileset>

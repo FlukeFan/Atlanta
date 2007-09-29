@@ -15,6 +15,7 @@
         <cscLibrary output="Atlanta.Application.Services">
 
             <references>
+                <include name="${build.dir}/bin/Common.Logging.dll" />
                 <include name="${build.dir}/bin/System.ServiceModel.dll" />
                 <include name="${build.dir}/bin/NHibernate.dll" />
                 <include name="${build.dir}/bin/Spring.Core.dll" />
@@ -40,6 +41,11 @@
         </copy>
 
         <copy todir="${build.dir}" file="Remote/web.config" />
+
+        <xmlpoke file="${build.dir}/web.config"
+                 xpath="/configuration/nhibernate/add[@key = 'hibernate.connection.connection_string']/@value"
+                 value="User=SYSDBA;Password=masterkey;Database=${build.dir}/LendingLibraryIntegrationTest.fdb;ServerType=1;">
+        </xmlpoke>
 
     </target>
 
