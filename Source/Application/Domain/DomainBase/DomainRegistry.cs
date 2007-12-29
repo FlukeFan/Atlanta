@@ -1,6 +1,6 @@
 
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 using NHibernate;
 
@@ -46,7 +46,10 @@ namespace Atlanta.Application.Domain.DomainBase
 
         static private void LoadSingleSystemLibrary()
         {
-            IList libraryList = Session.CreateCriteria(typeof(Library)).List();
+            IList<Library> libraryList =
+                Session
+                    .CreateCriteria(typeof(Library))
+                    .List<Library>();
 
             // there should be one, and only one library in the system ...
             if (libraryList.Count < 1)
@@ -59,7 +62,7 @@ namespace Atlanta.Application.Domain.DomainBase
                 throw new Exception("more than 1 library found in database");
             }
 
-            _library = (Library) libraryList[0];
+            _library = libraryList[0];
         }
 
     }

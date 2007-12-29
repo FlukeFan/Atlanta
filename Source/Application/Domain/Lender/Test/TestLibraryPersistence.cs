@@ -47,7 +47,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             Session.Flush();
             Session.Clear();
 
-            library = (Library) Session.Load(typeof(Library), library.Id);
+            library = Session.Load<Library>(library.Id);
 
             Assert.AreEqual(0, library.OwnedMedia.Count);
         }
@@ -55,7 +55,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void LibraryRegistry_Ok()
         {
-            Library library = (Library) Session.Load(typeof(Library), _libraryId);
+            Library library = Session.Load<Library>(_libraryId);
 
             Assert.AreEqual(library.Id, DomainRegistry.Library.Id);
             Assert.AreEqual(library, DomainRegistry.Library);
@@ -64,7 +64,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void LibraryRegistry_FailMissingLibrary()
         {
-            Library library = (Library) Session.Load(typeof(Library), _libraryId);
+            Library library = Session.Load<Library>(_libraryId);
             Session.Delete(library);
 
             try
@@ -102,7 +102,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void LoadCheckAggregates_Ok()
         {
-            Library library = (Library) Session.Load(typeof(Library), _libraryId);
+            Library library = Session.Load<Library>(_libraryId);
 
             Assert.AreEqual(3, library.OwnedMedia.Count);
         }
@@ -110,7 +110,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void InsertChildMedia_Ok()
         {
-            Library library = (Library) Session.Load(typeof(Library), _libraryId);
+            Library library = Session.Load<Library>(_libraryId);
 
             Media media = Media.InstantiateMedia(library, MediaType.Dvd, "test", "test description");
 
@@ -119,22 +119,22 @@ namespace Atlanta.Application.Domain.Lender.Test
             Session.Flush();
             Session.Clear();
 
-            library = (Library) Session.Load(typeof(Library), _libraryId);
+            library = Session.Load<Library>(_libraryId);
             Assert.AreEqual(4, library.OwnedMedia.Count);
         }
 
         [Test]
         public void DeleteChildMedia_Ok()
         {
-            Library library = (Library) Session.Load(typeof(Library), _libraryId);
-            Media media = (Media) Session.Load(typeof(Media), _mediaId);
+            Library library = Session.Load<Library>(_libraryId);
+            Media media = Session.Load<Media>(_mediaId);
 
             library.OwnedMedia.Remove(media);
 
             Session.Flush();
             Session.Clear();
 
-            library = (Library) Session.Load(typeof(Library), _libraryId);
+            library = Session.Load<Library>(_libraryId);
             Assert.AreEqual(2, library.OwnedMedia.Count);
         }
 

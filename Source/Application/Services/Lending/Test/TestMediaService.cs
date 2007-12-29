@@ -90,7 +90,7 @@ namespace Atlanta.Application.Services.Lending.Test
                 AtlantaServices.MediaService
                     .Create(_user, Media.InstantiateOrphanedMedia(MediaType.Cd, "test name", "test description"));
 
-            Assert.AreEqual(4, Session.CreateCriteria(typeof(Media)).List().Count);
+            Assert.AreEqual(4, Session.CreateCriteria(typeof(Media)).List<Media>().Count);
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace Atlanta.Application.Services.Lending.Test
 
             mediaCopy = AtlantaServices.MediaService.Modify(_user, mediaCopy);
 
-            Media modifiedMedia = (Media) Session.Load(typeof(Media), mediaCopy.Id);
+            Media modifiedMedia = Session.Load<Media>(mediaCopy.Id);
             Assert.AreEqual("modified CD name", modifiedMedia.Name);
             Assert.AreEqual("new description", modifiedMedia.Description);
         }
@@ -121,7 +121,7 @@ namespace Atlanta.Application.Services.Lending.Test
             AtlantaServices.MediaService
                 .Delete(_user, mediaCopy);
 
-            Assert.AreEqual(2, Session.CreateCriteria(typeof(Media)).List().Count);
+            Assert.AreEqual(2, Session.CreateCriteria(typeof(Media)).List<Media>().Count);
         }
 
     }

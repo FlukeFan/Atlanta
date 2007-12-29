@@ -1,6 +1,6 @@
 
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 using NHibernate.Expression;
 
@@ -37,7 +37,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void Insert_Load_Ok()
         {
-            Library library = (Library) Session.Load(typeof(Library), _libraryId);
+            Library library = Session.Load<Library>(_libraryId);
 
             Media media = Media.InstantiateMedia(library, MediaType.Dvd, "test", "test description");
 
@@ -47,7 +47,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             Session.Flush();
             Session.Clear();
 
-            media = (Media) Session.Load(typeof(Media), media.Id);
+            media = Session.Load<Media>(media.Id);
 
             Assert.AreEqual(MediaType.Dvd, media.Type);
             Assert.AreEqual("test", media.Name);
@@ -57,28 +57,30 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void ExampleByFilter_LoadAllBooks()
         {
-            Library library = (Library) Session.Load(typeof(Library), _libraryId);
+            Library library = Session.Load<Library>(_libraryId);
 
-            IList bookMediaInLibrary = Session.CreateFilter(library.OwnedMedia, "where type = ?")
-                                        .SetParameter(0, MediaType.Book)
-                                        .List();
+            IList<Media> bookMediaInLibrary =
+                Session.CreateFilter(library.OwnedMedia, "where type = ?")
+                    .SetParameter(0, MediaType.Book)
+                    .List<Media>();
 
             Assert.AreEqual(1, bookMediaInLibrary.Count);
-            Assert.AreEqual("Book", ((Media) bookMediaInLibrary[0]).Name);
+            Assert.AreEqual("Book", bookMediaInLibrary[0].Name);
         }
 
         [Test]
         public void ExampleByCriteria_LoadAllBooks()
         {
-            Library library = (Library) Session.Load(typeof(Library), _libraryId);
+            Library library = Session.Load<Library>(_libraryId);
 
-            IList bookMediaInLibrary = Session.CreateCriteria(typeof(Media))
-                                            .Add(Expression.Eq("OwningLibrary", library))
-                                            .Add(Expression.Eq("Type", MediaType.Book))
-                                            .List();
+            IList<Media> bookMediaInLibrary =
+                Session.CreateCriteria(typeof(Media))
+                    .Add(Expression.Eq("OwningLibrary", library))
+                    .Add(Expression.Eq("Type", MediaType.Book))
+                    .List<Media>();
 
             Assert.AreEqual(1, bookMediaInLibrary.Count);
-            Assert.AreEqual("Book", ((Media) bookMediaInLibrary[0]).Name);
+            Assert.AreEqual("Book", bookMediaInLibrary[0].Name);
         }
 
         [Test]
@@ -95,19 +97,20 @@ namespace Atlanta.Application.Domain.Lender.Test
             Session.Flush();
             Session.Clear();
 
-            library = (Library) Session.Load(typeof(Library), library.Id);
+            library = Session.Load<Library>(library.Id);
 
-            IList secondPage5Books = Session.CreateFilter(library.OwnedMedia, "")
-                                            .SetFirstResult(5)
-                                            .SetMaxResults(5)
-                                            .List();
+            IList<Media> secondPage5Books =
+                Session.CreateFilter(library.OwnedMedia, "")
+                    .SetFirstResult(5)
+                    .SetMaxResults(5)
+                    .List<Media>();
 
             Assert.AreEqual(5, secondPage5Books.Count);
-            Assert.AreEqual("book 5", ((Media) secondPage5Books[0]).Name);
-            Assert.AreEqual("book 6", ((Media) secondPage5Books[1]).Name);
-            Assert.AreEqual("book 7", ((Media) secondPage5Books[2]).Name);
-            Assert.AreEqual("book 8", ((Media) secondPage5Books[3]).Name);
-            Assert.AreEqual("book 9", ((Media) secondPage5Books[4]).Name);
+            Assert.AreEqual("book 5", secondPage5Books[0].Name);
+            Assert.AreEqual("book 6", secondPage5Books[1].Name);
+            Assert.AreEqual("book 7", secondPage5Books[2].Name);
+            Assert.AreEqual("book 8", secondPage5Books[3].Name);
+            Assert.AreEqual("book 9", secondPage5Books[4].Name);
         }
 
     }

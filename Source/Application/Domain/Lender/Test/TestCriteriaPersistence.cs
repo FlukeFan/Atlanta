@@ -36,7 +36,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void FilterStringAndEnumProperty_Ok()
         {
-            Library library = (Library) Session.Load(typeof(Library), _libraryId);
+            Library library = Session.Load<Library>(_libraryId);
 
             IList<Media> filteredList;
             {
