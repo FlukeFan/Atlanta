@@ -44,8 +44,9 @@
   <UsingTask AssemblyFile="SDKs\ExecParse1.0.0.0\ExecParse.dll" TaskName="ExecParse.ExecParse" />
   <PropertyGroup>
       <ExecParseConfiguration>
+
+        <!-- catches csc errors -->
         <Error>
-          <!-- catches csc errors -->
           <Search>\[csc\] (.*?)\((\d+),(\d+)\): error ([^:]*): (.*?)[\n\r]</Search>
           <File>$1</File>
           <LineNumber>$2</LineNumber>
@@ -53,6 +54,13 @@
           <Subcategory>$4</Subcategory>
           <Message>$5</Message>
         </Error>
+
+        <!-- catches coverage failures -->
+        <Error>
+          <Search>-- Loading file: .*\\(.*?)\.xml\.\.\.[\s\S]*\[ncoverexplorer\] \[FAIL\] - (.*)[\n\r]</Search>
+          <Message>$1: $2</Message>
+        </Error>
+
       </ExecParseConfiguration>
   </PropertyGroup>
   <Target Name="NAntBuild">
