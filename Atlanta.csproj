@@ -55,6 +55,15 @@
           <Message>$5</Message>
         </Error>
 
+        <!-- catches NUnit failures -->
+        <Error>
+          <Search>\[ncover\] \d+\) [\s\S]*?(?=[^\n\r]*?\[ncover\] [^ ])</Search>
+          <ReplaceSearch>\[ncover\] \d+\) .*?\.([^.]*?) : ([\s\S]*? in (.*?):line (\d+))\s*$</ReplaceSearch>
+          <Message>Test Failed: $1: $2</Message>
+          <File>$3</File>
+          <LineNumber>$4</LineNumber>
+        </Error>
+
         <!-- catches coverage failures -->
         <Error>
           <Search>-- Loading file: .*\\(.*?)\.xml\.\.\.[\s\S]*\[ncoverexplorer\] \[FAIL\] - (.*)[\n\r]</Search>
