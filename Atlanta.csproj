@@ -44,12 +44,12 @@
   <UsingTask AssemblyFile="SDKs\ExecParse1.0.0.0\ExecParse.dll" TaskName="ExecParse.ExecParse" />
   <Target Name="NAntBuild">
     <Message Text="Start NAnt debug build ..." />
-    <ExecParse Command="SDKs\nant-0.85\bin\NAnt.exe" Configuration="&lt;none/&gt;" />
+    <ExecParse Command="SDKs\nant-0.85\bin\NAnt.exe" />
     <Message Text="NAnt complete" />
   </Target>
   <Target Name="Clean">
     <Message Text="Start NAnt debug clean ..." />
-    <ExecParse Command="SDKs\nant-0.85\bin\NAnt.exe clean" Configuration="&lt;none/&gt;" />
+    <ExecParse Command="SDKs\nant-0.85\bin\NAnt.exe clean" />
     <Message Text="NAnt complete" />
   </Target>
   <Target Name="Rebuild">
