@@ -42,14 +42,27 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <UsingTask AssemblyFile="SDKs\ExecParse1.0.0.0\ExecParse.dll" TaskName="ExecParse.ExecParse" />
+  <PropertyGroup>
+      <ExecParseConfiguration>
+        <Error>
+          <!-- catches csc errors -->
+          <Search>\[csc\] (.*?)\((\d+),(\d+)\): error ([^:]*): (.*?)[\n\r]</Search>
+          <File>$1</File>
+          <LineNumber>$2</LineNumber>
+          <ColumnNumber>$3</ColumnNumber>
+          <Subcategory>$4</Subcategory>
+          <Message>$5</Message>
+        </Error>
+      </ExecParseConfiguration>
+  </PropertyGroup>
   <Target Name="NAntBuild">
     <Message Text="Start NAnt debug build ..." />
-    <ExecParse Command="SDKs\nant-0.85\bin\NAnt.exe" />
+    <ExecParse Command="SDKs\nant-0.85\bin\NAnt.exe" Configuration="$(ExecParseConfiguration)" />
     <Message Text="NAnt complete" />
   </Target>
   <Target Name="Clean">
     <Message Text="Start NAnt debug clean ..." />
-    <ExecParse Command="SDKs\nant-0.85\bin\NAnt.exe clean" />
+    <ExecParse Command="SDKs\nant-0.85\bin\NAnt.exe clean" Configuration="$(ExecParseConfiguration)" />
     <Message Text="NAnt complete" />
   </Target>
   <Target Name="Rebuild">
