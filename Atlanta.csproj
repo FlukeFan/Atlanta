@@ -15,16 +15,16 @@
   <ItemGroup>
     <None Include="**\*.build" />
     <Compile Include="**\*.cs" />
-    <Compile Include="**\*.svc" Exclude="build_debug\**" />
-    <Compile Include="**\*.js" Exclude="build_debug\**" />
-    <Compile Include="**\*.aspx" Exclude="build_debug\**" />
-    <Compile Include="**\*.asax" Exclude="build_debug\**" />
-    <Compile Include="**\*.master" Exclude="build_debug\**" />
-    <Compile Include="**\*.css" Exclude="build_debug\**" />
-    <Compile Include="**\*.ddl" Exclude="build_debug\**" />
-    <Compile Include="**\*.dml" Exclude="build_debug\**" />
-    <None Include="**\*.config" Exclude="build_debug\**;SDKs\**" />
-    <None Include="**\*.xml" Exclude="build_debug\**;SDKs\**" />
+    <Compile Include="**\*.svc" />
+    <Compile Include="**\*.js" />
+    <Compile Include="**\*.aspx" />
+    <Compile Include="**\*.asax" />
+    <Compile Include="**\*.master" />
+    <Compile Include="**\*.css" />
+    <Compile Include="**\*.ddl" />
+    <Compile Include="**\*.dml" />
+    <None Include="**\*.config" />
+    <None Include="**\*.xml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.ServiceModel" />
@@ -41,14 +41,15 @@
     <Reference Include="Atlanta.Presentation" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+  <UsingTask AssemblyFile="SDKs\ExecParse1.0.0.0\ExecParse.dll" TaskName="ExecParse.ExecParse" />
   <Target Name="NAntBuild">
     <Message Text="Start NAnt debug build ..." />
-    <Exec Command="SDKs\nant-0.85\bin\NAnt.exe" />
+    <ExecParse Command="SDKs\nant-0.85\bin\NAnt.exe" Configuration="&lt;none/&gt;" />
     <Message Text="NAnt complete" />
   </Target>
   <Target Name="Clean">
     <Message Text="Start NAnt debug clean ..." />
-    <Exec Command="SDKs\nant-0.85\bin\NAnt.exe clean" />
+    <ExecParse Command="SDKs\nant-0.85\bin\NAnt.exe clean" Configuration="&lt;none/&gt;" />
     <Message Text="NAnt complete" />
   </Target>
   <Target Name="Rebuild">
