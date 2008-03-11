@@ -27,50 +27,67 @@
     <None Include="**\*.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel">
+      <HintPath>SDKs\Wcf\System.ServiceModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Web" />
-    <Reference Include="log4net" />
-    <Reference Include="NHibernate" />
-    <Reference Include="nunit.framework" />
-    <Reference Include="Spring.Aop" />
-    <Reference Include="Spring.Core" />
-    <Reference Include="Atlanta.Application.Domain" />
-    <Reference Include="Atlanta.Application.Domain.Test" />
-    <Reference Include="Atlanta.Application.Services" />
-    <Reference Include="Atlanta.Application.Services.Test" />
-    <Reference Include="Atlanta.Presentation" />
+    <Reference Include="System.Xml" />
+    <Reference Include="log4net">
+      <HintPath>SDKs\NHibernate-1.2.0.CR1\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>SDKs\NHibernate-1.2.0.CR1\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy">
+      <HintPath>SDKs\NHibernate-1.2.0.CR1\Castle.DynamicProxy.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>SDKs\NHibernate-1.2.0.CR1\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>SDKs\NHibernate-1.2.0.CR1\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Aop">
+      <HintPath>SDKs\Spring1.1RC1\Spring.Aop.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core">
+      <HintPath>SDKs\Spring1.1RC1\Spring.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <UsingTask AssemblyFile="SDKs\ExecParse1.0.0.0\ExecParse.dll" TaskName="ExecParse.ExecParse" />
   <PropertyGroup>
-      <ExecParseConfiguration>
+    <ExecParseConfiguration>
 
-        <!-- catches csc errors -->
-        <Error>
-          <Search>\[csc\] (.*?)\((\d+),(\d+)\): error ([^:]*): (.*?)[\n\r]</Search>
-          <File>$1</File>
-          <LineNumber>$2</LineNumber>
-          <ColumnNumber>$3</ColumnNumber>
-          <Subcategory>$4</Subcategory>
-          <Message>$5</Message>
-        </Error>
+      <!-- catches csc errors -->
+      <Error>
+        <Search>\[csc\] (.*?)\((\d+),(\d+)\): error ([^:]*): (.*?)[\n\r]</Search>
+        <File>$1</File>
+        <LineNumber>$2</LineNumber>
+        <ColumnNumber>$3</ColumnNumber>
+        <Subcategory>$4</Subcategory>
+        <Message>$5</Message>
+      </Error>
 
-        <!-- catches NUnit failures -->
-        <Error>
-          <Search>\[ncover\] \d+\) [\s\S]*?(?=[^\n\r]*?\[ncover\] [^ ])</Search>
-          <ReplaceSearch>\[ncover\] \d+\) .*?\.([^.]*?) : ([\s\S]*? in (.*?):line (\d+))\s*$</ReplaceSearch>
-          <Message>Test Failed: $1: $2</Message>
-          <File>$3</File>
-          <LineNumber>$4</LineNumber>
-        </Error>
+      <!-- catches NUnit failures -->
+      <Error>
+        <Search>\[ncover\] \d+\) [\s\S]*?(?=[^\n\r]*?\[ncover\] [^ ])</Search>
+        <ReplaceSearch>\[ncover\] \d+\) .*?\.([^.]*?) : ([\s\S]*? in (.*?):line (\d+))\s*$</ReplaceSearch>
+        <Message>Test Failed: $1: $2</Message>
+        <File>$3</File>
+        <LineNumber>$4</LineNumber>
+      </Error>
 
-        <!-- catches coverage failures -->
-        <Error>
-          <Search>-- Loading file: .*\\(.*?)\.xml\.\.\.[\s\S]*\[ncoverexplorer\] \[FAIL\] - (.*)[\n\r]</Search>
-          <Message>$1: $2</Message>
-        </Error>
+      <!-- catches coverage failures -->
+      <Error>
+        <Search>-- Loading file: .*\\(.*?)\.xml\.\.\.[\s\S]*\[ncoverexplorer\] \[FAIL\] - (.*)[\n\r]</Search>
+        <Message>$1: $2</Message>
+      </Error>
 
-      </ExecParseConfiguration>
+    </ExecParseConfiguration>
   </PropertyGroup>
   <Target Name="NAntBuild">
     <Message Text="Start NAnt debug build ..." />
@@ -83,7 +100,7 @@
     <Message Text="NAnt complete" />
   </Target>
   <Target Name="Rebuild">
-    <CallTarget Targets="Clean"/>
-    <CallTarget Targets="NAntBuild"/>
+    <CallTarget Targets="Clean" />
+    <CallTarget Targets="NAntBuild" />
   </Target>
 </Project>

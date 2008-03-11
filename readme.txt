@@ -6,7 +6,7 @@ A project to demonstrate best use of NHibernate and Spring.Net to create an ente
 
 To build:
 
-1.  Open Atlanta Command Prompt and type 'nant'
+1.  Open CommandPrompt.bat and type 'nant'
 
 That's it!
 
