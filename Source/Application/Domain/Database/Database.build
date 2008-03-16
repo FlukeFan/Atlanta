@@ -53,10 +53,10 @@
             </hbm2ddl>
 
             <exec   program="isql.exe"
-                    commandline="-b -i ${build.dir}/design/Database.ddl -u SYSDBA -p masterkey ${build.dir}/LendingLibrary.fdb" />
+                    commandline="-b -i &quot;${build.dir}/design/Database.ddl&quot; -u SYSDBA -p masterkey &quot;${build.dir}/LendingLibrary.fdb&quot;" />
 
             <exec   program="isql.exe"
-                    commandline="-b -i CustomPostCreate.ddl -u SYSDBA -p masterkey ${build.dir}/LendingLibrary.fdb" />
+                    commandline="-b -i CustomPostCreate.ddl -u SYSDBA -p masterkey &quot;${build.dir}/LendingLibrary.fdb&quot;" />
 
             <!-- create an integration test database with some standing data to integration test through the front-end -->
             <copy   file="${build.dir}/LendingLibrary.fdb"
@@ -64,7 +64,7 @@
                     />
 
             <exec   program="isql.exe"
-                    commandline="-b -i Populate.dml -u SYSDBA -p masterkey ${build.dir}/LendingLibraryIntegrationTest.fdb" />
+                    commandline="-b -i Populate.dml -u SYSDBA -p masterkey &quot;${build.dir}/LendingLibraryIntegrationTest.fdb&quot;" />
 
             <touch file="${build.dir}/results/database.flg" />
 

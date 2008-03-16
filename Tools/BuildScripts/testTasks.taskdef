@@ -91,7 +91,7 @@
                 <echo message="running tests with coverage"/>
     
                 <ncover commandLineExe="nunit-console.exe"
-                        commandLineArgs="__testAssembly__ /xml:${build.dir}/results/testCoverageResults.xml"
+                        commandLineArgs="&quot;__testAssembly__&quot; /xml:&quot;${build.dir}/results/testCoverageResults.xml&quot;"
                         coverageFile="__testCoverageFile__"
                         logFile="${build.dir}/results/coverage.log"
                         >

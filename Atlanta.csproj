@@ -14,6 +14,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="**\*.build" />
+    <None Include="**\*.taskdef" />
     <Compile Include="**\*.cs" />
     <Compile Include="**\*.svc" />
     <Compile Include="**\*.js" />
@@ -79,6 +80,15 @@
         <Message>Test Failed: $1: $2</Message>
         <File>$3</File>
         <LineNumber>$4</LineNumber>
+      </Error>
+
+      <!-- catches Build failures -->
+      <Error>
+        <Search>[\s\n\r](\S.*?\.build)\((\d+),(\d+)\):.*?[\n\r]\s*(.*?)[\n\r]</Search>
+        <Message>Build Failed: $4</Message>
+        <File>$1</File>
+        <LineNumber>$2</LineNumber>
+        <ColumnNumber>$3</ColumnNumber>
       </Error>
 
       <!-- catches coverage failures -->
