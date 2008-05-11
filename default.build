@@ -38,7 +38,7 @@
 
         <!-- NHibernate binaries -->
         <copy todir="${build.dir}/bin">
-            <fileset basedir="SDKs\NHibernate-1.2.0.CR1">
+            <fileset basedir="SDKs\NHibernate-2.0.0.Alpha1-bin">
                 <exclude name="**/.svn/**" />
                 <include name="**" />
             </fileset>

@@ -30,27 +30,57 @@
             <exec   program="isql.exe"
                     commandline="-b -i CustomPreCreate.ddl" />
 
-            <loadtasks assembly="${build.dir}/bin/NHibernate.Tasks.dll" />
-
             <move
                 file="LendingLibrary.fdb"
                 todir="${build.dir}"
                 overwrite="true"
                 />
 
-            <hbm2ddl    connectionprovider="NHibernate.Connection.DriverConnectionProvider"
-                        dialect="NHibernate.Dialect.FirebirdDialect"
-                        connectiondriverclass="NHibernate.Driver.FirebirdClientDriver"
-                        connectionstring="User=SYSDBA;Password=masterkey;Database=${build.dir}/LendingLibrary.fdb;ServerType=1;Pooling=false;"
-                        delimiter=";"
-                        outputtoconsole="false"
-                        exportonly="true"
-                        formatnice="true"
-                        outputfilename="${build.dir}/design/Database.ddl">
-                <assemblies>
-                    <include name="${build.dir}/bin/Atlanta.Application.Domain.dll" />
-                </assemblies>
-            </hbm2ddl>
+            <property name="hbm2ddl.ConnectionProvider" value="NHibernate.Connection.DriverConnectionProvider" />
+            <property name="hbm2ddl.Dialect"            value="NHibernate.Dialect.FirebirdDialect" />
+            <property name="hbm2ddl.ConnectionDriver"   value="NHibernate.Driver.FirebirdClientDriver" />
+            <property name="hbm2ddl.ConnectionString"   value="User=SYSDBA;Password=masterkey;Database=${build.dir}/LendingLibrary.fdb;ServerType=1;Pooling=false;" />
+            <property name="hbm2ddl.Assembly"           value="${build.dir}/bin/Atlanta.Application.Domain.dll" />
+            <property name="hbm2ddl.OutputFileName"     value="${build.dir}/design/Database.ddl" />
+
+            <script language="C#" >
+                <references>
+                    <include name="${build.dir}/bin/NHibernate.dll" />
+                </references>
+                <imports>
+                    <import namespace="System.Collections.Generic" />
+                    <import namespace="System.Reflection" />
+                    <import namespace="NHibernate.Cfg" />
+                    <import namespace="NHibernate.Tool.hbm2ddl" />
+                </imports>
+                <code>
+                    <![CDATA[
+
+                public static void ScriptMain(Project project)
+                {
+                    Configuration config = new Configuration();
+                    Dictionary<string, string> properties = new Dictionary<string, string>();
+
+                    properties[NHibernate.Cfg.Environment.ConnectionProvider] = project.Properties["hbm2ddl.ConnectionProvider"];
+                    properties[NHibernate.Cfg.Environment.Dialect] = project.Properties["hbm2ddl.Dialect"];
+                    properties[NHibernate.Cfg.Environment.ConnectionDriver] = project.Properties["hbm2ddl.ConnectionDriver"];
+                    properties[NHibernate.Cfg.Environment.ConnectionString] = project.Properties["hbm2ddl.ConnectionString"];
+
+                    config.AddProperties(properties);
+                    config.AddAssembly(Assembly.LoadFile(project.Properties["hbm2ddl.Assembly"]));
+
+                    SchemaExport schemaExport = new SchemaExport(config);
+                    schemaExport.SetOutputFile(project.Properties["hbm2ddl.OutputFileName"]);
+                    schemaExport.SetDelimiter(";");
+                    schemaExport.Execute(   false,  // output to console
+                                            true,   // export only
+                                            false,  // drop only
+                                            true);  // format nice
+                }
+
+            ]]>
+                </code>
+            </script>
 
             <exec   program="isql.exe"
                     commandline="-b -i &quot;${build.dir}/design/Database.ddl&quot; -u SYSDBA -p masterkey &quot;${build.dir}/LendingLibrary.fdb&quot;" />

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-using NHibernate.Expression;
+using NHibernate.Criterion;
 
 using NUnit.Framework;
 

@@ -40,12 +40,13 @@
             </fileset>
         </copy>
 
-        <copy todir="${build.dir}" file="Remote/web.config" />
-
-        <xmlpoke file="${build.dir}/web.config"
-                 xpath="/configuration/nhibernate/add[@key = 'hibernate.connection.connection_string']/@value"
-                 value="User=SYSDBA;Password=masterkey;Database=${build.dir}/LendingLibraryIntegrationTest.fdb;ServerType=1;">
-        </xmlpoke>
+        <copy   file="Remote/web.config"
+                todir="${build.dir}"
+                overwrite="true">
+            <filterchain>
+                <replacestring from="Database=?" to="Database=${build.dir}/LendingLibraryIntegrationTest.fdb" />
+            </filterchain>
+        </copy>
 
     </target>
 
