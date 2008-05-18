@@ -22,9 +22,9 @@ namespace Atlanta.Application.Services.Lending
         ///  Get a list of Media for the system Library
         /// </summary>
         public IList<Media> GetMediaList(   User            user,
-                                            MediaCriteria   criteria)
+                                            DomainCriteria  mediaCriteria)
         {
-            return DomainRegistry.Library.GetMediaList(criteria);
+            return DomainRegistry.Library.GetMediaList(mediaCriteria);
         }
 
         /// <summary>

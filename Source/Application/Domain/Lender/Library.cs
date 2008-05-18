@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using Atlanta.Application.Domain.DomainBase;
 using Atlanta.Application.Domain.Common;
 
+using NHibernate.Criterion;
+
 namespace Atlanta.Application.Domain.Lender
 {
 
@@ -27,7 +29,9 @@ namespace Atlanta.Application.Domain.Lender
         /// <summary> factory method </summary>
         public static Library InstantiateLibrary()
         {
-            return new Library();
+            Library library = new Library();
+            DomainRegistry.Session.Save(library);
+            return library;
         }
 
 
@@ -42,10 +46,13 @@ namespace Atlanta.Application.Domain.Lender
 
         private void ValidateNoMediaWithNameAndType(Media media)
         {
-            IList<Media> mediaWithNameAndType = new MediaCriteria()
-                                                    .SetTypeFilter(media.Type)
-                                                    .SetNameFilter(media.Name)
-                                                    .List(OwnedMedia);
+            IList<Media> mediaWithNameAndType =
+                DomainRegistry.Session
+                    .CreateCriteria(typeof(Media))
+                    .Add(Expression.Eq("OwningLibrary", this))
+                    .Add(Expression.Eq("Type", media.Type))
+                    .Add(Expression.Eq("Name", media.Name))
+                    .List<Media>();
 
             if (mediaWithNameAndType.Count != 0)
             {
@@ -57,9 +64,12 @@ namespace Atlanta.Application.Domain.Lender
         /// <summary>
         ///  Get a list of Media in the Library using the specified criteria.
         /// </summary>
-        virtual public IList<Media> GetMediaList(MediaCriteria mediaCriteria)
+        virtual public IList<Media> GetMediaList(DomainCriteria mediaCriteria)
         {
-            return mediaCriteria.List(OwnedMedia);
+            return
+                mediaCriteria
+                    .ToExecutableCriteria()
+                    .List<Media>();
         }
 
         /// <summary>

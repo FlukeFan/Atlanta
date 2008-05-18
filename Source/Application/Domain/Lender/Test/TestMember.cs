@@ -8,7 +8,7 @@ namespace Atlanta.Application.Domain.Lender.Test
 {
 
     [TestFixture]
-    public class TestMember : DomainTestBase
+    public class TestMember : DomainPersistenceTestBase
     {
         [Test]
         public void InstantiateOrphanedMember_Ok()

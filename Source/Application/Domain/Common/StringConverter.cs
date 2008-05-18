@@ -26,7 +26,9 @@ namespace Atlanta.Application.Domain.Common
             {        
                 StringBuilder convertedObjectBuilder = new StringBuilder();
 
-                PropertyInfo[] propertyInfo = objectToConvert.GetType().GetProperties();            
+                PropertyInfo[] propertyInfo = objectToConvert.GetType().GetProperties();
+                Array.Sort<PropertyInfo>(propertyInfo, delegate(PropertyInfo pi1, PropertyInfo pi2) { return pi1.Name.CompareTo(pi2.Name); });
+                bool firstProperty = true;
                 for(int i=0; i<propertyInfo.Length; i++)
                 {
                     if (IsPropertyStringVisible(propertyInfo[i]))
@@ -46,11 +48,12 @@ namespace Atlanta.Application.Domain.Common
                             }
                         }
 
-                        convertedObjectBuilder.Append(String.Format("{0}=<{1}>", currentPropertyName, currentPropertyStringValue));  
-                        if (i < propertyInfo.Length - 1)
+                        if (!firstProperty)
                         {
                             convertedObjectBuilder.Append(",");
                         }
+                        convertedObjectBuilder.Append(String.Format("{0}=<{1}>", currentPropertyName, currentPropertyStringValue));
+                        firstProperty = false;
                     }                    
                 }
                    

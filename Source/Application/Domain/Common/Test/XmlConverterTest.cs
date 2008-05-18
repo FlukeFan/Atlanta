@@ -5,13 +5,14 @@ using System.Xml;
 
 using NUnit.Framework;
 
+using Atlanta.Application.Domain.DomainBase.Test;
 using Atlanta.Application.Domain.Lender;
 
 namespace Atlanta.Application.Domain.Common.Test
 {
 
     [TestFixture]
-    public class XmlConverterTest
+    public class XmlConverterTest : DomainPersistenceTestBase
     {
         [Test]
         public void Convert_User()

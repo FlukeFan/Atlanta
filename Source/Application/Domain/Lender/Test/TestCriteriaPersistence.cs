@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 using NUnit.Framework;
 
+using NHibernate.Criterion;
+
 using Atlanta.Application.Domain.DomainBase;
 using Atlanta.Application.Domain.DomainBase.Test;
 
@@ -40,36 +42,48 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             IList<Media> filteredList;
             {
-                filteredList = new MediaCriteria()
-                                    .SetNameFilter("CD")
-                                    .List(library.OwnedMedia);
+                DomainCriteria filter =
+                    new DomainCriteria(typeof(Media))
+                        .Add(Expression.Eq("Name", "CD"));
+
+                filteredList =
+                    library.GetMediaList(filter);
 
                 Assert.AreEqual(1, filteredList.Count);
                 Assert.AreEqual("CD", filteredList[0].Name);
             }
 
             {
-                filteredList = new MediaCriteria()
-                                    .SetTypeFilter(MediaType.Dvd)
-                                    .List(library.OwnedMedia);
+                DomainCriteria filter =
+                    new DomainCriteria(typeof(Media))
+                        .Add(Expression.Eq("Type", MediaType.Dvd));
+
+                filteredList =
+                    library.GetMediaList(filter);
 
                 Assert.AreEqual(1, filteredList.Count);
                 Assert.AreEqual("DVD", filteredList[0].Name);
             }
 
             {
-                filteredList = new MediaCriteria()
-                                    .SetTypeFilter(MediaType.Dvd)
-                                    .SetNameFilter("CD")
-                                    .List(library.OwnedMedia);
+                DomainCriteria filter =
+                    new DomainCriteria(typeof(Media))
+                        .Add(Expression.Eq("Type", MediaType.Dvd))
+                        .Add(Expression.Eq("Name", "CD"));
+
+                filteredList =
+                    library.GetMediaList(filter);
 
                 Assert.AreEqual(0, filteredList.Count);
             }
 
             {
-                filteredList = new MediaCriteria()
-                                    .SetTypeFilter(MediaType.Dvd, FilterCondition.NotEqual)
-                                    .List(library.OwnedMedia);
+                DomainCriteria filter =
+                    new DomainCriteria(typeof(Media))
+                        .Add(Expression.Not(Expression.Eq("Type", MediaType.Dvd)));
+
+                filteredList =
+                    library.GetMediaList(filter);
 
                 Assert.AreEqual(2, filteredList.Count);
                 Assert.AreEqual("Book", filteredList[0].Name);

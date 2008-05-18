@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 
 using NUnit.Framework;
+using NHibernate.Criterion;
 
 using Atlanta.Application.Domain.DomainBase;
 using Atlanta.Application.Domain.DomainBase.Test;
@@ -22,7 +23,6 @@ namespace Atlanta.Application.Domain.Lender.Test
             base.SetUp();
 
             Library library = Library.InstantiateLibrary();
-            Session.Save(library);
 
             library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Book,  "Book", "A test book"));
             library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Cd,    "CD", "A test cd"));
@@ -47,14 +47,10 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void GetMedaList_Ok()
         {
-            Library library = Library.InstantiateLibrary();
-            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Dvd, "test dvd1", "test description"));
-            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Cd, "test cd1", "test description"));
-            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Dvd, "test dvd2", "test description"));
+            Library library = Session.Load<Library>(_libraryId);
+            IList<Media> mediaList = library.GetMediaList(new DomainCriteria(typeof(Media)).Add(Expression.Eq("Type", MediaType.Dvd)));
 
-            IList<Media> mediaList = library.GetMediaList(new MediaCriteria().SetTypeFilter(MediaType.Dvd));
-
-            Assert.AreEqual(2, mediaList.Count);
+            Assert.AreEqual(1, mediaList.Count);
         }
 
         [Test]
@@ -63,7 +59,6 @@ namespace Atlanta.Application.Domain.Lender.Test
             Library library = Library.InstantiateLibrary();
 
             Media media = Media.InstantiateOrphanedMedia(MediaType.Dvd, "test dvd", "test description");
-
             Media newMedia = library.Create(media);
 
             Assert.AreEqual(1, library.OwnedMedia.Count);
@@ -75,7 +70,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void CreateMedia_FailDuplicate()
         {
-            Library library = Library.InstantiateLibrary();
+            Library library = Session.Load<Library>(_libraryId);
             library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Dvd, "test dvd", "test description"));
 
             Media media = Media.InstantiateOrphanedMedia(MediaType.Dvd, "test dvd", "test description 2");

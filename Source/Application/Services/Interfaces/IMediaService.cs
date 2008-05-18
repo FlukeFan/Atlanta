@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ServiceModel;
 
+using Atlanta.Application.Domain.DomainBase;
 using Atlanta.Application.Domain.Lender;
 
 namespace Atlanta.Application.Services.Interfaces
@@ -19,7 +20,7 @@ namespace Atlanta.Application.Services.Interfaces
         /// </summary>
         [OperationContract]
         IList<Media> GetMediaList(  User            user,
-                                    MediaCriteria   criteria);
+                                    DomainCriteria  mediaCriteria);
 
         /// <summary>
         ///  Create a Media in the system Library

@@ -3,20 +3,21 @@ using System;
 
 using NUnit.Framework;
 
+using Atlanta.Application.Domain.DomainBase.Test;
 using Atlanta.Application.Domain.Lender;
 
 namespace Atlanta.Application.Domain.Common.Test
 {
 
     [TestFixture]
-    public class StringConverterTest
+    public class StringConverterTest : DomainPersistenceTestBase
     {
         
         [Test]
         public void Convert_OrphanedMedia()
         {
             string received = StringConverter.Convert(Media.InstantiateOrphanedMedia(MediaType.Book, "LA Confidential","Crime Fiction"));
-            string expected = "OwningLibrary=<null>,Type=<Book>,Name=<LA Confidential>,Description=<Crime Fiction>,Id=<0>";
+            string expected = "Description=<Crime Fiction>,Id=<0>,Name=<LA Confidential>,OwningLibrary=<null>,Type=<Book>";
             
             Assert.AreEqual(expected, received);            
         }
@@ -24,8 +25,9 @@ namespace Atlanta.Application.Domain.Common.Test
         [Test]
         public void Convert_Media()
         {
-            string received = StringConverter.Convert(Media.InstantiateMedia(Library.InstantiateLibrary(), MediaType.Book, "Refactoring", "Programming"));
-            string expected = "OwningLibrary=<Id=<0>>,Type=<Book>,Name=<Refactoring>,Description=<Programming>,Id=<0>";
+            Library library = Library.InstantiateLibrary();
+            string received = StringConverter.Convert(Media.InstantiateMedia(library, MediaType.Book, "Refactoring", "Programming"));
+            string expected = "Description=<Programming>,Id=<0>,Name=<Refactoring>,OwningLibrary=<Id=<" + library.Id.ToString() + ">>,Type=<Book>";
             
             Assert.AreEqual(expected, received);            
         }        
@@ -34,7 +36,7 @@ namespace Atlanta.Application.Domain.Common.Test
         public void Convert_User()
         {        
             string received = StringConverter.Convert(User.InstantiateUser("Pete Bondourant"));
-            string expected = "Login=<Pete Bondourant>,Id=<0>";
+            string expected = "Id=<0>,Login=<Pete Bondourant>";
             
             Assert.AreEqual(expected, received);
         }
@@ -42,8 +44,9 @@ namespace Atlanta.Application.Domain.Common.Test
         [Test]
         public void Convert_Library()
         {
-            string received = StringConverter.Convert(Library.InstantiateLibrary());
-            string expected = "Id=<0>";
+            Library library = Library.InstantiateLibrary();
+            string received = StringConverter.Convert(library);
+            string expected = "Id=<" + library.Id.ToString() + ">";
             
             Assert.AreEqual(expected, received);
         }

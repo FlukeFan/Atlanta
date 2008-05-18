@@ -51,6 +51,12 @@ namespace Atlanta.Application.Domain.DomainBase.Test
             }
         }
 
+        public override void SetUp()
+        {
+            base.SetUp();
+            DomainRegistry.Session = Session;
+        }
+
         override public void TearDown()
         {
             base.TearDown();
