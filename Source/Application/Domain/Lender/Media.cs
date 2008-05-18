@@ -43,24 +43,8 @@ namespace Atlanta.Application.Domain.Lender
         
         #region Constructors
         
-        /// <summary> constructor </summary>
-        protected Media() 
-            : this(null, MediaType.None, String.Empty, String.Empty)
-        {
-        }
-        
-        /// <summary> constructor </summary>
-        protected Media(Library     owningLibrary,
-                        MediaType   type,
-                        string      name,
-                        string      description)
-            : base()                        
-        {
-            OwningLibrary = owningLibrary;
-            Type = type;
-            Name = name;
-            Description = description;
-        }        
+        /// <summary> default constructor (for NH only)</summary>
+        protected Media() { }
         
         #endregion 
         
@@ -71,7 +55,11 @@ namespace Atlanta.Application.Domain.Lender
                                                         string      name,
                                                         string      description)
         {
-            return new Media(null, type, name, description);
+            Media media = new Media();
+            media.Type = type;
+            media.Name = name;
+            media.Description = description;
+            return media;
         }
         
         /// <summary> factory method </summary>
@@ -80,7 +68,9 @@ namespace Atlanta.Application.Domain.Lender
                                                 string      name,
                                                 string      description)
         {
-            return new Media(owningLibrary, type, name, description);
+            Media media = InstantiateOrphanedMedia(type, name, description);
+            media.OwningLibrary = owningLibrary;
+            return media;
         }        
         
         #endregion
@@ -119,7 +109,7 @@ namespace Atlanta.Application.Domain.Lender
         
         #region Business Methods
         
-        /// <summary> Update the details of this media. </summary>
+        /// <summary> Update the details of this (transient) media. </summary>
         public virtual void ModifyDetails(  MediaType   newType,
                                             string      newName,
                                             string      newDescription)

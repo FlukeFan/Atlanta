@@ -35,6 +35,36 @@ namespace Atlanta.Application.Domain.Lender.Test
         }
 
         [Test]
+        public void InstantiateOrphanedMedia_Ok()
+        {
+            Media media = Media.InstantiateOrphanedMedia(MediaType.Dvd, "test", "test description");
+
+            Assert.AreEqual(null, media.OwningLibrary);
+            Assert.AreEqual(MediaType.Dvd, media.Type);
+            Assert.AreEqual("test", media.Name);
+            Assert.AreEqual("test description", media.Description);
+        }
+
+        [Test]
+        public void ModifyDetails_Ok()
+        {
+            Media media = Media.InstantiateOrphanedMedia(MediaType.Dvd, "test", "test description");
+
+            media.ModifyDetails(MediaType.Cd, "new name", "new description");
+
+            Assert.AreEqual(null, media.OwningLibrary);
+            Assert.AreEqual(MediaType.Cd, media.Type);
+            Assert.AreEqual("new name", media.Name);
+            Assert.AreEqual("new description", media.Description);
+        }
+
+        [Test]
+        public void XmlSerialization_Ok()
+        {
+            Media toSerialize = Media.InstantiateOrphanedMedia(MediaType.Dvd, "test", "test description");
+        }
+
+        [Test]
         public void Insert_Load_Ok()
         {
             Library library = Session.Load<Library>(_libraryId);
