@@ -11,7 +11,7 @@ namespace Atlanta.Application.Domain.Lender.Test
 {
 
     [TestFixture]
-    public class TestLibraryPersistence : DomainPersistenceTestBase
+    public class TestLibrary : DomainPersistenceTestBase
     {
 
         private long _libraryId;
