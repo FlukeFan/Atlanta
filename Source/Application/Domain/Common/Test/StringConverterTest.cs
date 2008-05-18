@@ -26,7 +26,8 @@ namespace Atlanta.Application.Domain.Common.Test
         public void Convert_Media()
         {
             Library library = Library.InstantiateLibrary();
-            string received = StringConverter.Convert(Media.InstantiateMedia(library, MediaType.Book, "Refactoring", "Programming"));
+            Media media = library.Create(Media.InstantiateOrphanedMedia(MediaType.Book, "Refactoring", "Programming"));
+            string received = StringConverter.Convert(media);
             string expected = "Description=<Programming>,Id=<0>,Name=<Refactoring>,OwningLibrary=<Id=<" + library.Id.ToString() + ">>,Type=<Book>";
             
             Assert.AreEqual(expected, received);            

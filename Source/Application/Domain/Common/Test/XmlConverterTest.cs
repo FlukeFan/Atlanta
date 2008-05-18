@@ -30,7 +30,9 @@ namespace Atlanta.Application.Domain.Common.Test
         [Test]
         public void Convert_Media()
         {
-            Console.WriteLine(ConvertXmlDocumentToString(XmlConverter.Convert(Media.InstantiateMedia(Library.InstantiateLibrary(), MediaType.Book, "Refactoring", "Programming"))));
+            Library library = Library.InstantiateLibrary();
+            Media media = library.Create(Media.InstantiateOrphanedMedia(MediaType.Book, "Refactoring", "Programming"));
+            Console.WriteLine(ConvertXmlDocumentToString(XmlConverter.Convert(media)));
         }
        
         

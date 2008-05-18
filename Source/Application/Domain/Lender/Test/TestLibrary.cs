@@ -24,16 +24,16 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             Library library = Library.InstantiateLibrary();
 
-            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Book,  "Book", "A test book"));
-            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Cd,    "CD", "A test cd"));
-            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Dvd,   "DVD", "A test dvd"));
+            Media media1 = library.Create(Media.InstantiateOrphanedMedia(MediaType.Book,  "Book", "A test book"));
+            Media media2 = library.Create(Media.InstantiateOrphanedMedia(MediaType.Cd, "CD", "A test cd"));
+            Media media3 = library.Create(Media.InstantiateOrphanedMedia(MediaType.Dvd, "DVD", "A test dvd"));
 
             Session.Flush();
             Session.Clear();
             DomainRegistry.Library = null;
 
             _libraryId = library.Id;
-            _mediaId = library.OwnedMedia[0].Id;
+            _mediaId = library.ReadonlyOwnedMedia[0].Id;
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         {
             Library library = Library.InstantiateLibrary();
 
-            Assert.AreEqual(0, library.OwnedMedia.Count);
+            Assert.AreEqual(0, library.ReadonlyOwnedMedia.Count);
         }
 
         [Test]
@@ -61,17 +61,17 @@ namespace Atlanta.Application.Domain.Lender.Test
             Media media = Media.InstantiateOrphanedMedia(MediaType.Dvd, "test dvd", "test description");
             Media newMedia = library.Create(media);
 
-            Assert.AreEqual(1, library.OwnedMedia.Count);
-            Assert.AreEqual(newMedia, library.OwnedMedia[0]);
+            Assert.AreEqual(1, library.ReadonlyOwnedMedia.Count);
+            Assert.AreEqual(newMedia, library.ReadonlyOwnedMedia[0]);
             Assert.AreEqual(library, newMedia.OwningLibrary);
-            Assert.AreEqual("test dvd", library.OwnedMedia[0].Name);
+            Assert.AreEqual("test dvd", library.ReadonlyOwnedMedia[0].Name);
         }
 
         [Test]
         public void CreateMedia_FailDuplicate()
         {
             Library library = Session.Load<Library>(_libraryId);
-            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Dvd, "test dvd", "test description"));
+            library.Create(Media.InstantiateOrphanedMedia(MediaType.Dvd, "test dvd", "test description"));
 
             Media media = Media.InstantiateOrphanedMedia(MediaType.Dvd, "test dvd", "test description 2");
 
@@ -90,15 +90,14 @@ namespace Atlanta.Application.Domain.Lender.Test
         public void ModifyMedia_Ok()
         {
             Library library = Library.InstantiateLibrary();
-            Media existingMedia = Media.InstantiateMedia(library, MediaType.Dvd, "test dvd", "test description");
-            library.OwnedMedia.Add(existingMedia);
+            Media existingMedia = library.Create(Media.InstantiateOrphanedMedia(MediaType.Dvd, "test dvd", "test description"));
 
             Media mediaClientCopy = (Media)MakeCopy(existingMedia);
             mediaClientCopy.ModifyDetails(MediaType.Cd, "test name changed", "test description changed");
 
             Media modifiedMedia = library.Modify(existingMedia, mediaClientCopy);
 
-            Assert.AreEqual(1, library.OwnedMedia.Count);
+            Assert.AreEqual(1, library.ReadonlyOwnedMedia.Count);
             Assert.AreEqual(existingMedia, modifiedMedia);
             Assert.AreEqual(MediaType.Cd, modifiedMedia.Type);
             Assert.AreEqual("test name changed", modifiedMedia.Name);
@@ -109,11 +108,11 @@ namespace Atlanta.Application.Domain.Lender.Test
         public void ModifyMedia_FailDuplicate()
         {
             Library library = Library.InstantiateLibrary();
-            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Cd, "test", "test object 1"));
-            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Cd, "test2", "test object 2"));
-            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Dvd, "test", "test object 3"));
+            library.Create(Media.InstantiateOrphanedMedia(MediaType.Cd, "test", "test object 1"));
+            library.Create(Media.InstantiateOrphanedMedia(MediaType.Cd, "test2", "test object 2"));
+            library.Create(Media.InstantiateOrphanedMedia(MediaType.Dvd, "test", "test object 3"));
 
-            Media existingMedia = library.OwnedMedia[0];
+            Media existingMedia = library.ReadonlyOwnedMedia[0];
             Media mediaClientCopy = (Media)MakeCopy(existingMedia);
 
             Media modifiedMedia = library.Modify(existingMedia, mediaClientCopy);
@@ -128,7 +127,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             }
             catch (DuplicationException e)
             {
-                Assert.AreEqual(library.OwnedMedia[2], e.Duplicate);
+                Assert.AreEqual(library.ReadonlyOwnedMedia[2], e.Duplicate);
             }
 
             try
@@ -140,7 +139,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             }
             catch (DuplicationException e)
             {
-                Assert.AreEqual(library.OwnedMedia[1], e.Duplicate);
+                Assert.AreEqual(library.ReadonlyOwnedMedia[1], e.Duplicate);
             }
         }
 
@@ -148,12 +147,11 @@ namespace Atlanta.Application.Domain.Lender.Test
         public void DeleteMedia_Ok()
         {
             Library library = Library.InstantiateLibrary();
-            Media media = Media.InstantiateMedia(library, MediaType.Dvd, "test dvd", "test description");
-            library.OwnedMedia.Add(media);
+            Media media = library.Create(Media.InstantiateOrphanedMedia(MediaType.Dvd, "test dvd", "test description"));
 
             library.Delete(media);
 
-            Assert.AreEqual(0, library.OwnedMedia.Count);
+            Assert.AreEqual(0, library.ReadonlyOwnedMedia.Count);
         }
 
         [Test]
@@ -169,7 +167,7 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             library = Session.Load<Library>(library.Id);
 
-            Assert.AreEqual(0, library.OwnedMedia.Count);
+            Assert.AreEqual(0, library.ReadonlyOwnedMedia.Count);
         }
 
         [Test]
@@ -224,23 +222,20 @@ namespace Atlanta.Application.Domain.Lender.Test
         {
             Library library = Session.Load<Library>(_libraryId);
 
-            Assert.AreEqual(3, library.OwnedMedia.Count);
+            Assert.AreEqual(3, library.ReadonlyOwnedMedia.Count);
         }
 
         [Test]
         public void InsertChildMedia_Ok()
         {
             Library library = Session.Load<Library>(_libraryId);
-
-            Media media = Media.InstantiateMedia(library, MediaType.Dvd, "test", "test description");
-
-            library.OwnedMedia.Add(media);
+            Media media = library.Create(Media.InstantiateOrphanedMedia(MediaType.Dvd, "test", "test description"));
 
             Session.Flush();
             Session.Clear();
 
             library = Session.Load<Library>(_libraryId);
-            Assert.AreEqual(4, library.OwnedMedia.Count);
+            Assert.AreEqual(4, library.ReadonlyOwnedMedia.Count);
         }
 
         [Test]
@@ -249,13 +244,13 @@ namespace Atlanta.Application.Domain.Lender.Test
             Library library = Session.Load<Library>(_libraryId);
             Media media = Session.Load<Media>(_mediaId);
 
-            library.OwnedMedia.Remove(media);
+            library.Delete(media);
 
             Session.Flush();
             Session.Clear();
 
             library = Session.Load<Library>(_libraryId);
-            Assert.AreEqual(2, library.OwnedMedia.Count);
+            Assert.AreEqual(2, library.ReadonlyOwnedMedia.Count);
         }
 
     }

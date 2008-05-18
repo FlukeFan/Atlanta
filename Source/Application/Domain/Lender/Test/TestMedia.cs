@@ -24,9 +24,9 @@ namespace Atlanta.Application.Domain.Lender.Test
             Library library = Library.InstantiateLibrary();
             Session.Save(library);
 
-            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Book,  "Book", "A test book"));
-            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Cd,    "CD", "A test cd"));
-            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Dvd,   "DVD", "A test dvd"));
+            library.Create(Media.InstantiateOrphanedMedia(MediaType.Book,  "Book", "A test book"));
+            library.Create(Media.InstantiateOrphanedMedia(MediaType.Cd, "CD", "A test cd"));
+            library.Create(Media.InstantiateOrphanedMedia(MediaType.Dvd, "DVD", "A test dvd"));
 
             Session.Flush();
             Session.Clear();
@@ -69,7 +69,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         {
             Library library = Session.Load<Library>(_libraryId);
 
-            Media media = Media.InstantiateMedia(library, MediaType.Dvd, "test", "test description");
+            Media media = library.Create(Media.InstantiateOrphanedMedia(MediaType.Dvd, "test", "test description"));
 
             Session.Save(media);
             Assert.IsTrue(media.Id != 0);
@@ -85,20 +85,6 @@ namespace Atlanta.Application.Domain.Lender.Test
         }
 
         [Test]
-        public void ExampleByFilter_LoadAllBooks()
-        {
-            Library library = Session.Load<Library>(_libraryId);
-
-            IList<Media> bookMediaInLibrary =
-                Session.CreateFilter(library.OwnedMedia, "where type = ?")
-                    .SetParameter(0, MediaType.Book)
-                    .List<Media>();
-
-            Assert.AreEqual(1, bookMediaInLibrary.Count);
-            Assert.AreEqual("Book", bookMediaInLibrary[0].Name);
-        }
-
-        [Test]
         public void ExampleByCriteria_LoadAllBooks()
         {
             Library library = Session.Load<Library>(_libraryId);
@@ -111,36 +97,6 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             Assert.AreEqual(1, bookMediaInLibrary.Count);
             Assert.AreEqual("Book", bookMediaInLibrary[0].Name);
-        }
-
-        [Test]
-        public void ExampleByFilter_Paging()
-        {
-            Library library = Library.InstantiateLibrary();
-
-            for (int i=0; i<20; i++)
-            {
-                library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Book, "book " + i.ToString(), "book description"));
-            }
-
-            Session.Save(library);
-            Session.Flush();
-            Session.Clear();
-
-            library = Session.Load<Library>(library.Id);
-
-            IList<Media> secondPage5Books =
-                Session.CreateFilter(library.OwnedMedia, "")
-                    .SetFirstResult(5)
-                    .SetMaxResults(5)
-                    .List<Media>();
-
-            Assert.AreEqual(5, secondPage5Books.Count);
-            Assert.AreEqual("book 5", secondPage5Books[0].Name);
-            Assert.AreEqual("book 6", secondPage5Books[1].Name);
-            Assert.AreEqual("book 7", secondPage5Books[2].Name);
-            Assert.AreEqual("book 8", secondPage5Books[3].Name);
-            Assert.AreEqual("book 9", secondPage5Books[4].Name);
         }
 
     }

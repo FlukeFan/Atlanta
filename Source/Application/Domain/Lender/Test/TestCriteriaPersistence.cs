@@ -25,9 +25,9 @@ namespace Atlanta.Application.Domain.Lender.Test
             Library library = Library.InstantiateLibrary();
             Session.Save(library);
 
-            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Book,  "Book", "A test book"));
-            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Cd,    "CD", "A test cd"));
-            library.OwnedMedia.Add(Media.InstantiateMedia(library, MediaType.Dvd,   "DVD", "A test dvd"));
+            library.Create(Media.InstantiateOrphanedMedia(MediaType.Book,  "Book", "A test book"));
+            library.Create(Media.InstantiateOrphanedMedia(MediaType.Cd, "CD", "A test cd"));
+            library.Create(Media.InstantiateOrphanedMedia(MediaType.Dvd, "DVD", "A test dvd"));
 
             Session.Flush();
             Session.Clear();

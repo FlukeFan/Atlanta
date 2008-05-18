@@ -63,7 +63,7 @@ namespace Atlanta.Application.Domain.Lender
         }
         
         /// <summary> factory method </summary>
-        public static Media InstantiateMedia(   Library     owningLibrary,
+        internal static Media InstantiateMedia( Library     owningLibrary,
                                                 MediaType   type,
                                                 string      name,
                                                 string      description)

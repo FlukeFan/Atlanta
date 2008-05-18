@@ -17,7 +17,7 @@ namespace Atlanta.Application.Domain.Lender
     public class Library : DomainObjectBase
     {
 
-        private IList<Media> _ownedMedia = new DomainList<Media>();
+        private IList<Media> _ownedMedia;
 
 
         /// <summary> constructor </summary>
@@ -30,18 +30,22 @@ namespace Atlanta.Application.Domain.Lender
         public static Library InstantiateLibrary()
         {
             Library library = new Library();
+            library._ownedMedia = new List<Media>();
             DomainRegistry.Session.Save(library);
             return library;
         }
 
 
         /// <summary> Media collection </summary>
-        [StringVisible(false)]
-        virtual public IList<Media> OwnedMedia
+        protected virtual IList<Media> OwnedMedia
         {
             get { return _ownedMedia; }
-            protected set { _ownedMedia = value; }
+            set { _ownedMedia = value; }
         }
+
+        /// <summary> Read-only wrapper of list </summary>
+        [StringVisible(false)]
+        public virtual IList<Media> ReadonlyOwnedMedia { get { return new List<Media>(_ownedMedia).AsReadOnly(); } }
 
 
         private void ValidateNoMediaWithNameAndType(Media media)
