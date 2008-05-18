@@ -32,10 +32,10 @@ namespace Atlanta.Application.Domain.DomainBase
     };
 
     /// <summary>
-    /// Base class for domain criteria objects
+    /// Class for domain criteria (simple detached criteria useable by a thin client)
     /// </summary>
     [Serializable]
-    abstract public class DomainCriteriaBase<T, D>
+    abstract public class DomainCriteria<T, D>
     {
 
         private Dictionary<string, List<object>>            _filterValues       = new Dictionary<string, List<object>>();
