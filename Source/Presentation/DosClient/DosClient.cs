@@ -1,7 +1,10 @@
 
 using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 
+using Atlanta.Application.Domain.DomainBase;
+using Atlanta.Application.Domain.Lender;
 using Atlanta.Application.Services.Interfaces;
 
 namespace Atlanta.Presentation
@@ -17,8 +20,12 @@ namespace Atlanta.Presentation
         static void Main(string[] args)
         {
             IMediaService service = new ChannelFactory<IMediaService>("MediaService").CreateChannel();
-            string result = service.TempMethodToTestWebServices();
-            Console.WriteLine(result);
+            DomainCriteria mediaCriteria = new DomainCriteria(typeof(Media));
+            IList<Media> mediaList = service.GetMediaList(null, mediaCriteria);
+            foreach (Media media in mediaList)
+            {
+                Console.WriteLine(media.Name + ", " + media.Type.ToString() + ", " + media.Description);
+            }
         }
 
     }

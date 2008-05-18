@@ -17,7 +17,7 @@ namespace Atlanta.Application.Domain.DomainBase
     public class DomainCriteria
     {
 
-        private Type _type;
+        private string _type;
         private List<ICriterion> _criterionList = new List<ICriterion>();
 
         /// <summary>
@@ -25,12 +25,13 @@ namespace Atlanta.Application.Domain.DomainBase
         /// </summary>
         public DomainCriteria(Type persistentType)
         {
-            _type = persistentType;
+            _type = persistentType.FullName;
         }
 
         internal ICriteria ToExecutableCriteria()
         {
-            ICriteria criteria = DomainRegistry.Session.CreateCriteria(_type);
+            Type type = Type.GetType(_type);
+            ICriteria criteria = DomainRegistry.Session.CreateCriteria(type);
 
             foreach (ICriterion criterion in _criterionList)
             {

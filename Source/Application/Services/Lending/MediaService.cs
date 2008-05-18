@@ -1,6 +1,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
 
 using Atlanta.Application.Domain.DomainBase;
 using Atlanta.Application.Domain.Lender;
@@ -24,7 +27,22 @@ namespace Atlanta.Application.Services.Lending
         public IList<Media> GetMediaList(   User            user,
                                             DomainCriteria  mediaCriteria)
         {
-            return DomainRegistry.Library.GetMediaList(mediaCriteria);
+            IList<Media> mediaList =
+                DomainRegistry.Library.GetMediaList(mediaCriteria);
+
+            // temporary solution that
+            // creates a copy to serialise
+            // across a web-service
+            IList<Media> mediaListCopy = new List<Media>();
+            foreach (Media sourceMedia in mediaList)
+            {
+                Media copy = Media.InstantiateOrphanedMedia(sourceMedia.Type, sourceMedia.Name, sourceMedia.Description);
+                PropertyInfo propertyInfo = typeof(Media).GetProperty("Id");
+                propertyInfo.SetValue(copy, sourceMedia.Id, null);
+                mediaListCopy.Add(copy);
+            }
+
+            return mediaListCopy;
         }
 
         /// <summary>
