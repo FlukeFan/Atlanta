@@ -24,6 +24,11 @@
 
     <target name="onBuild">
 
+        <if test="${not directory::exists(build.dir)}">
+            <mkdir dir="${build.dir}" />
+            <exec program="cacls" commandline="&quot;${build.dir}&quot; /T /E /G ASPNET:C" />
+        </if>
+
         <mkdir dir="${build.dir}/bin" />
         <mkdir dir="${build.dir}/design" />
         <mkdir dir="${build.dir}/web" />
