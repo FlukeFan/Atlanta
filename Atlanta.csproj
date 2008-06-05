@@ -45,7 +45,7 @@
     <Reference Include="Spring.Core" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
-  <UsingTask AssemblyFile="SDKs\ExecParse1.0.0.0\ExecParse.dll" TaskName="ExecParse.ExecParse" />
+  <UsingTask AssemblyFile="SDKs\ExecParse1.1.0.0\ExecParse.dll" TaskName="ExecParse.ExecParse" />
   <PropertyGroup>
     <ExecParseConfiguration>
 
@@ -61,7 +61,7 @@
 
       <!-- catches NUnit failures -->
       <Error>
-        <Search>\[ncover\] \d+\) [\s\S]*?(?=[^\n\r]*?\[ncover\] [^ ])</Search>
+        <Search>\[ncover\] \d+\) [\s\S]*?(?=[^\n\r]*?\[ncover\] ( *[\n\r]|\d|\*))</Search>
         <ReplaceSearch>\[ncover\] \d+\) .*?\.([^.]*?) : ([\s\S]*? in (.*?):line (\d+))\s*$</ReplaceSearch>
         <Message>Test Failed: $1: $2</Message>
         <File>$3</File>
