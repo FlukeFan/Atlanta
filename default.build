@@ -26,7 +26,7 @@
 
         <if test="${not directory::exists(build.dir)}">
             <mkdir dir="${build.dir}" />
-            <exec program="cacls" commandline="&quot;${build.dir}&quot; /T /E /G ASPNET:C" />
+            <exec program="cacls" commandline="&quot;${build.dir}&quot; /T /E /G Users:C" />
         </if>
 
         <mkdir dir="${build.dir}/bin" />
@@ -90,6 +90,15 @@
 
         <nant buildfile="Source\Source.build"           inheritall="true"   target="build"/>
 
+    </target>
+
+
+    <target name="exportResults">
+        <copy todir="results">
+            <fileset basedir="${build.dir}/results">
+                <include name="*.xml" />
+            </fileset>
+        </copy>
     </target>
 
 
