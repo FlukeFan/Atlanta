@@ -37,7 +37,7 @@ namespace Atlanta.Application.Services.Lending.Test
             _user = User.InstantiateUser("testServiceUser");
         }
         
-/*        [Test]
+        [Test]
         public void TestSetService()
         {
             Assert.IsNotNull(AtlantaServices.MediaService);
@@ -124,7 +124,7 @@ namespace Atlanta.Application.Services.Lending.Test
                 .Delete(_user, mediaCopy);
 
             Assert.AreEqual(2, Session.CreateCriteria(typeof(Media)).List<Media>().Count);
-        }*/
+        }
 
     }
 }
