@@ -56,6 +56,7 @@
                 testAssembly="${build.dir}/bin/Atlanta.Application.Domain.Test.dll"
                 testSuccessFlagFile="test_domain.flg"
                 testCoverageFile="${build.dir}/results/DomainCoverage.xml"
+                testResultsFile="${build.dir}/results/TestDomain-results.xml"
                 satisfactoryCoverage="95"
                 >
 

@@ -60,6 +60,7 @@
             <stringparam name="testAssembly" />
             <stringparam name="testSuccessFlagFile" />
             <stringparam name="testCoverageFile" />
+            <stringparam name="testResultsFile" />
             <stringparam name="satisfactoryCoverage" />
         </stringparams>
 
@@ -91,7 +92,7 @@
                 <echo message="running tests with coverage"/>
     
                 <ncover commandLineExe="nunit-console.exe"
-                        commandLineArgs="&quot;__testAssembly__&quot; /xml:&quot;${build.dir}/results/testCoverageResults.xml&quot;"
+                        commandLineArgs="&quot;__testAssembly__&quot; /xml:&quot;__testResultsFile__&quot;"
                         coverageFile="__testCoverageFile__"
                         logFile="${build.dir}/results/coverage.log"
                         >
