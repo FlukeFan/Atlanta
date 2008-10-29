@@ -27,4 +27,4 @@ nant release build                      Perform a release build
 nant release clean                      Clean a release build
 nant release build -D:notest=true       Perform a release build, but supress creation (and running) of tests
 nant -D:ignore=Application              Ignore the project labelled 'Application' when it is reached
-
+nant build exportResults clean          Build, export the results (for CCNet), and clean the build
