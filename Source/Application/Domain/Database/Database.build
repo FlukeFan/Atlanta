@@ -28,7 +28,7 @@
 
 
             <exec   program="isql.exe"
-                    commandline="-b -i CustomPreCreate.ddl" />
+                    commandline="-q -b -i CustomPreCreate.ddl" />
 
             <move
                 file="LendingLibrary.fdb"
