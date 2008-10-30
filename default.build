@@ -65,7 +65,7 @@
 
         <!-- Spring.Net binaries -->
         <copy todir="${build.dir}/bin">
-            <fileset basedir="SDKs\Spring1.1RC1">
+            <fileset basedir="SDKs\Spring1.2RC1">
                 <exclude name="**/.svn/**" />
                 <include name="**" />
             </fileset>
