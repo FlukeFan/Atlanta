@@ -9,6 +9,7 @@ using NHibernate.Criterion;
 using Atlanta.Application.Domain.DomainBase;
 using Atlanta.Application.Domain.Lender;
 
+using Atlanta.Application.Services.Interfaces;
 using Atlanta.Application.Services.ServiceBase.Test;
 
 namespace Atlanta.Application.Services.Lending.Test
@@ -24,6 +25,9 @@ namespace Atlanta.Application.Services.Lending.Test
         {
             base.SetUp();
 
+            AtlantaServices.ClearServices();
+            AtlantaServices.AddAdvisedService<IMediaService>(new MediaService(), new AopAroundTestAdvice());
+
             Library library = Library.InstantiateLibrary();
             Session.Save(library);
 
@@ -37,14 +41,6 @@ namespace Atlanta.Application.Services.Lending.Test
             _user = User.InstantiateUser("testServiceUser");
         }
         
-        [Test]
-        public void TestSetService()
-        {
-            Assert.IsNotNull(AtlantaServices.MediaService);
-            AtlantaServices.MediaService = null;
-            Assert.IsNotNull(AtlantaServices.MediaService);
-        }
-
         [Test]
         public void TestGetMediaList_Ok()
         {

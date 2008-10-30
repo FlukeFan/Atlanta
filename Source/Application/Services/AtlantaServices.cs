@@ -2,8 +2,8 @@
 using System;
 using System.Collections;
 
-using Spring.Context;
-using Spring.Context.Support;
+using AopAlliance.Intercept;
+using Spring.Aop.Framework;
 
 using Atlanta.Application.Services.Interfaces;
 
@@ -16,8 +16,6 @@ namespace Atlanta.Application.Services
     public class AtlantaServices
     {
 
-        private static IApplicationContext _context = ContextRegistry.GetContext();
-
         [ThreadStatic]
         private static Hashtable _services;
 
@@ -29,33 +27,44 @@ namespace Atlanta.Application.Services
             }
         }
 
-        private static object GetService(string serviceName)
+        private static InterfaceType GetService<InterfaceType>()
         {
             CreateServicesTable();
 
-            object service = _services[serviceName];
+            object service = _services[typeof(InterfaceType)];
 
             if (service == null)
-            {
-                service = _context[serviceName];
-                _services[serviceName] = service;
-            }
+                throw new Exception("Service of type '" + typeof(InterfaceType).ToString() + "' not registered."
+                    + "  Register service using AddAdvisedService first.");
 
-            return service;
+            return (InterfaceType)service;
         }
 
-        private static void SetService( string  serviceName,
-                                        object  service)
+        /// <summary>
+        /// Clear any existing advised services
+        /// </summary>
+        public static void ClearServices()
+        {
+            _services = null;
+        }
+
+        /// <summary>
+        /// Add a service proxied and advised using the appropriate around AOP advice
+        /// </summary>
+        public static void AddAdvisedService<IServiceInterface>(IServiceInterface   implementation,
+                                                                IMethodInterceptor  interceptor)
         {
             CreateServicesTable();
-            _services[serviceName] = service;
+            ProxyFactory proxyFactory = new ProxyFactory(implementation);
+            proxyFactory.AddAdvice(interceptor);
+            IServiceInterface service = (IServiceInterface)proxyFactory.GetProxy();
+            _services.Add(typeof(IServiceInterface), service);
         }
 
         /// <summary> MediaService </summary>
         public static IMediaService MediaService
         {
-            get { return (IMediaService) GetService("MediaService"); }
-            set { SetService("MediaService", value); }
+            get { return GetService<IMediaService>(); }
         }
 
     }
