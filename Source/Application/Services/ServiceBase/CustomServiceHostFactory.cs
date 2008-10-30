@@ -2,39 +2,54 @@
 using System;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
+using System.ServiceModel.Description;
 
 using Spring.Util;
+
+using Atlanta.Application.Services.Interfaces;
+using Atlanta.Application.Services.Lending;
 
 namespace Atlanta.Application.Services.ServiceBase
 {
 
     /// <summary>
-    ///  This code was derived from the Spring.Net trunk.  This can be replace with a direct reference to the
-    ///   Spring.Net assemblies once the WCF stuff makes it into a release.  (Currently you can only get it
-    ///   by checking out the trunk, hacking a couple of build files, then building it yourself)
+    /// Custom service factory to return correctly advised services to Asp.Net hosted WCF service.
     /// </summary>
-    public class CustomServiceHostFactory : ServiceHostFactoryBase
+    public class CustomServiceHostFactory : ServiceHostFactory
     {
 
-        /// <summary>
-        ///  Override
-        /// </summary>
-        public override ServiceHostBase CreateServiceHost(string reference, Uri[] baseAddresses)
-        {
-            if (StringUtils.IsNullOrEmpty(reference))
-            {
-                throw new ArgumentException("The service name was not provided in the ServiceHost directive.", "Service");
-            }
+        private static bool _servicesCreated = false;
 
-            string[] refSplitted = reference.Split(':');
-            if (refSplitted.Length == 2)
-            {
-                return new CustomServiceHost(refSplitted[0], refSplitted[1], baseAddresses);
-            }
-            else
-            {
-                return new CustomServiceHost(reference, baseAddresses);
-            }
+        private static void CreateServices()
+        {
+            if (!_servicesCreated)
+                lock(typeof(CustomServiceHostFactory))
+                    if (!_servicesCreated)
+                    {
+                        AtlantaServices.ClearServices();
+                        AtlantaServices.AddAdvisedService<IMediaService>(new MediaService(), new AopAroundAdvice());
+                        _servicesCreated = true;
+                    }
+        }
+
+        /// <summary>
+        ///  Overriden to create services
+        /// </summary>
+        protected override ServiceHost CreateServiceHost(Type serviceType, Uri[] baseAddresses)
+        {
+            CreateServices();
+            ServiceHost serviceHost = new ServiceHost(AtlantaServices.GetService(serviceType), baseAddresses);
+            serviceHost.Description.Name = serviceType.Name;
+            serviceHost.AddServiceEndpoint(serviceType.ToString(), new BasicHttpBinding(), "");
+
+            ServiceMetadataBehavior metadataBehavior = new ServiceMetadataBehavior();
+            metadataBehavior.HttpGetEnabled = true;
+            serviceHost.Description.Behaviors.Add(metadataBehavior);
+
+            ServiceDebugBehavior debugBehavior = (ServiceDebugBehavior)serviceHost.Description.Behaviors[typeof(ServiceDebugBehavior)];
+            debugBehavior.IncludeExceptionDetailInFaults = true;
+
+            return serviceHost;
         }
 
     }

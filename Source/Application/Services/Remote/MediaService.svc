@@ -1,1 +1,2 @@
-<% @ServiceHost Factory="Atlanta.Application.Services.ServiceBase.CustomServiceHostFactory" Service="MediaService" %>
+<% @ServiceHost Factory="Atlanta.Application.Services.ServiceBase.CustomServiceHostFactory"
+                Service="Atlanta.Application.Services.Interfaces.IMediaService" %>

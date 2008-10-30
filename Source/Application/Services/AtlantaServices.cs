@@ -27,17 +27,20 @@ namespace Atlanta.Application.Services
             }
         }
 
-        private static InterfaceType GetService<InterfaceType>()
+        /// <summary>
+        /// Retrieve previously registered service.
+        /// </summary>
+        public static object GetService(Type interfaceType)
         {
             CreateServicesTable();
 
-            object service = _services[typeof(InterfaceType)];
+            object service = _services[interfaceType];
 
             if (service == null)
-                throw new Exception("Service of type '" + typeof(InterfaceType).ToString() + "' not registered."
+                throw new Exception("Service of type '" + interfaceType.ToString() + "' not registered."
                     + "  Register service using AddAdvisedService first.");
 
-            return (InterfaceType)service;
+            return service;
         }
 
         /// <summary>
@@ -64,7 +67,7 @@ namespace Atlanta.Application.Services
         /// <summary> MediaService </summary>
         public static IMediaService MediaService
         {
-            get { return GetService<IMediaService>(); }
+            get { return (IMediaService)GetService(typeof(IMediaService)); }
         }
 
     }
