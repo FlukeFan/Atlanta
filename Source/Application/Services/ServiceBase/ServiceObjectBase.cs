@@ -1,5 +1,5 @@
 
-using NHibernate;
+using Atlanta.Application.Domain.DomainBase;
 
 namespace Atlanta.Application.Services.ServiceBase
 {
@@ -10,15 +10,15 @@ namespace Atlanta.Application.Services.ServiceBase
     public class ServiceObjectBase
     {
 
-        private ISession _session;
+        private IRepository _repository;
 
         /// <summary>
         ///  The NHibernate session for the service call
         /// </summary>
-        public ISession Session
+        public IRepository Repository
         {
-            get { return _session; }
-            set { _session = value; }
+            get { return _repository; }
+            set { _repository = value; }
         }
 
     }

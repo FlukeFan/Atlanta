@@ -1,10 +1,9 @@
 
 using System;
 
-using NHibernate;
-
 using NUnit.Framework;
 
+using Atlanta.Application.Domain.DomainBase;
 using Atlanta.Application.Domain.DomainBase.Test;
 
 namespace Atlanta.Application.Services.ServiceBase.Test
@@ -14,11 +13,11 @@ namespace Atlanta.Application.Services.ServiceBase.Test
     public class ServiceTestBase : DomainPersistenceTestBase
     {
 
-        static private ISession _session;
+        static private Repository _repository;
 
-        static public ISession GetSession()
+        static public Repository GetRepository()
         {
-            return _session;
+            return _repository;
         }
 
         override public void SetUp()
@@ -26,7 +25,7 @@ namespace Atlanta.Application.Services.ServiceBase.Test
             base.SetUp();
 
             // create a session for the service calls
-            _session = Repository.Session;
+            _repository = Repository;
         }
 
     }

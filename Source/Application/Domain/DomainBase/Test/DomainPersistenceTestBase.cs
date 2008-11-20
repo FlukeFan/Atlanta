@@ -23,7 +23,6 @@ namespace Atlanta.Application.Domain.DomainBase.Test
                 {
                     _repository = new Repository(Repository.SessionFactory).BeginTransaction();
                     DomainRegistry.Repository = _repository;
-                    DomainRegistry.Session = _repository.Session;
                 }
 
                 return _repository;
@@ -34,7 +33,6 @@ namespace Atlanta.Application.Domain.DomainBase.Test
         {
             base.SetUp();
             DomainRegistry.Repository = Repository;
-            DomainRegistry.Session = Repository.Session;
         }
 
         override public void TearDown()
@@ -48,7 +46,6 @@ namespace Atlanta.Application.Domain.DomainBase.Test
             }
 
             DomainRegistry.Repository = null;
-            DomainRegistry.Session = null;
         }
 
     }

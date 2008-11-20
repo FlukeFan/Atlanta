@@ -1,5 +1,5 @@
 
-using NHibernate;
+using Atlanta.Application.Domain.DomainBase;
 
 namespace Atlanta.Application.Services.Interfaces
 {
@@ -11,9 +11,9 @@ namespace Atlanta.Application.Services.Interfaces
     {
 
         /// <summary>
-        ///  Accessor for the current NHibernate Session
+        ///  Accessor for the current Repository (NHibernate Session wrapper)
         /// </summary>
-        ISession Session { get; set; }
+        IRepository Repository { get; set; }
 
     }
 }

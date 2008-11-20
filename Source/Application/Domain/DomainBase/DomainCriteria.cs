@@ -31,7 +31,7 @@ namespace Atlanta.Application.Domain.DomainBase
         internal ICriteria ToExecutableCriteria()
         {
             Type type = Type.GetType(_type);
-            ICriteria criteria = DomainRegistry.Session.CreateCriteria(type);
+            ICriteria criteria = DomainRegistry.Repository.CreateQuery(DetachedCriteria.For(type));
 
             foreach (ICriterion criterion in _criterionList)
             {

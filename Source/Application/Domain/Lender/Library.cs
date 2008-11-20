@@ -31,7 +31,7 @@ namespace Atlanta.Application.Domain.Lender
         {
             Library library = new Library();
             library._ownedMedia = new List<Media>();
-            DomainRegistry.Session.Save(library);
+            DomainRegistry.Repository.Insert(library);
             return library;
         }
 
@@ -51,8 +51,8 @@ namespace Atlanta.Application.Domain.Lender
         private void ValidateNoMediaWithNameAndType(Media media)
         {
             IList<Media> mediaWithNameAndType =
-                DomainRegistry.Session
-                    .CreateCriteria(typeof(Media))
+                DomainRegistry.Repository
+                    .CreateQuery<Media>()
                     .Add(Expression.Eq("OwningLibrary", this))
                     .Add(Expression.Eq("Type", media.Type))
                     .Add(Expression.Eq("Name", media.Name))

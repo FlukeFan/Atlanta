@@ -41,12 +41,13 @@ namespace Atlanta.Application.Services.ServiceBase
         /// </summary>
         public object Invoke(IMethodInvocation invocation)
         {
-            ISession session = SessionFactory.OpenSession();
-            ITransaction transaction = session.BeginTransaction();
+            Repository repository =
+                new Repository(Repository.SessionFactory)
+                    .BeginTransaction();
 
-            ((IServiceBase)invocation.This).Session = session;
+            ((IServiceBase)invocation.This).Repository = repository;
 
-            DomainRegistry.Session = session;
+            DomainRegistry.Repository = repository;
             DomainRegistry.Library = null;
 
             object returnValue = null;
@@ -54,15 +55,14 @@ namespace Atlanta.Application.Services.ServiceBase
             {
                 returnValue = invocation.Proceed();
 
-                transaction.Commit();
-                session.Disconnect();
-                session.Close();
+                repository
+                    .CommitTransaction()
+                    .Dispose();
             }
             catch
             {
-                transaction.Rollback();
-                session.Disconnect();
-                session.Close();
+                repository
+                    .Dispose();
                 throw;
             }
 

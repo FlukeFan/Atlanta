@@ -17,20 +17,10 @@ namespace Atlanta.Application.Domain.DomainBase
     {
 
         [ThreadStatic]
-        static private ISession _session;
-
-        [ThreadStatic]
         private static IRepository _repository;
 
         [ThreadStatic]
         static private Library _library;
-
-        /// <summary> thread-local session </summary>
-        static public ISession Session
-        {
-            get { return _session; }
-            set { _session = value; }
-        }
 
         /// <summary> thread-local Repository </summary>
         static public IRepository Repository
@@ -57,8 +47,8 @@ namespace Atlanta.Application.Domain.DomainBase
         static private void LoadSingleSystemLibrary()
         {
             IList<Library> libraryList =
-                Session
-                    .CreateCriteria(typeof(Library))
+                Repository
+                    .CreateQuery<Library>()
                     .List<Library>();
 
             // there should be one, and only one library in the system ...

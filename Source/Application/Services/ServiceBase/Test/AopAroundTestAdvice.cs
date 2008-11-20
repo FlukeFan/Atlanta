@@ -21,17 +21,17 @@ namespace Atlanta.Application.Services.ServiceBase.Test
         /// </summary>
         public object Invoke(IMethodInvocation invocation)
         {
-            ISession session = ServiceTestBase.GetSession();
+            Repository repository = ServiceTestBase.GetRepository();
 
-            ((IServiceBase) invocation.This).Session = session;
+            ((IServiceBase) invocation.This).Repository = repository;
 
-            DomainRegistry.Session = session;
+            DomainRegistry.Repository = repository;
             DomainRegistry.Library = null;
 
             object returnValue = invocation.Proceed();
 
-            session.Flush();
-            session.Clear();
+            repository.Flush();
+            repository.Clear();
 
             return returnValue;
         }

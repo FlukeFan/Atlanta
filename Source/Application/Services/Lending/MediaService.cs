@@ -62,7 +62,7 @@ namespace Atlanta.Application.Services.Lending
         public Media Modify(User    user,
                             Media   modifiedMediaCopy)
         {
-            Media loadedMedia = Session.Load<Media>(modifiedMediaCopy.Id);
+            Media loadedMedia = Repository.Load<Media>(modifiedMediaCopy.Id);
             return loadedMedia.OwningLibrary.Modify(loadedMedia, modifiedMediaCopy);
         }
 
@@ -72,7 +72,7 @@ namespace Atlanta.Application.Services.Lending
         public void Delete( User    user,
                             Media   mediaCopy)
         {
-            Media loadedMedia = Session.Load<Media>(mediaCopy.Id);
+            Media loadedMedia = Repository.Load<Media>(mediaCopy.Id);
             loadedMedia.OwningLibrary.Delete(loadedMedia);
         }
 
