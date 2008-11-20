@@ -1,0 +1,41 @@
+<#@ import namespace="System.Collections.Specialized" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Reflection" #>
+<#@ import namespace="System.Runtime.Remoting.Messaging" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#+
+    private string GetCommandLineProperty(string propertyName)
+    {
+        PropertyInfo parametersProperty = Host.GetType().GetProperty("Parameters", BindingFlags.NonPublic | BindingFlags.Instance);
+        StringCollection parameters = (StringCollection)parametersProperty.GetValue(Host, null);
+        foreach (string parameter in parameters)
+        {
+            string[] values = parameter.Split('!');
+            int length = values.Length;
+            if (values[length - 2] == propertyName)
+                return values[length - 1];
+        }
+        return null;
+    }
+#>
+<#+
+    private void ProcessTemplate(string templateFileName, string outputFileName)
+    {
+        string template = File.ReadAllText(Host.ResolvePath(templateFileName));
+        Engine engine = new Engine();
+        string output = engine.ProcessTemplate(template, Host);
+        File.WriteAllText(outputFileName, output);
+    }
+#>
+<#+
+    private void SetData(string name, object data)
+    {
+        CallContext.SetData(name, data);
+    }
+#>
+<#+
+    private object GetData(string name)
+    {
+        return CallContext.GetData(name);
+    }
+#>

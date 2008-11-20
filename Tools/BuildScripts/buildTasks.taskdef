@@ -92,6 +92,43 @@
 
     </taskdef>
 
+
+    <taskdef name="generateStaticProperties">
+
+        <stringparams>
+            <stringparam name="outputFolder" />
+        </stringparams>
+
+        <nodeparams>
+            <nodeparam name="mappingFiles" />
+        </nodeparams>
+
+        <do>
+
+            <echo message="Code generating static properties to [__outputFolder__]" />
+          
+            <foreach item="File" property="mappingFile">
+                <in>
+                    <items>
+                        <__mappingFiles__/>
+                    </items>
+                </in>
+                <do>
+                    <property name="generatedFile" value="__outputFolder__/${path::get-file-name(mappingFile)}.cs" />
+                    <echo message="Processing ${mappingFile} to ${generatedFile}" />
+
+                    <exec program="TextTransform">
+                        <arg line="-a mappingFile!${mappingFile}" />
+                        <arg line="-out ${generatedFile}" />
+                        <arg line="${project.dir}/Tools/Templates/StaticProperties.tt" />
+                    </exec>
+                </do>
+            </foreach>
+
+        </do>
+
+    </taskdef>
+
 </project>
 
 

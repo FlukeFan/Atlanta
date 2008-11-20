@@ -3,8 +3,17 @@
 
     <include buildfile="${build.includes.file}" />
 
+    <target name="onSetup">
+        <property name="hasGeneratedCode" value="true"/>
+    </target>
 
     <target name="onBuild">
+
+        <generateStaticProperties outputFolder="${project::get-base-directory()}/generated">
+            <mappingFiles>
+                <include name="*/*.hbm.xml" />
+            </mappingFiles>
+        </generateStaticProperties>
 
         <cscLibrary output="Atlanta.Application.Domain">
 

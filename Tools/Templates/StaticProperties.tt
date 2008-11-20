@@ -1,0 +1,14 @@
+<#@ template language="C#" hostspecific="True" #>
+<#@ include file="Utility.tt" #>
+<# Init(); #>
+// Generated on <#= DateTime.Now.ToString() #>
+//   from <#= _mappingFile #>
+
+<#+
+    private string _mappingFile;
+    
+    private void Init()
+    {
+        _mappingFile = GetCommandLineProperty("mappingFile");
+    }
+#>
