@@ -13,66 +13,41 @@ namespace Atlanta.Application.Domain.DomainBase.Test
     public class DomainPersistenceTestBase : DomainTestBase
     {
 
-        static private Configuration    _configuration;
-        static private ISessionFactory  _sessionFactory;
+        private Repository _repository;
 
-        private ISession        _session;
-        private ITransaction    _transaction;
-
-        private ISessionFactory SessionFactory
+        protected Repository Repository
         {
             get
             {
-                if (_sessionFactory == null)
+                if (_repository == null)
                 {
-                    _configuration = new Configuration();
-                    _configuration.AddAssembly("Atlanta.Application.Domain");
-
-                    _sessionFactory = _configuration.BuildSessionFactory();
+                    _repository = new Repository(Repository.SessionFactory).BeginTransaction();
+                    DomainRegistry.Repository = _repository;
+                    DomainRegistry.Session = _repository.Session;
                 }
 
-                return _sessionFactory;
-            }
-        }
-
-        protected ISession Session
-        {
-            get
-            {
-                if (_session == null)
-                {
-                    _session = SessionFactory.OpenSession();
-                    DomainRegistry.Session = _session;
-
-                    _transaction = _session.BeginTransaction();
-                }
-
-                return _session;
+                return _repository;
             }
         }
 
         public override void SetUp()
         {
             base.SetUp();
-            DomainRegistry.Session = Session;
+            DomainRegistry.Repository = Repository;
+            DomainRegistry.Session = Repository.Session;
         }
 
         override public void TearDown()
         {
             base.TearDown();
 
-            if (_transaction != null)
+            if (_repository != null)
             {
-                _transaction.Rollback();
-                _transaction = null;
+                _repository.Dispose();
+                _repository = null;
             }
 
-            if (_session != null)
-            {
-                _session.Close();
-                _session = null;
-            }
-
+            DomainRegistry.Repository = null;
             DomainRegistry.Session = null;
         }
 

@@ -42,6 +42,7 @@ namespace Atlanta.Application.Domain.DomainBase
                         if (_sessionFactory == null)
                         {
                             _configuration = new Configuration();
+                            _configuration.AddAssembly(typeof(DomainObjectBase).Assembly);
                             _sessionFactory = _configuration.BuildSessionFactory();
                         }
                     }
@@ -86,7 +87,7 @@ namespace Atlanta.Application.Domain.DomainBase
         }
 
         /// <summary> Load (potentially lazy) an object from the Repository </summary>
-        public T Load<T>(int identifier)
+        public T Load<T>(long identifier)
         {
             return _session.Load<T>(identifier);
         }

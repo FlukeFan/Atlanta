@@ -23,14 +23,14 @@ namespace Atlanta.Application.Domain.Lender.Test
             base.SetUp();
 
             Library library = Library.InstantiateLibrary();
-            Session.Save(library);
+            Repository.Insert(library);
 
             library.Create(Media.InstantiateOrphanedMedia(MediaType.Book,  "Book", "A test book"));
             library.Create(Media.InstantiateOrphanedMedia(MediaType.Cd, "CD", "A test cd"));
             library.Create(Media.InstantiateOrphanedMedia(MediaType.Dvd, "DVD", "A test dvd"));
 
-            Session.Flush();
-            Session.Clear();
+            Repository.Flush();
+            Repository.Clear();
 
             _libraryId = library.Id;
         }
@@ -38,7 +38,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void FilterStringAndEnumProperty_Ok()
         {
-            Library library = Session.Load<Library>(_libraryId);
+            Library library = Repository.Load<Library>(_libraryId);
 
             IList<Media> filteredList;
             {

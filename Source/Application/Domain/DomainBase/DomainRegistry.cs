@@ -20,6 +20,9 @@ namespace Atlanta.Application.Domain.DomainBase
         static private ISession _session;
 
         [ThreadStatic]
+        private static IRepository _repository;
+
+        [ThreadStatic]
         static private Library _library;
 
         /// <summary> thread-local session </summary>
@@ -27,6 +30,13 @@ namespace Atlanta.Application.Domain.DomainBase
         {
             get { return _session; }
             set { _session = value; }
+        }
+
+        /// <summary> thread-local Repository </summary>
+        static public IRepository Repository
+        {
+            get { return _repository; }
+            set { _repository = value; }
         }
 
         /// <summary> get/find the  </summary>

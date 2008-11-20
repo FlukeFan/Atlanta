@@ -26,7 +26,7 @@ namespace Atlanta.Application.Services.ServiceBase.Test
             base.SetUp();
 
             // create a session for the service calls
-            _session = Session;
+            _session = Repository.Session;
         }
 
     }

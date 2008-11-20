@@ -50,7 +50,7 @@ namespace Atlanta.Application.Domain.DomainBase
         /// <typeparam name="T">The type of object to load</typeparam>
         /// <param name="identifier">The unique identifier for the existing object</param>
         /// <returns></returns>
-        T Load<T>(int identifier);
+        T Load<T>(long identifier);
 
         /// <summary>
         /// Insert a new instance into the repository

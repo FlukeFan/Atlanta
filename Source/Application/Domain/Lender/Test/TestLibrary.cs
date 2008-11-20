@@ -28,8 +28,8 @@ namespace Atlanta.Application.Domain.Lender.Test
             Media media2 = library.Create(Media.InstantiateOrphanedMedia(MediaType.Cd, "CD", "A test cd"));
             Media media3 = library.Create(Media.InstantiateOrphanedMedia(MediaType.Dvd, "DVD", "A test dvd"));
 
-            Session.Flush();
-            Session.Clear();
+            Repository.Flush();
+            Repository.Clear();
             DomainRegistry.Library = null;
 
             _libraryId = library.Id;
@@ -47,7 +47,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void GetMedaList_Ok()
         {
-            Library library = Session.Load<Library>(_libraryId);
+            Library library = Repository.Load<Library>(_libraryId);
             IList<Media> mediaList = library.GetMediaList(new DomainCriteria(typeof(Media)).Add(Expression.Eq("Type", MediaType.Dvd)));
 
             Assert.AreEqual(1, mediaList.Count);
@@ -70,7 +70,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void CreateMedia_FailDuplicate()
         {
-            Library library = Session.Load<Library>(_libraryId);
+            Library library = Repository.Load<Library>(_libraryId);
             library.Create(Media.InstantiateOrphanedMedia(MediaType.Dvd, "test dvd", "test description"));
 
             Media media = Media.InstantiateOrphanedMedia(MediaType.Dvd, "test dvd", "test description 2");
@@ -159,13 +159,13 @@ namespace Atlanta.Application.Domain.Lender.Test
         {
             Library library = Library.InstantiateLibrary();
 
-            Session.Save(library);
+            Repository.Insert(library);
             Assert.IsTrue(library.Id != 0);
 
-            Session.Flush();
-            Session.Clear();
+            Repository.Flush();
+            Repository.Clear();
 
-            library = Session.Load<Library>(library.Id);
+            library = Repository.Load<Library>(library.Id);
 
             Assert.AreEqual(0, library.ReadonlyOwnedMedia.Count);
         }
@@ -173,7 +173,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void LibraryRegistry_Ok()
         {
-            Library library = Session.Load<Library>(_libraryId);
+            Library library = Repository.Load<Library>(_libraryId);
 
             Assert.AreEqual(library.Id, DomainRegistry.Library.Id);
             Assert.AreEqual(library, DomainRegistry.Library);
@@ -182,8 +182,8 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void LibraryRegistry_FailMissingLibrary()
         {
-            Library library = Session.Load<Library>(_libraryId);
-            Session.Delete(library);
+            Library library = Repository.Load<Library>(_libraryId);
+            Repository.Delete(library);
 
             try
             {
@@ -200,10 +200,10 @@ namespace Atlanta.Application.Domain.Lender.Test
         public void LibraryRegistry_FailTooManyLibrary()
         {
             Library library = Library.InstantiateLibrary();
-            Session.Save(library);
+            Repository.Insert(library);
 
-            Session.Flush();
-            Session.Clear();
+            Repository.Flush();
+            Repository.Clear();
             DomainRegistry.Library = null;
 
             try
@@ -220,7 +220,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void LoadCheckAggregates_Ok()
         {
-            Library library = Session.Load<Library>(_libraryId);
+            Library library = Repository.Load<Library>(_libraryId);
 
             Assert.AreEqual(3, library.ReadonlyOwnedMedia.Count);
         }
@@ -228,28 +228,28 @@ namespace Atlanta.Application.Domain.Lender.Test
         [Test]
         public void InsertChildMedia_Ok()
         {
-            Library library = Session.Load<Library>(_libraryId);
+            Library library = Repository.Load<Library>(_libraryId);
             Media media = library.Create(Media.InstantiateOrphanedMedia(MediaType.Dvd, "test", "test description"));
 
-            Session.Flush();
-            Session.Clear();
+            Repository.Flush();
+            Repository.Clear();
 
-            library = Session.Load<Library>(_libraryId);
+            library = Repository.Load<Library>(_libraryId);
             Assert.AreEqual(4, library.ReadonlyOwnedMedia.Count);
         }
 
         [Test]
         public void DeleteChildMedia_Ok()
         {
-            Library library = Session.Load<Library>(_libraryId);
-            Media media = Session.Load<Media>(_mediaId);
+            Library library = Repository.Load<Library>(_libraryId);
+            Media media = Repository.Load<Media>(_mediaId);
 
             library.Delete(media);
 
-            Session.Flush();
-            Session.Clear();
+            Repository.Flush();
+            Repository.Clear();
 
-            library = Session.Load<Library>(_libraryId);
+            library = Repository.Load<Library>(_libraryId);
             Assert.AreEqual(2, library.ReadonlyOwnedMedia.Count);
         }
 
