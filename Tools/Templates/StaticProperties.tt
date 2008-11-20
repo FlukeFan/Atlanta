@@ -1,14 +1,39 @@
 <#@ template language="C#" hostspecific="True" #>
 <#@ include file="Utility.tt" #>
-<# Init(); #>
+<#@ assembly name="System.Xml" #>
+<#@ import namespace="System.Xml" #>
+<#
+
+Init();
+
+#>
 // Generated on <#= DateTime.Now.ToString() #>
 //   from <#= _mappingFile #>
 
+namespace <#=_namespace#>
+{
+}
+
 <#+
+
     private string _mappingFile;
+    private XmlDocument _mapping;
+    private string _fullClassName;
+    private string _className;
+    private string _namespace;
     
     private void Init()
     {
         _mappingFile = GetCommandLineProperty("mappingFile");
+        _mapping = new XmlDocument();
+        _mapping.Load(_mappingFile);
+        
+        _fullClassName = _mapping.SelectSingleNode("//*[local-name()='class']/@name").Value;
+        _fullClassName = _fullClassName.Split(',')[0];
+        string[] names = _fullClassName.Split('.');
+        _className = names[names.Length - 1];
+        _namespace = _fullClassName.Substring(0, _fullClassName.Length - _className.Length - 1);
+        
+        Console.WriteLine(_fullClassName);
     }
 #>

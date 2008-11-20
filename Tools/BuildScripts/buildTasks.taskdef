@@ -109,7 +109,8 @@
           
             <uptodate property="generated.files.uptodate">
                 <sourcefiles>
-                        <__mappingFiles__/>
+                    <include name="${project.dir}/Tools/Templates/*.tt" />
+                    <__mappingFiles__/>
                 </sourcefiles>
                 <targetfiles>
                     <include name="__outputFolder__/*.cs"/>
