@@ -44,7 +44,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             {
                 DomainCriteria filter =
                     new DomainCriteria(typeof(Media))
-                        .Add(Expression.Eq(Media.P_Name, "CD"));
+                        .Add(Expression.Eq(Media.Properties.Name, "CD"));
 
                 filteredList =
                     library.GetMediaList(filter);
@@ -56,7 +56,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             {
                 DomainCriteria filter =
                     new DomainCriteria(typeof(Media))
-                        .Add(Expression.Eq(Media.P_Type, MediaType.Dvd));
+                        .Add(Expression.Eq(Media.Properties.Type, MediaType.Dvd));
 
                 filteredList =
                     library.GetMediaList(filter);
@@ -68,8 +68,8 @@ namespace Atlanta.Application.Domain.Lender.Test
             {
                 DomainCriteria filter =
                     new DomainCriteria(typeof(Media))
-                        .Add(Expression.Eq(Media.P_Type, MediaType.Dvd))
-                        .Add(Expression.Eq(Media.P_Name, "CD"));
+                        .Add(Expression.Eq(Media.Properties.Type, MediaType.Dvd))
+                        .Add(Expression.Eq(Media.Properties.Name, "CD"));
 
                 filteredList =
                     library.GetMediaList(filter);
@@ -80,7 +80,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             {
                 DomainCriteria filter =
                     new DomainCriteria(typeof(Media))
-                        .Add(Expression.Not(Expression.Eq(Media.P_Type, MediaType.Dvd)));
+                        .Add(Expression.Not(Expression.Eq(Media.Properties.Type, MediaType.Dvd)));
 
                 filteredList =
                     library.GetMediaList(filter);

@@ -47,7 +47,7 @@ namespace Atlanta.Application.Services.Lending.Test
             IList<Media> mediaList =
                 AtlantaServices.MediaService
                     .GetMediaList(_user, new DomainCriteria(typeof(Media))
-                                            .Add(Expression.Eq(Media.P_Type, MediaType.Book)));
+                                            .Add(Expression.Eq(Media.Properties.Type, MediaType.Book)));
 
             Assert.AreEqual(2, mediaList.Count);
 
@@ -58,7 +58,7 @@ namespace Atlanta.Application.Services.Lending.Test
             IList<Media> mediaList2 =
                 AtlantaServices.MediaService
                     .GetMediaList(_user, new DomainCriteria(typeof(Media))
-                                            .Add(Expression.Eq(Media.P_Name, media1.Name)));
+                                            .Add(Expression.Eq(Media.Properties.Name, media1.Name)));
 
             Assert.AreEqual(1, mediaList2.Count);
             Assert.AreNotEqual(media1, mediaList2[0], "objects from different session matched");
@@ -97,7 +97,7 @@ namespace Atlanta.Application.Services.Lending.Test
             Media mediaCopy =
                 AtlantaServices.MediaService
                     .GetMediaList(_user, new DomainCriteria(typeof(Media))
-                                            .Add(Expression.Eq(Media.P_Name, "CD")))[0];
+                                            .Add(Expression.Eq(Media.Properties.Name, "CD")))[0];
 
             mediaCopy.ModifyDetails(mediaCopy.Type, "modified CD name", "new description");
 
@@ -114,7 +114,7 @@ namespace Atlanta.Application.Services.Lending.Test
             Media mediaCopy =
                 AtlantaServices.MediaService
                     .GetMediaList(_user, new DomainCriteria(typeof(Media))
-                                            .Add(Expression.Eq(Media.P_Name, "CD")))[0];
+                                            .Add(Expression.Eq(Media.Properties.Name, "CD")))[0];
 
             AtlantaServices.MediaService
                 .Delete(_user, mediaCopy);

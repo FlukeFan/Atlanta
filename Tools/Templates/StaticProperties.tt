@@ -16,6 +16,12 @@ namespace <#=_namespace#>
     public partial class <#=_className#>
     {
 
+        /// <summary> Property constants for <#=_className#> </summary>
+        public class Properties
+        {
+        
+            private Properties() { }
+
 <#
 foreach (XmlElement element in _classElements)
 {
@@ -23,14 +29,17 @@ foreach (XmlElement element in _classElements)
     {
         string propertyName = element.Attributes["name"].Value;
 #>
-        /// <summary> Constant for <#=propertyName#> (="<#=propertyName#>") </summary>
-        public const string P_<#=propertyName#> = "<#=propertyName#>";
+            /// <summary> Constant for <#=_className#>.<#=propertyName#> (="<#=propertyName#>") </summary>
+            public const string <#=propertyName#> = "<#=propertyName#>";
 
 <#
     }
+    
 }
 #>
 
+        }
+        
     }
 
 }
