@@ -16,7 +16,20 @@ namespace <#=_namespace#>
     public partial class <#=_className#>
     {
 
+<#
+foreach (XmlElement element in _classElements)
+{
+    if (element.Attributes["name"] != null)
+    {
+        string propertyName = element.Attributes["name"].Value;
+#>
+        /// <summary> Constant for <#=propertyName#> (="<#=propertyName#>") </summary>
+        public const string P_<#=propertyName#> = "<#=propertyName#>";
 
+<#
+    }
+}
+#>
 
     }
 
@@ -29,6 +42,7 @@ namespace <#=_namespace#>
     private string _fullClassName;
     private string _className;
     private string _namespace;
+    private XmlNodeList _classElements;
     
     private void Init()
     {
@@ -41,5 +55,6 @@ namespace <#=_namespace#>
         string[] names = _fullClassName.Split('.');
         _className = names[names.Length - 1];
         _namespace = _fullClassName.Substring(0, _fullClassName.Length - _className.Length - 1);
+        _classElements = _mapping.SelectNodes("//*[local-name()='class']/*");
     }
 #>
