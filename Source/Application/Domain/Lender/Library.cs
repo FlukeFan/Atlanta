@@ -14,7 +14,7 @@ namespace Atlanta.Application.Domain.Lender
     /// Class to represent a Library
     /// </summary>
     [Serializable]
-    public class Library : DomainObjectBase
+    public partial class Library : DomainObjectBase
     {
 
         private IList<Media> _ownedMedia;

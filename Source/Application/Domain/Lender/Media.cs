@@ -30,7 +30,7 @@ namespace Atlanta.Application.Domain.Lender
     /// Class to represent Media
     /// </summary>
     [Serializable]
-    public class Media : DomainObjectBase
+    public partial class Media : DomainObjectBase
     {
         #region Fields
 

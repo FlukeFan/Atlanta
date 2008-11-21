@@ -97,6 +97,7 @@
 
         <stringparams>
             <stringparam name="outputFolder" />
+            <stringparam name="generateSuccessFlagFile" />
         </stringparams>
 
         <nodeparams>
@@ -105,6 +106,7 @@
 
         <do>
 
+            <property name="generateSuccessFlagFileWithPath" value="${build.dir}/results/__generateSuccessFlagFile__"/>
             <echo message="Code generating static properties to [__outputFolder__]" />
           
             <uptodate property="generated.files.uptodate">
@@ -113,11 +115,11 @@
                     <__mappingFiles__/>
                 </sourcefiles>
                 <targetfiles>
-                    <include name="__outputFolder__/*.cs"/>
+                    <include name="${generateSuccessFlagFileWithPath}"/>
                 </targetfiles>
             </uptodate>
 
-            <echo message="Generated files up to date: ${generated.files.uptodate}"/>
+            <echo message="flag file up to date: ${generated.files.uptodate}"/>
 
             <if test="${not generated.files.uptodate}">
 
@@ -138,6 +140,8 @@
                         </exec>
                     </do>
                 </foreach>
+
+                <touch file="${generateSuccessFlagFileWithPath}" />
 
             </if>
 

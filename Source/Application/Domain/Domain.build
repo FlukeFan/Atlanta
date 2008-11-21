@@ -9,7 +9,8 @@
 
     <target name="onBuild">
 
-        <generateStaticProperties outputFolder="${project::get-base-directory()}/generated">
+        <generateStaticProperties outputFolder="${project::get-base-directory()}/generated"
+                                  generateSuccessFlagFile="domain_generate_static.flg">
             <mappingFiles>
                 <include name="*/*.hbm.xml" />
             </mappingFiles>
