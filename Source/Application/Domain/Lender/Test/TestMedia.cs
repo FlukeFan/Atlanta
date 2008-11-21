@@ -91,8 +91,8 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             IList<Media> bookMediaInLibrary =
                 Repository.CreateQuery<Media>()
-                    .Add(Expression.Eq("OwningLibrary", library))
-                    .Add(Expression.Eq("Type", MediaType.Book))
+                    .Add(Expression.Eq(Media.P_OwningLibrary, library))
+                    .Add(Expression.Eq(Media.P_Type, MediaType.Book))
                     .List<Media>();
 
             Assert.AreEqual(1, bookMediaInLibrary.Count);

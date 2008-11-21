@@ -53,9 +53,9 @@ namespace Atlanta.Application.Domain.Lender
             IList<Media> mediaWithNameAndType =
                 DomainRegistry.Repository
                     .CreateQuery<Media>()
-                    .Add(Expression.Eq("OwningLibrary", this))
-                    .Add(Expression.Eq("Type", media.Type))
-                    .Add(Expression.Eq("Name", media.Name))
+                    .Add(Expression.Eq(Media.P_OwningLibrary, this))
+                    .Add(Expression.Eq(Media.P_Type, media.Type))
+                    .Add(Expression.Eq(Media.P_Name, media.Name))
                     .List<Media>();
 
             if (mediaWithNameAndType.Count != 0)

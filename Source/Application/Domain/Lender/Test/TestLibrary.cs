@@ -48,7 +48,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         public void GetMedaList_Ok()
         {
             Library library = Repository.Load<Library>(_libraryId);
-            IList<Media> mediaList = library.GetMediaList(new DomainCriteria(typeof(Media)).Add(Expression.Eq("Type", MediaType.Dvd)));
+            IList<Media> mediaList = library.GetMediaList(new DomainCriteria(typeof(Media)).Add(Expression.Eq(Media.P_Type, MediaType.Dvd)));
 
             Assert.AreEqual(1, mediaList.Count);
         }
