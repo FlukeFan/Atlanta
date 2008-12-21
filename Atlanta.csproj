@@ -88,12 +88,12 @@
   </PropertyGroup>
   <Target Name="NAntBuild">
     <Message Text="Start NAnt debug build ..." />
-    <ExecParse Command="SDKs\NAnt\bin\NAnt.exe" Configuration="$(ExecParseConfiguration)" />
+    <ExecParse Command="SDKs\nant-0.85\bin\NAnt.exe" Configuration="$(ExecParseConfiguration)" />
     <Message Text="NAnt complete" />
   </Target>
   <Target Name="Clean">
     <Message Text="Start NAnt debug clean ..." />
-    <ExecParse Command="SDKs\NAnt\bin\NAnt.exe clean" Configuration="$(ExecParseConfiguration)" />
+    <ExecParse Command="SDKs\nant-0.85\bin\NAnt.exe clean" Configuration="$(ExecParseConfiguration)" />
     <Message Text="NAnt complete" />
   </Target>
   <Target Name="Rebuild">
