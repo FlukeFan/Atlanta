@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using NUnit.Framework;
 using NHibernate.Criterion;
+using NHibernate.LambdaExtensions;
 
 using Atlanta.Application.Domain.DomainBase;
 using Atlanta.Application.Domain.DomainBase.Test;
@@ -48,7 +49,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         public void GetMedaList_Ok()
         {
             Library library = Repository.Load<Library>(_libraryId);
-            IList<Media> mediaList = library.GetMediaList(new DomainCriteria(typeof(Media)).Add(Expression.Eq(Media.Properties.Type, MediaType.Dvd)));
+            IList<Media> mediaList = library.GetMediaList(new DomainCriteria(typeof(Media)).Add(SqlExpression.CriterionFor<Media>(m => m.Type == MediaType.Dvd)));
 
             Assert.AreEqual(1, mediaList.Count);
         }

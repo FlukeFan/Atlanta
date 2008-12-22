@@ -6,6 +6,7 @@ using Atlanta.Application.Domain.DomainBase;
 using Atlanta.Application.Domain.Common;
 
 using NHibernate.Criterion;
+using NHibernate.LambdaExtensions;
 
 namespace Atlanta.Application.Domain.Lender
 {
@@ -53,9 +54,9 @@ namespace Atlanta.Application.Domain.Lender
             IList<Media> mediaWithNameAndType =
                 DomainRegistry.Repository
                     .CreateQuery<Media>()
-                    .Add(Expression.Eq(Media.Properties.OwningLibrary, this))
-                    .Add(Expression.Eq(Media.Properties.Type, media.Type))
-                    .Add(Expression.Eq(Media.Properties.Name, media.Name))
+                    .Add<Media>(m => m.OwningLibrary == this)
+                    .Add<Media>(m => m.Type == media.Type)
+                    .Add<Media>(m => m.Name == media.Name)
                     .List<Media>();
 
             if (mediaWithNameAndType.Count != 0)

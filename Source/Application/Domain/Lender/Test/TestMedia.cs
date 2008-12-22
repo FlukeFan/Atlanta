@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 
 using NHibernate.Criterion;
+using NHibernate.LambdaExtensions;
 
 using NUnit.Framework;
 
@@ -91,8 +92,8 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             IList<Media> bookMediaInLibrary =
                 Repository.CreateQuery<Media>()
-                    .Add(Expression.Eq(Media.Properties.OwningLibrary, library))
-                    .Add(Expression.Eq(Media.Properties.Type, MediaType.Book))
+                    .Add<Media>(m => m.OwningLibrary == library)
+                    .Add<Media>(m => m.Type == MediaType.Book)
                     .List<Media>();
 
             Assert.AreEqual(1, bookMediaInLibrary.Count);

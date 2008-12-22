@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 
 using NHibernate.Criterion;
+using NHibernate.LambdaExtensions;
 
 using Atlanta.Application.Domain.DomainBase;
 using Atlanta.Application.Domain.DomainBase.Test;
@@ -44,7 +45,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             {
                 DomainCriteria filter =
                     new DomainCriteria(typeof(Media))
-                        .Add(Expression.Eq(Media.Properties.Name, "CD"));
+                        .Add(SqlExpression.CriterionFor<Media>(m => m.Name == "CD"));
 
                 filteredList =
                     library.GetMediaList(filter);
@@ -56,7 +57,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             {
                 DomainCriteria filter =
                     new DomainCriteria(typeof(Media))
-                        .Add(Expression.Eq(Media.Properties.Type, MediaType.Dvd));
+                        .Add(SqlExpression.CriterionFor<Media>(m => m.Type == MediaType.Dvd));
 
                 filteredList =
                     library.GetMediaList(filter);
@@ -68,8 +69,8 @@ namespace Atlanta.Application.Domain.Lender.Test
             {
                 DomainCriteria filter =
                     new DomainCriteria(typeof(Media))
-                        .Add(Expression.Eq(Media.Properties.Type, MediaType.Dvd))
-                        .Add(Expression.Eq(Media.Properties.Name, "CD"));
+                        .Add(SqlExpression.CriterionFor<Media>(m => m.Type == MediaType.Dvd))
+                        .Add(SqlExpression.CriterionFor<Media>(m => m.Name == "CD"));
 
                 filteredList =
                     library.GetMediaList(filter);
@@ -80,7 +81,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             {
                 DomainCriteria filter =
                     new DomainCriteria(typeof(Media))
-                        .Add(Expression.Not(Expression.Eq(Media.Properties.Type, MediaType.Dvd)));
+                        .Add(SqlExpression.CriterionFor<Media>(m => m.Type != MediaType.Dvd));
 
                 filteredList =
                     library.GetMediaList(filter);

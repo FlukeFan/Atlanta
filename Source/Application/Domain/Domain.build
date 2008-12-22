@@ -20,6 +20,7 @@
 
             <references>
                 <include name="${build.dir}/bin/NHibernate.dll" />
+                <include name="${build.dir}/bin/NHibernate.LambdaExtensions.dll" />
             </references>
 
             <sources>
@@ -42,6 +43,7 @@
 
             <references>
                 <include name="${build.dir}/bin/NHibernate.dll" />
+                <include name="${build.dir}/bin/NHibernate.LambdaExtensions.dll" />
                 <include name="${build.dir}/bin/nunit.framework.dll" />
                 <include name="${build.dir}/bin/Atlanta.Application.Domain.dll" />
             </references>
