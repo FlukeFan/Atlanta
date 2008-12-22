@@ -4,7 +4,7 @@
     <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
 
     <!-- global project settings -->
-    <property name="nant.settings.currentframework"     value="net-2.0" />
+    <property name="nant.settings.currentframework"     value="net-3.5" />
 
     <property name="project.version" value="0.0.0.1" overwrite="false" />
 
@@ -32,14 +32,6 @@
         <mkdir dir="${build.dir}/bin" />
         <mkdir dir="${build.dir}/design" />
         <mkdir dir="${build.dir}/web" />
-
-        <!-- Wcf binaries -->
-        <copy todir="${build.dir}/bin">
-            <fileset basedir="SDKs\Wcf">
-                <exclude name="**/.svn/**" />
-                <include name="**" />
-            </fileset>
-        </copy>
 
         <!-- NHibernate binaries -->
         <copy todir="${build.dir}/bin">
@@ -80,7 +72,7 @@
 
         <!-- NUnit binaries -->
         <copy
-            file="${nant::get-base-directory()}lib\${framework::get-family(nant.settings.currentframework)}\${framework::get-version(nant.settings.currentframework)}\nunit.framework.dll"
+            file="${nant::get-base-directory()}\lib\common\2.0\nunit.framework.dll"
             todir="${build.dir}/bin"
             />
 

@@ -15,8 +15,8 @@
         <cscLibrary output="Atlanta.Application.Services">
 
             <references>
+                <include name="System.dll" />
                 <include name="${build.dir}/bin/Common.Logging.dll" />
-                <include name="${build.dir}/bin/System.ServiceModel.dll" />
                 <include name="${build.dir}/bin/NHibernate.dll" />
                 <include name="${build.dir}/bin/Spring.Core.dll" />
                 <include name="${build.dir}/bin/Spring.Aop.dll" />

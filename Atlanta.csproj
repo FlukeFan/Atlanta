@@ -29,12 +29,10 @@
     <None Include="**\*.tt" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.ServiceModel">
-      <HintPath>SDKs\Wcf\System.ServiceModel.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.ServiceModel"/>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="log4net" />
@@ -88,12 +86,12 @@
   </PropertyGroup>
   <Target Name="NAntBuild">
     <Message Text="Start NAnt debug build ..." />
-    <ExecParse Command="SDKs\nant-0.85\bin\NAnt.exe" Configuration="$(ExecParseConfiguration)" />
+    <ExecParse Command="SDKs\nant-0.86\bin\NAnt.exe" Configuration="$(ExecParseConfiguration)" />
     <Message Text="NAnt complete" />
   </Target>
   <Target Name="Clean">
     <Message Text="Start NAnt debug clean ..." />
-    <ExecParse Command="SDKs\nant-0.85\bin\NAnt.exe clean" Configuration="$(ExecParseConfiguration)" />
+    <ExecParse Command="SDKs\nant-0.86\bin\NAnt.exe clean" Configuration="$(ExecParseConfiguration)" />
     <Message Text="NAnt complete" />
   </Target>
   <Target Name="Rebuild">
