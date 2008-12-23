@@ -43,9 +43,9 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             IList<Media> filteredList;
             {
-                DomainCriteria filter =
-                    new DomainCriteria(typeof(Media))
-                        .Add(SqlExpression.CriterionFor<Media>(m => m.Name == "CD"));
+                DetachedCriteria filter =
+                    DetachedCriteria.For<Media>()
+                        .Add<Media>(m => m.Name == "CD");
 
                 filteredList =
                     library.GetMediaList(filter);
@@ -55,9 +55,9 @@ namespace Atlanta.Application.Domain.Lender.Test
             }
 
             {
-                DomainCriteria filter =
-                    new DomainCriteria(typeof(Media))
-                        .Add(SqlExpression.CriterionFor<Media>(m => m.Type == MediaType.Dvd));
+                DetachedCriteria filter =
+                    DetachedCriteria.For<Media>()
+                        .Add<Media>(m => m.Type == MediaType.Dvd);
 
                 filteredList =
                     library.GetMediaList(filter);
@@ -67,10 +67,10 @@ namespace Atlanta.Application.Domain.Lender.Test
             }
 
             {
-                DomainCriteria filter =
-                    new DomainCriteria(typeof(Media))
-                        .Add(SqlExpression.CriterionFor<Media>(m => m.Type == MediaType.Dvd))
-                        .Add(SqlExpression.CriterionFor<Media>(m => m.Name == "CD"));
+                DetachedCriteria filter =
+                    DetachedCriteria.For<Media>()
+                        .Add<Media>(m => m.Type == MediaType.Dvd)
+                        .Add<Media>(m => m.Name == "CD");
 
                 filteredList =
                     library.GetMediaList(filter);
@@ -79,9 +79,9 @@ namespace Atlanta.Application.Domain.Lender.Test
             }
 
             {
-                DomainCriteria filter =
-                    new DomainCriteria(typeof(Media))
-                        .Add(SqlExpression.CriterionFor<Media>(m => m.Type != MediaType.Dvd));
+                DetachedCriteria filter =
+                    DetachedCriteria.For<Media>()
+                        .Add<Media>(m => m.Type != MediaType.Dvd);
 
                 filteredList =
                     library.GetMediaList(filter);

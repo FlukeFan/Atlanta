@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ServiceModel;
 
+using NHibernate.Criterion;
+
 using Atlanta.Application.Domain.DomainBase;
 using Atlanta.Application.Domain.Lender;
 
@@ -19,8 +21,8 @@ namespace Atlanta.Application.Services.Interfaces
         ///  Get a list of Media for the system Library
         /// </summary>
         [OperationContract]
-        IList<Media> GetMediaList(  User            user,
-                                    DomainCriteria  mediaCriteria);
+        IList<Media> GetMediaList(  User                user,
+                                    DetachedCriteria    mediaCriteria);
 
         /// <summary>
         ///  Create a Media in the system Library

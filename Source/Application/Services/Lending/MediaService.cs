@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.ServiceModel;
 
+using NHibernate.Criterion;
+
 using Atlanta.Application.Domain.DomainBase;
 using Atlanta.Application.Domain.Lender;
 
@@ -26,8 +28,8 @@ namespace Atlanta.Application.Services.Lending
         /// <summary>
         ///  Get a list of Media for the system Library
         /// </summary>
-        public IList<Media> GetMediaList(   User            user,
-                                            DomainCriteria  mediaCriteria)
+        public IList<Media> GetMediaList(   User                user,
+                                            DetachedCriteria    mediaCriteria)
         {
             IList<Media> mediaList =
                 DomainRegistry.Library.GetMediaList(mediaCriteria);

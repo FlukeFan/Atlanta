@@ -47,8 +47,8 @@ namespace Atlanta.Application.Services.Lending.Test
         {
             IList<Media> mediaList =
                 AtlantaServices.MediaService
-                    .GetMediaList(_user, new DomainCriteria(typeof(Media))
-                                            .Add(SqlExpression.CriterionFor<Media>(m => m.Type == MediaType.Book)));
+                    .GetMediaList(_user, DetachedCriteria.For<Media>()
+                                            .Add<Media>(m => m.Type == MediaType.Book));
 
             Assert.AreEqual(2, mediaList.Count);
 
@@ -58,8 +58,8 @@ namespace Atlanta.Application.Services.Lending.Test
             //  (i.e., the returned objects are disconnected)
             IList<Media> mediaList2 =
                 AtlantaServices.MediaService
-                    .GetMediaList(_user, new DomainCriteria(typeof(Media))
-                                            .Add(SqlExpression.CriterionFor<Media>(m => m.Name == media1.Name)));
+                    .GetMediaList(_user, DetachedCriteria.For<Media>()
+                                            .Add<Media>(m => m.Name == media1.Name));
 
             Assert.AreEqual(1, mediaList2.Count);
             Assert.AreNotEqual(media1, mediaList2[0], "objects from different session matched");
@@ -97,8 +97,8 @@ namespace Atlanta.Application.Services.Lending.Test
         {
             Media mediaCopy =
                 AtlantaServices.MediaService
-                    .GetMediaList(_user, new DomainCriteria(typeof(Media))
-                                            .Add(SqlExpression.CriterionFor<Media>(m => m.Name == "CD")))[0];
+                    .GetMediaList(_user, DetachedCriteria.For<Media>()
+                                            .Add<Media>(m => m.Name == "CD"))[0];
 
             mediaCopy.ModifyDetails(mediaCopy.Type, "modified CD name", "new description");
 
@@ -114,8 +114,8 @@ namespace Atlanta.Application.Services.Lending.Test
         {
             Media mediaCopy =
                 AtlantaServices.MediaService
-                    .GetMediaList(_user, new DomainCriteria(typeof(Media))
-                                            .Add(SqlExpression.CriterionFor<Media>(m => m.Name == "CD")))[0];
+                    .GetMediaList(_user, DetachedCriteria.For<Media>()
+                                            .Add<Media>(m => m.Name == "CD"))[0];
 
             AtlantaServices.MediaService
                 .Delete(_user, mediaCopy);

@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 
+using NHibernate.Criterion;
+
 using Atlanta.Application.Domain.DomainBase;
 using Atlanta.Application.Domain.Lender;
 using Atlanta.Application.Services.Interfaces;
@@ -20,7 +22,7 @@ namespace Atlanta.Presentation
         static void Main(string[] args)
         {
             IMediaService service = new ChannelFactory<IMediaService>("MediaService").CreateChannel();
-            DomainCriteria mediaCriteria = new DomainCriteria(typeof(Media));
+            DetachedCriteria mediaCriteria = DetachedCriteria.For<Media>();
             IList<Media> mediaList = service.GetMediaList(null, mediaCriteria);
             foreach (Media media in mediaList)
             {
