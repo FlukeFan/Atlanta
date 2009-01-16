@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-<project name="Atlanta" default="build">
+<project name="Atlanta" default="build" xsi:schemaLocation="http://broloco.atlanta/nant.xsd SDKs\nant-0.86\schema\nant.xsd" xmlns="http://broloco.atlanta/nant.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
     <echo message="Using '${nant.settings.currentframework}' framework on '${platform::get-name()}' platform." />
 
@@ -105,6 +104,14 @@
         <nant buildfile="Source\Source.build"           inheritall="true"   target="clean"/>
 
         <delete dir="${build.dir}" failonerror="false" />
+
+    </target>
+
+
+    <target name="exportNAntSchema">
+
+        <nantschema output="SDKs\nant-0.86\schema\nant.xsd"
+                    target-ns="http://broloco.atlanta/nant.xsd" />
 
     </target>
 

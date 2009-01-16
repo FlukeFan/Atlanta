@@ -1,4 +1,4 @@
-<project>
+<project name="loadTasks" xsi:schemaLocation="http://broloco.atlanta/nant.xsd ..\..\SDKs\nant-0.86\schema\nant.xsd" xmlns="http://broloco.atlanta/nant.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
     <!-- custom tasks -->
     <tdc output="${path::get-temp-path()}/AtlantaBuildTasks.dll" >
@@ -7,7 +7,7 @@
             <include name="Tools/BuildScripts/testTasks.taskdef" />
         </sources>
     </tdc>
-
+  
     <!-- targets -->
     <include buildfile="${build.includes.dir}\globalTargets.build"/>
 
