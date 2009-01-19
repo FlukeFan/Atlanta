@@ -1,0 +1,10 @@
+﻿<UserControl
+                xmlns="http://schemas.microsoft.com/client/2007"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                x:Class="Atlanta.Presentation.Main"
+                x:Name="Main"
+                >
+    <StackPanel>
+        <TextBlock Text="Atlanta Lending Library" TextWrapping="Wrap"/>
+    </StackPanel>
+</UserControl>

@@ -11,6 +11,8 @@
                     enabledirbrowsing="true"
                     />
 
+        <exec program="CScript.exe" commandline="c:\inetpub\AdminScripts\adsutil.vbs set w3svc/1/root/Atlanta/MimeMap &quot;.xap,application/x-silverlight-app&quot;" />
+
         <cscLibrary output="Atlanta.Application.Services">
 
             <references>
@@ -102,6 +104,13 @@
             </exclusions>
 
         </runTestWithCoverage>
+
+    </target>
+
+
+    <target name="onClean">
+
+        <deliisdir vdirname="atlanta" failonerror="false" />
 
     </target>
 

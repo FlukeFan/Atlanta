@@ -2,36 +2,55 @@
 
     <include buildfile="${build.includes.file}" />
 
+    <target name="onSetup">
+        <property name="hasGeneratedCode" value="true"/>
+    </target>
+
     <target name="onBuild">
 
-        <cscLibrary output="Atlanta.Presentation">
+        <mkdir dir="${build.dir}\client" />
+        
+        <copy file="..\..\SDKs\Silverlight\tools\Silverlight.js"  todir="${build.dir}" />
+        <copy file="default.htm"                                  todir="${build.dir}" />
+        
+        <copy todir="${build.dir}\client">
+          <fileset>
+            <include name="**\*.xaml"/>
+          </fileset>
+        </copy>
+        
+        <csc    target="library"
+                debug="true"
+                output="${build.dir}\client\Atlanta.dll"
+                warnaserror="true"
+                nostdlib="true"
+                noconfig="true">
 
             <references>
-                <include name="${build.dir}/bin/Atlanta.Application.Services.dll" />
+                <include name="..\..\SDKs\Silverlight\ref\mscorlib.dll" />
+                <include name="..\..\SDKs\Silverlight\ref\System.dll" />
+                <include name="..\..\SDKs\Silverlight\ref\System.Core.dll" />
+                <include name="..\..\SDKs\Silverlight\ref\System.Runtime.Serialization.dll" />
+                <include name="..\..\SDKs\Silverlight\ref\System.ServiceModel.dll" />
+                <include name="..\..\SDKs\Silverlight\ref\System.Windows.dll" />
+                <include name="..\..\SDKs\Silverlight\ref\System.Windows.Browser.dll" />
+                <include name="..\..\SDKs\Silverlight\ref\System.Xml.dll" />
             </references>
 
-            <sources>
-                <include name="*/*.cs" />
-            <!-- being temp for DosClient -->
-                <exclude name="DosClient/*.cs" />
-            <!-- end temp for DosClient -->
-            </sources>
+          <resources>
+          </resources>
 
-            <resources>
-            </resources>
+          <sources>
+            <include name="**\*.cs" />
+            <exclude name="DosClient\**" />
+          </sources>
+          
+        </csc>
 
-        </cscLibrary>
+        <delete file="${build.dir}\Atlanta.xap" />
+        <exec program="..\..\SDKs\Silverlight\tools\chiron.exe" commandline="/directory:${build.dir}\client /xap:${build.dir}\Atlanta.xap" />
 
-        <copy todir="${build.dir}/web/style" file="WebControls/atlanta.css" />
-
-        <copy todir="${build.dir}/web/script">
-            <fileset basedir="WebControls">
-                <exclude name="**/.svn/**" />
-                <include name="*.js" />
-            </fileset>
-        </copy>
-
-<!-- begin test client -->
+<!-- begin temp test client -->
 
         <csc    target="exe"
                 debug="${build.debug}"
@@ -66,22 +85,6 @@
 
 
     <target name="onBuildTest">
-
-        <mkdir dir="${build.dir}/web/test" />
-
-        <copy todir="${build.dir}/web/test">
-            <fileset basedir="WebControls/Test">
-                <exclude name="**/.svn/**" />
-                <include name="**" />
-            </fileset>
-        </copy>
-
-    </target>
-
-
-    <target name="onClean">
-
-        <deliisdir vdirname="atlanta" failonerror="false" />
 
     </target>
 

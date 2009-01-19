@@ -1,0 +1,26 @@
+<html>
+
+    <head>
+        <script type="text/javascript" src="Silverlight.js"></script>
+    </head>
+
+    <body>
+
+        <div id="silverlightControlHost">
+            <script type="text/javascript">
+                Silverlight.createObject(
+                    "Atlanta.xap", silverlightControlHost, "silverlightControl",
+                    {
+                        width: "100%", height: "100%",
+                        background: "white", alt: "<!--not installed-->",
+                        minRuntimeVersion: "2.0.31005.0"
+                    },
+                    { onError: Silverlight.default_error_handler },
+                    "", "context");
+            </script>
+        </div>
+
+    </body>
+
+</html>
+

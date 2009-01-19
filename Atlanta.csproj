@@ -26,6 +26,8 @@
     <Compile Include="**\*.dml" />
     <None Include="**\*.config" />
     <None Include="**\*.xml" />
+    <None Include="**\*.xaml" />
+    <None Include="**\*.htm" />
     <None Include="**\*.tt" />
   </ItemGroup>
   <ItemGroup>
