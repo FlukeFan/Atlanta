@@ -13,7 +13,10 @@ That's it!
 Access the application using:
 
 http://localhost/atlanta            (the example application)
-http://localhost/atlanta/design     (the design documentation)
+
+
+To use the Visual Studio solution you require a minimum of Visual Web Developer Express 2008, and
+Silverlight extensions installed.
 
 
 Some example NAnt scenarios:
