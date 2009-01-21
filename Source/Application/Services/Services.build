@@ -110,7 +110,8 @@
 
     <target name="onClean">
 
-        <deliisdir vdirname="atlanta" failonerror="false" />
+        <deliisdir vdirname="atlanta"               failonerror="false" />
+        <deliisdir vdirname="atlantaVisualStudio"   failonerror="false" />
 
     </target>
 
