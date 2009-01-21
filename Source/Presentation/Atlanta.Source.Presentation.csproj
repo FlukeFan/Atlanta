@@ -2,6 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectGuid>{3B37A575-F5E0-4D86-A816-2BB1EA6B71ED}</ProjectGuid>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <OutputPath>..\..\build_debug</OutputPath>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>

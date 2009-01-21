@@ -2,6 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectGuid>{EF3E27A5-671D-42C4-93B8-26E5B69C7203}</ProjectGuid>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <OutputPath>..\..\..\build_debug\bin</OutputPath>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
@@ -33,7 +34,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ServiceModel"/>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
     <Reference Include="Atlanta.Application.Domain" />
     <Reference Include="Atlanta.Application.Domain.Test" />
