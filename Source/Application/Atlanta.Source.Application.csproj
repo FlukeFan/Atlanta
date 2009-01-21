@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <ProjectGuid>{94C237FD-3785-4725-BE96-A482D3D27ADF}</ProjectGuid>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <OutputPath>..\..\build_debug\bin</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="*.build" />
+  </ItemGroup>
+  <Target Name="Build">
+  </Target>
+  <Target Name="Clean">
+  </Target>
+  <Target Name="Rebuild">
+  </Target>
+</Project>

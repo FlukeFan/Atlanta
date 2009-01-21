@@ -3,6 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Web Developer Express 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlanta", "Atlanta.csproj", "{DE5C3E73-F3B6-4A8F-8AE5-BD10BF0B8C4F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlanta.Source.Application.Domain", "Source\Application\Domain\Atlanta.Source.Application.Domain.csproj", "{0118F8D0-3CFE-4BE0-A0C5-5C925FDAD534}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DE5C3E73-F3B6-4A8F-8AE5-BD10BF0B8C4F} = {DE5C3E73-F3B6-4A8F-8AE5-BD10BF0B8C4F}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlanta.Source.Application", "Source\Application\Atlanta.Source.Application.csproj", "{94C237FD-3785-4725-BE96-A482D3D27ADF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -10,6 +17,10 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DE5C3E73-F3B6-4A8F-8AE5-BD10BF0B8C4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DE5C3E73-F3B6-4A8F-8AE5-BD10BF0B8C4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0118F8D0-3CFE-4BE0-A0C5-5C925FDAD534}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0118F8D0-3CFE-4BE0-A0C5-5C925FDAD534}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94C237FD-3785-4725-BE96-A482D3D27ADF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94C237FD-3785-4725-BE96-A482D3D27ADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

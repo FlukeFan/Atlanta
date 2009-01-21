@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <ProjectGuid>{0118F8D0-3CFE-4BE0-A0C5-5C925FDAD534}</ProjectGuid>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <OutputPath>..\..\..\build_debug\bin</OutputPath>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Atlanta.Application.Domain</RootNamespace>
+    <AssemblyName>Atlanta.Application.Domain.Test</AssemblyName>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(MSBuildProjectDirectory)\..\..\..\SDKs\nant-0.86\bin\lib\common\2.0\nunit-gui.exe</StartProgram>
+    <StartArguments>$(MSBuildProjectDirectory)\..\..\..\build_debug\bin\Atlanta.Application.Domain.Test.dll</StartArguments>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="**\*.build" />
+    <None Include="**\*.taskdef" />
+    <Compile Include="**\*.cs" />
+    <Compile Include="**\*.svc" />
+    <Compile Include="**\*.js" />
+    <Compile Include="**\*.xaml" />
+    <Compile Include="**\*.html" />
+    <Compile Include="**\*.aspx" />
+    <Compile Include="**\*.asax" />
+    <Compile Include="**\*.master" />
+    <Compile Include="**\*.css" />
+    <Compile Include="**\*.ddl" />
+    <Compile Include="**\*.dml" />
+    <None Include="**\*.config" />
+    <None Include="**\*.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="NHibernate" />
+    <Reference Include="NHibernate.LambdaExtensions" />
+    <Reference Include="nunit.framework" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+  <Target Name="Build">
+  </Target>
+  <Target Name="Clean">
+  </Target>
+  <Target Name="Rebuild">
+  </Target>
+</Project>
