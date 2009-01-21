@@ -50,37 +50,6 @@
         <delete file="${build.dir}\Atlanta.xap" />
         <exec program="..\..\SDKs\Silverlight\tools\chiron.exe" commandline="/directory:${build.dir}\client /xap:${build.dir}\Atlanta.xap" />
 
-<!-- begin temp test client -->
-
-        <csc    target="exe"
-                debug="${build.debug}"
-                optimize="${optimize}"
-                output="${build.dir}/bin/Atlanta.Presentation.DosClient.exe"
-                warnaserror="true"
-                doc="${build.dir}/bin/Atlanta.Presentation.DosClient.xml">
-
-            <references>
-                <include name="${build.dir}/bin/NHibernate.dll" />
-                <include name="${build.dir}/bin/Atlanta.Application.Domain.dll" />
-                <include name="${build.dir}/bin/Atlanta.Application.Services.dll" />
-            </references>
-
-            <sources>
-                <include name="${project.assemblyVersionFile}" />
-
-                <include name="DosClient/*.cs" />
-            </sources>
-
-        </csc>
-
-        <copy todir="${build.dir}/bin">
-            <fileset basedir="DosClient">
-                <include name="Atlanta.Presentation.DosClient.exe.config" />
-            </fileset>
-        </copy>
-
-<!-- end temp test client -->
-
     </target>
 
 
