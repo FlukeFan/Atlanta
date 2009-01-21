@@ -14,39 +14,10 @@
     </StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="**\*.build" />
-    <None Include="**\*.taskdef" />
-    <Compile Include="**\*.cs" />
-    <Compile Include="**\*.svc" />
-    <Compile Include="**\*.js" />
-    <Compile Include="**\*.aspx" />
-    <Compile Include="**\*.asax" />
-    <Compile Include="**\*.master" />
-    <Compile Include="**\*.css" />
-    <Compile Include="**\*.ddl" />
-    <Compile Include="**\*.dml" />
-    <None Include="**\*.config" />
-    <None Include="**\*.xml" />
-    <None Include="**\*.xaml" />
-    <None Include="**\*.htm" />
-    <None Include="**\*.tt" />
+    <None Include="*.build" />
+    <None Include="*.txt" />
+    <None Include="*.bat" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.ServiceModel"/>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml" />
-    <Reference Include="log4net" />
-    <Reference Include="Iesi.Collections" />
-    <Reference Include="NHibernate" />
-    <Reference Include="NHibernate.LambdaExtensions" />
-    <Reference Include="nunit.framework" />
-    <Reference Include="Spring.Aop" />
-    <Reference Include="Spring.Core" />
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <UsingTask AssemblyFile="SDKs\ExecParse1.1.0.0\ExecParse.dll" TaskName="ExecParse.ExecParse" />
   <PropertyGroup>
     <ExecParseConfiguration>

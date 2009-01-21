@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlanta.Source.Presentation
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlanta.Source", "Source\Atlanta.Source.csproj", "{B07F4509-2FF6-4DE8-A110-A771EB489EF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlanta.Tools", "Tools\Atlanta.Tools.csproj", "{B995245B-6405-4F76-A46D-5323C8A99B86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,8 @@ Global
 		{3B37A575-F5E0-4D86-A816-2BB1EA6B71ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B07F4509-2FF6-4DE8-A110-A771EB489EF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B07F4509-2FF6-4DE8-A110-A771EB489EF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B995245B-6405-4F76-A46D-5323C8A99B86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B995245B-6405-4F76-A46D-5323C8A99B86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
