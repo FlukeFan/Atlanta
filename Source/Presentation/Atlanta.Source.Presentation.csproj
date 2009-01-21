@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <ProjectGuid>{3B37A575-F5E0-4D86-A816-2BB1EA6B71ED}</ProjectGuid>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <OutputPath>..\..\build_debug</OutputPath>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <ErrorReport>prompt</ErrorReport>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <SilverlightApplication>true</SilverlightApplication>
+    <AssemblyName>Atlanta</AssemblyName>
+    <XapFilename>Atlanta.xap</XapFilename>
+    <SilverlightManifestTemplate>AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>Atlanta.Presentation.App</SilverlightAppEntry>
+    <CreateTestPage>false</CreateTestPage>
+    <TestPageFileName>default.htm</TestPageFileName>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="**\*.build" />
+    <None Include="**\*.taskdef" />
+    <Compile Include="**\*.cs" />
+    <Compile Include="**\*.svc" />
+    <Compile Include="**\*.js" />
+    <Compile Include="**\*.xaml" />
+    <Compile Include="**\*.html" />
+    <Compile Include="**\*.aspx" />
+    <Compile Include="**\*.asax" />
+    <Compile Include="**\*.master" />
+    <Compile Include="**\*.css" />
+    <Compile Include="**\*.ddl" />
+    <Compile Include="**\*.dml" />
+    <None Include="**\*.config" />
+    <None Include="**\*.xml" />
+    <Compile Include="**\*.tt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <HintPath>..\..\SDKs\Silverlight\ref\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>..\..\SDKs\Silverlight\ref\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows">
+      <HintPath>..\..\SDKs\Silverlight\ref\System.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Browser">
+      <HintPath>..\..\SDKs\Silverlight\ref\System.Windows.Browser.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <HintPath>..\..\SDKs\Silverlight\ref\System.Runtime.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <HintPath>..\..\SDKs\Silverlight\ref\System.ServiceModel.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+  <Target Name="Build">
+  </Target>
+  <Target Name="Clean">
+  </Target>
+  <Target Name="Rebuild">
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

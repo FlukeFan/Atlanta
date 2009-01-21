@@ -15,6 +15,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlanta.Source.Application.
 		{DE5C3E73-F3B6-4A8F-8AE5-BD10BF0B8C4F} = {DE5C3E73-F3B6-4A8F-8AE5-BD10BF0B8C4F}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlanta.Source.Presentation", "Source\Presentation\Atlanta.Source.Presentation.csproj", "{3B37A575-F5E0-4D86-A816-2BB1EA6B71ED}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DE5C3E73-F3B6-4A8F-8AE5-BD10BF0B8C4F} = {DE5C3E73-F3B6-4A8F-8AE5-BD10BF0B8C4F}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlanta.Source", "Source\Atlanta.Source.csproj", "{B07F4509-2FF6-4DE8-A110-A771EB489EF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +35,10 @@ Global
 		{94C237FD-3785-4725-BE96-A482D3D27ADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF3E27A5-671D-42C4-93B8-26E5B69C7203}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EF3E27A5-671D-42C4-93B8-26E5B69C7203}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B37A575-F5E0-4D86-A816-2BB1EA6B71ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B37A575-F5E0-4D86-A816-2BB1EA6B71ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B07F4509-2FF6-4DE8-A110-A771EB489EF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B07F4509-2FF6-4DE8-A110-A771EB489EF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
