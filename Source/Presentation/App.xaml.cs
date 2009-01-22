@@ -8,7 +8,7 @@ using System.Windows.Browser;
 namespace Atlanta.Presentation
 {
 
-    public class App : Application
+    public class App : System.Windows.Application
     {
 
         public App()
