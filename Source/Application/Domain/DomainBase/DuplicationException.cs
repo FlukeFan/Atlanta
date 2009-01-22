@@ -13,6 +13,10 @@ namespace Atlanta.Application.Domain.DomainBase
 
         private DomainObjectBase _duplicate;
 
+        private DuplicationException(string message) : base(message)
+        {
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>

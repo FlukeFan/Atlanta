@@ -1,10 +1,11 @@
 
+using System;
+
 using NHibernate;
 
 using AopAlliance.Intercept;
 
 using Atlanta.Application.Domain.DomainBase;
-
 using Atlanta.Application.Services.Interfaces;
 
 namespace Atlanta.Application.Services.ServiceBase.Test
@@ -28,12 +29,19 @@ namespace Atlanta.Application.Services.ServiceBase.Test
             DomainRegistry.Repository = repository;
             DomainRegistry.Library = null;
 
-            object returnValue = invocation.Proceed();
+            try
+            {
+                object returnValue = invocation.Proceed();
 
-            repository.Flush();
-            repository.Clear();
+                repository.Flush();
+                repository.Clear();
 
-            return returnValue;
+                return returnValue;
+            }
+            catch (Exception e)
+            {
+                return ServiceResult.Error(invocation.Method.ReturnType, e);
+            }
         }
 
     }

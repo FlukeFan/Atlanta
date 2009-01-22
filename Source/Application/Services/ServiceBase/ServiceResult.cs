@@ -86,12 +86,12 @@ namespace Atlanta.Application.Services.ServiceBase
         /// <summary>
         /// Wrap an exception to be returned from a service call
         /// </summary>
-        public static ServiceResult Error(Exception exception)
+        public static ServiceResult Error(Type resultType, Exception exception)
         {
-            ServiceResult serviceResult = new ServiceResult();
+            ServiceResult serviceResult = (ServiceResult)Activator.CreateInstance(resultType, true);
             serviceResult.IsError = true;
             serviceResult.ExceptionMessage = exception.Message;
-            serviceResult.ExceptionClass = exception.GetType().FullName;
+            serviceResult.ExceptionClass = exception.GetType().AssemblyQualifiedName;
             serviceResult.Properties = new Dictionary<string, object>();
 
             foreach (PropertyInfo property in exception.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
@@ -118,7 +118,8 @@ namespace Atlanta.Application.Services.ServiceBase
             if (exceptionType == null)
                 throw new Exception("Unrecognised exception type (" + ExceptionClass + ")\r\n" + ExceptionMessage);
 
-            ConstructorInfo messageConstructor = exceptionType.GetConstructor(new Type[] { typeof(string) });
+            ConstructorInfo messageConstructor = exceptionType.GetConstructor(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, null,
+                                                                    new Type[] { typeof(string) }, null);
             if (messageConstructor == null)
                 throw new Exception("No valid constructor taking a string for (" + ExceptionClass + ")\r\n" + ExceptionMessage);
 
