@@ -1,0 +1,98 @@
+<#@ template language="C#" hostspecific="True" #>
+<#@ assembly name="System.ServiceModel" #>
+<#@ assembly name="System.Xml" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ include file="Utility.tt" #>
+<# Run(); #>
+<#+
+
+    private IList<Regex> _includes;
+    private IList<Regex> _excludes;
+    
+    public void Run()
+    {
+        Console.WriteLine("Generating WCF Silverlight dtos");
+
+        string modelAssemblyPath = GetCommandLineProperty("ModelAssembly");
+        Console.WriteLine("Model assembly:" + modelAssemblyPath);
+
+        string dtoConfigPath = GetCommandLineProperty("DtoConfig");
+        Console.WriteLine("DTO Config:" + dtoConfigPath);
+        ReadDtoConfig(dtoConfigPath);
+
+        string outputFolderPath = GetCommandLineProperty("OutputFolder");
+        Console.WriteLine("Output folder:" + outputFolderPath);
+        
+        Assembly modelAssembly = Assembly.LoadFrom(modelAssemblyPath);
+        foreach (Type modelType in modelAssembly.GetTypes())
+        {
+            if (!modelType.IsPublic)
+            {
+                Console.WriteLine("Ignoring non public type " + modelType.Name);
+                continue;
+            }
+            
+            if (!Matches(_includes, modelType.FullName))
+            {
+                Console.WriteLine("Ignoring " + modelType.Name);
+                continue;
+            }
+
+            if (Matches(_excludes, modelType.FullName))
+            {
+                Console.WriteLine("Excluding " + modelType.Name);
+                continue;
+            }
+            
+            SetData("ModelType", modelType);
+            if (modelType.IsClass)
+            {
+                Console.WriteLine("Generating class: " + modelType.FullName);
+                ProcessTemplate("GenerateSilverlightDtoClass.tt",
+                    Path.Combine(outputFolderPath, modelType.Name + ".cs"));
+            }
+            else if (modelType.IsEnum)
+            {
+                Console.WriteLine("Generating enum: " + modelType.Name);
+                ProcessTemplate("GenerateSilverlightDtoEnum.tt",
+                    Path.Combine(outputFolderPath, modelType.Name + ".cs"));
+            }
+            else
+            {
+                throw new Exception("Unhandled type:" + modelType);
+            }
+        }
+
+        // Write flag file to indicate success
+        File.WriteAllText(  Path.Combine(   outputFolderPath,
+                                            Path.GetFileNameWithoutExtension(Host.TemplateFile) + ".flg"),
+                            DateTime.Now.ToString());
+    }
+    
+    private bool Matches(IList<Regex> matches, string test)
+    {
+        foreach (Regex regex in matches)
+            if (regex.IsMatch(test))
+                return true;
+        return false;
+    }
+    
+    private IList<Regex> ReadConfig(XmlNodeList nodes)
+    {
+        IList<Regex> list = new List<Regex>();
+        foreach (XmlElement node in nodes)
+            list.Add(new Regex(node.GetAttribute("types")));
+        return list;
+    }
+    
+    private void ReadDtoConfig(string dtoConfigPath)
+    {
+        XmlDocument dtoConfig = new XmlDocument();
+        dtoConfig.Load(dtoConfigPath);
+        _includes = ReadConfig(dtoConfig.SelectNodes("//include"));
+        _excludes = ReadConfig(dtoConfig.SelectNodes("//exclude"));
+    }
+    
+#>

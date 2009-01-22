@@ -1,4 +1,5 @@
 <dtoTypes>
     <!-- regular expressions detailing which types should have DTO's created -->
     <include types="Atlanta\.Application\.Domain\..*" />
+    <exclude types="Atlanta\.Application\.Domain\.DomainBase\..*" />
 </dtoTypes>

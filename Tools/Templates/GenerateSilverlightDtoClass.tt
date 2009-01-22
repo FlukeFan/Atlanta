@@ -1,0 +1,80 @@
+<#@ template language="C#" hostspecific="True" #>
+<#@ assembly name="System.ServiceModel" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Runtime.Serialization" #>
+<#@ include file="Utility.tt" #>
+<# Init(); #>
+// Generated DTO for <#=_modelTypeName#> (<#=DateTime.Now#>)
+
+using System;
+using System.Runtime.Serialization;
+
+namespace <#=_namespace#>
+{
+
+    [DataContract]
+    public partial class <#=_modelTypeName#> : <#=SharpType(_modelType.BaseType)#>
+    {
+
+<#
+        if (typeof(Exception).IsAssignableFrom(_modelType))
+        {#>
+        public <#=_modelTypeName#>(string message) : base(message) { }
+
+<#
+        }
+#>
+<#
+        for (int i=0; i<_fieldNames.Count; i++)
+        {#>
+        [DataMember(Name="<#=_fieldNames[i]#>")]
+        public <#=_fieldTypes[i]#> <#=_propertyNames[i]#> { get; set; }
+
+<#
+        }
+        #>
+    }
+
+}
+
+<#+
+    
+    private Type _modelType;
+    private string _namespace;
+    private string _modelTypeName;
+    
+    private IList<string> _fieldTypes = new List<string>();
+    private IList<string> _fieldNames = new List<string>();
+    private IList<string> _propertyNames = new List<string>();
+
+    public void Init()
+    {
+        _modelType = (Type)GetData("ModelType");
+        _modelTypeName = _modelType.Name;
+        _namespace = _modelType.Namespace;
+        
+        foreach (FieldInfo field in _modelType.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
+        {
+            _fieldTypes.Add(SharpType(field.FieldType));
+            _fieldNames.Add(field.Name);
+            _propertyNames.Add(FieldToProperty(field.Name));
+        }
+        
+        foreach (PropertyInfo property in _modelType.GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
+            foreach (object attribute in property.GetCustomAttributes(false))
+                if (attribute.GetType().Name == "DataMemberAttribute")
+                {
+                    if (_propertyNames.Contains(property.Name))
+                    {
+                        int existingIndex = _propertyNames.IndexOf(property.Name);
+                        _fieldTypes.RemoveAt(existingIndex);
+                        _fieldNames.RemoveAt(existingIndex);
+                        _propertyNames.RemoveAt(existingIndex);
+                    }
+                    _fieldTypes.Add(SharpType(property.PropertyType));
+                    _fieldNames.Add(property.Name);
+                    _propertyNames.Add(property.Name);
+                }
+    }
+    
+#>

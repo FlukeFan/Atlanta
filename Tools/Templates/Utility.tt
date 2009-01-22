@@ -39,3 +39,73 @@
         return CallContext.GetData(name);
     }
 #>
+<#+
+    private string ParameterDeclaration(MethodInfo method)
+    {
+        string decl = "";
+        foreach (ParameterInfo param in method.GetParameters())
+        {
+            decl +=
+                SharpType(param.ParameterType) + " "
+                + param.Name + ", ";
+        }
+        return decl;
+    }
+#>
+<#+
+    private string ParameterList(MethodInfo method)
+    {
+        string decl = "";
+        foreach (ParameterInfo param in method.GetParameters())
+        {
+            decl += param.Name + ", ";
+        }
+        return decl;
+    }
+#>
+<#+
+    private string StripTrailingComma(string list)
+    {
+        return list.TrimEnd(", ".ToCharArray());
+    }
+#>
+<#+
+    private string SharpType(Type type)
+    {
+        if (!type.IsGenericType)
+            return type.FullName;
+        
+        string name = type.FullName;
+        name = name.Substring(0, name.IndexOf("`")) + "<";
+        
+        foreach (Type param in type.GetGenericArguments())
+        {
+            name += SharpType(param) + ", ";
+        }
+        name = name.TrimEnd(", ".ToCharArray());
+
+        return name + ">";
+    }
+#>
+<#+
+    private string FieldToProperty(string fieldName)
+    {
+        string propertyName = fieldName;
+        propertyName =
+            propertyName
+                .Replace(">k__BackingField", "")
+                .Replace("<", "")
+                .Replace("_", "");
+        propertyName = ToPascalCase(propertyName);
+        return propertyName;
+    }
+#>
+<#+
+    private string ToPascalCase(string camelCase)
+    {
+        string pascalCase =
+            camelCase.Substring(0, 1).ToUpper()
+            + camelCase.Substring(1, camelCase.Length - 1);
+        return pascalCase;
+    }
+#>

@@ -7,6 +7,13 @@
     </target>
 
     <target name="onBuild">
+    
+        <exec program="TextTransform">
+            <arg line="-a ModelAssembly!&quot;${build.dir}\bin\Atlanta.Application.Domain.dll&quot;" />
+            <arg line="-a DtoConfig!&quot;${project::get-base-directory()}\DtoConfig.xml&quot;" />
+            <arg line="-a OutputFolder!&quot;${project::get-base-directory()}\generated&quot;" />
+            <arg line="..\..\Tools\Templates\GenerateSilverlightDtos.tt" />
+        </exec>
 
         <mkdir dir="${build.dir}\client" />
         

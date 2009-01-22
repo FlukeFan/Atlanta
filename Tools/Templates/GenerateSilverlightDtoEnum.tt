@@ -1,0 +1,41 @@
+<#@ template language="C#" hostspecific="True" #>
+<#@ assembly name="System.ServiceModel" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Runtime.Serialization" #>
+<#@ include file="Utility.tt" #>
+<# Init(); #>
+// Generated DTO for <#=_modelTypeName#> (<#=DateTime.Now#>)
+
+using System;
+using System.Runtime.Serialization;
+
+namespace <#=_namespace#>
+{
+
+    public enum <#=_modelTypeName#>
+    {
+<#
+        foreach (int v in Enum.GetValues(_modelType))
+        {#>
+        <#=Enum.GetName(_modelType, v)#> = <#=v#>,
+<#
+        }
+        #>
+    }
+
+}
+
+<#+
+    
+    private Type _modelType;
+    private string _namespace;
+    private string _modelTypeName;
+    
+    public void Init()
+    {
+        _modelType = (Type)GetData("ModelType");
+        _modelTypeName = _modelType.Name;
+        _namespace = _modelType.Namespace;
+    }
+    
+#>
