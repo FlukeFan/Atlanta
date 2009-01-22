@@ -6,6 +6,7 @@ using NHibernate.Criterion;
 
 using Atlanta.Application.Domain.DomainBase;
 using Atlanta.Application.Domain.Lender;
+using Atlanta.Application.Services.ServiceBase;
 
 namespace Atlanta.Application.Services.Interfaces
 {
@@ -21,34 +22,29 @@ namespace Atlanta.Application.Services.Interfaces
         ///  Get a list of Media for the system Library
         /// </summary>
         [OperationContract]
-        IList<Media> GetMediaList(  User                user,
-                                    DetachedCriteria    mediaCriteria);
+        ServiceResult<IList<Media>> GetMediaList(   User                user,
+                                                    DetachedCriteria    mediaCriteria);
 
         /// <summary>
         ///  Create a Media in the system Library
         /// </summary>
         [OperationContract]
-        Media Create(   User    user,
-                        Media   orphanedMedia);
+        ServiceResult<Media> Create(User    user,
+                                    Media   orphanedMedia);
 
         /// <summary>
         ///  Modify an existing Media.
         /// </summary>
         [OperationContract]
-        Media Modify(   User    user,
-                        Media   modifiedMediaCopy);
+        ServiceResult<Media> Modify(User    user,
+                                    Media   modifiedMediaCopy);
 
         /// <summary>
         ///  Delete the media from the system Library.
         /// </summary>
         [OperationContract]
-        void Delete(User    user,
-                    Media   mediaCopy);
+        ServiceResult Delete(   User    user,
+                                Media   mediaCopy);
 
-        /// <summary>
-        ///  TempMethodToTestWebServices
-        /// </summary>
-        [OperationContract]
-        string TempMethodToTestWebServices();
     }
 }

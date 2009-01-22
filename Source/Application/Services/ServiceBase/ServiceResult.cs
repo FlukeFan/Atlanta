@@ -13,12 +13,25 @@ namespace Atlanta.Application.Services.ServiceBase
     public class ServiceResult<T> : ServiceResult
     {
 
+        private T _result;
+
         /// <summary> protected constructor </summary>
         protected ServiceResult() { }
 
         /// <summary> return value </summary>
         [DataMember]
-        public T Result { get; protected set; }
+        public T Result
+        {
+            get
+            {
+                ProcessException();
+                return _result;
+            }
+            protected set
+            {
+                _result = value;
+            }
+        }
 
         /// <summary> Create a return value </summary>
         public static ServiceResult<T> Return(T result)
@@ -90,6 +103,43 @@ namespace Atlanta.Application.Services.ServiceBase
             }
 
             return serviceResult;
+        }
+
+        /// <summary>
+        /// Process an exception is there is one
+        /// </summary>
+        protected void ProcessException()
+        {
+            if (!IsError)
+                return;
+
+            Type exceptionType = Type.GetType(ExceptionClass);
+
+            if (exceptionType == null)
+                throw new Exception("Unrecognised exception type (" + ExceptionClass + ")\r\n" + ExceptionMessage);
+
+            ConstructorInfo messageConstructor = exceptionType.GetConstructor(new Type[] { typeof(string) });
+            if (messageConstructor == null)
+                throw new Exception("No valid constructor taking a string for (" + ExceptionClass + ")\r\n" + ExceptionMessage);
+
+            Exception exception = (Exception) messageConstructor.Invoke(new object[] { ExceptionMessage });
+            foreach (string propertyName in Properties.Keys)
+            {
+                PropertyInfo property = exceptionType.GetProperty(propertyName);
+                if (property == null)
+                    throw new Exception("No property (" + propertyName + ") on (" + ExceptionClass + ")\r\n" + ExceptionMessage);
+
+                try
+                {
+                    property.SetValue(exception, Properties[propertyName], null);
+                }
+                catch(Exception e)
+                {
+                    throw new Exception("Error setting property (" + propertyName + ") on (" + ExceptionClass + ")\r\n" + ExceptionMessage, e);
+                }
+            }
+
+            throw exception;
         }
 
     }

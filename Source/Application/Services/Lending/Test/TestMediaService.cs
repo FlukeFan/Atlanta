@@ -48,7 +48,8 @@ namespace Atlanta.Application.Services.Lending.Test
             IList<Media> mediaList =
                 AtlantaServices.MediaService
                     .GetMediaList(_user, DetachedCriteria.For<Media>()
-                                            .Add<Media>(m => m.Type == MediaType.Book));
+                                            .Add<Media>(m => m.Type == MediaType.Book))
+                    .Result;
 
             Assert.AreEqual(2, mediaList.Count);
 
@@ -59,20 +60,22 @@ namespace Atlanta.Application.Services.Lending.Test
             IList<Media> mediaList2 =
                 AtlantaServices.MediaService
                     .GetMediaList(_user, DetachedCriteria.For<Media>()
-                                            .Add<Media>(m => m.Name == media1.Name));
+                                            .Add<Media>(m => m.Name == media1.Name))
+                    .Result;
 
             Assert.AreEqual(1, mediaList2.Count);
             Assert.AreNotEqual(media1, mediaList2[0], "objects from different session matched");
         }
 
         [Test]
-        public void TestCreate_Ok()
+        public void TestCreate_FailDuplicateName()
         {
             try
             {
                 Media media =
                     AtlantaServices.MediaService
-                        .Create(_user, Media.InstantiateOrphanedMedia(MediaType.Cd, "CD", "test description"));
+                        .Create(_user, Media.InstantiateOrphanedMedia(MediaType.Cd, "CD", "test description"))
+                        .Result;
 
                 Assert.Fail("exception not thrown");
             }
@@ -83,11 +86,12 @@ namespace Atlanta.Application.Services.Lending.Test
         }
 
         [Test]
-        public void TestCreate_FailDuplicateName()
+        public void TestCreate_Ok()
         {
             Media media =
                 AtlantaServices.MediaService
-                    .Create(_user, Media.InstantiateOrphanedMedia(MediaType.Cd, "test name", "test description"));
+                    .Create(_user, Media.InstantiateOrphanedMedia(MediaType.Cd, "test name", "test description"))
+                    .Result;
 
             Assert.AreEqual(4, Repository.CreateQuery<Media>().List<Media>().Count);
         }
@@ -98,11 +102,11 @@ namespace Atlanta.Application.Services.Lending.Test
             Media mediaCopy =
                 AtlantaServices.MediaService
                     .GetMediaList(_user, DetachedCriteria.For<Media>()
-                                            .Add<Media>(m => m.Name == "CD"))[0];
+                                            .Add<Media>(m => m.Name == "CD")).Result[0];
 
             mediaCopy.ModifyDetails(mediaCopy.Type, "modified CD name", "new description");
 
-            mediaCopy = AtlantaServices.MediaService.Modify(_user, mediaCopy);
+            mediaCopy = AtlantaServices.MediaService.Modify(_user, mediaCopy).Result;
 
             Media modifiedMedia = Repository.Load<Media>(mediaCopy.Id);
             Assert.AreEqual("modified CD name", modifiedMedia.Name);
@@ -115,7 +119,7 @@ namespace Atlanta.Application.Services.Lending.Test
             Media mediaCopy =
                 AtlantaServices.MediaService
                     .GetMediaList(_user, DetachedCriteria.For<Media>()
-                                            .Add<Media>(m => m.Name == "CD"))[0];
+                                            .Add<Media>(m => m.Name == "CD")).Result[0];
 
             AtlantaServices.MediaService
                 .Delete(_user, mediaCopy);

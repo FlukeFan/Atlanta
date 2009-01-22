@@ -28,8 +28,8 @@ namespace Atlanta.Application.Services.Lending
         /// <summary>
         ///  Get a list of Media for the system Library
         /// </summary>
-        public IList<Media> GetMediaList(   User                user,
-                                            DetachedCriteria    mediaCriteria)
+        public ServiceResult<IList<Media>> GetMediaList(User                user,
+                                                        DetachedCriteria    mediaCriteria)
         {
             IList<Media> mediaList =
                 DomainRegistry.Library.GetMediaList(mediaCriteria);
@@ -46,42 +46,40 @@ namespace Atlanta.Application.Services.Lending
                 mediaListCopy.Add(copy);
             }
 
-            return mediaListCopy;
+            return ServiceResult<IList<Media>>.Return(mediaListCopy);
         }
 
         /// <summary>
         ///  Create a Media in the system Library
         /// </summary>
-        public Media Create(User    user,
-                            Media   orphanedMedia)
+        public ServiceResult<Media> Create( User    user,
+                                            Media   orphanedMedia)
         {
-            return DomainRegistry.Library.Create(orphanedMedia);
+            return ServiceResult<Media>
+                .Return(DomainRegistry.Library.Create(orphanedMedia));
         }
 
         /// <summary>
         ///  Modify an existing Media.
         /// </summary>
-        public Media Modify(User    user,
-                            Media   modifiedMediaCopy)
+        public ServiceResult<Media> Modify( User    user,
+                                            Media   modifiedMediaCopy)
         {
             Media loadedMedia = Repository.Load<Media>(modifiedMediaCopy.Id);
-            return loadedMedia.OwningLibrary.Modify(loadedMedia, modifiedMediaCopy);
+
+            return ServiceResult<Media>
+                .Return(loadedMedia.OwningLibrary.Modify(loadedMedia, modifiedMediaCopy));
         }
 
         /// <summary>
         ///  Delete the media from the system Library.
         /// </summary>
-        public void Delete( User    user,
-                            Media   mediaCopy)
+        public ServiceResult Delete(User    user,
+                                    Media   mediaCopy)
         {
             Media loadedMedia = Repository.Load<Media>(mediaCopy.Id);
             loadedMedia.OwningLibrary.Delete(loadedMedia);
-        }
-
-        /// <summary> RGB - temp method - to be removed</summary>
-        public string TempMethodToTestWebServices()
-        {
-            return "a simple test";
+            return ServiceResult.Void;
         }
 
     }
