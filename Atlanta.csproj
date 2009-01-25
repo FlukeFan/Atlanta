@@ -18,6 +18,7 @@
     <None Include="*.build" />
     <None Include="*.txt" />
     <None Include="*.bat" />
+    <None Include="*.nunit" />
   </ItemGroup>
   <UsingTask AssemblyFile="SDKs\ExecParse1.1.0.0\ExecParse.dll" TaskName="ExecParse.ExecParse" />
   <PropertyGroup>

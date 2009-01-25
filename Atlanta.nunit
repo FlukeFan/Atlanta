@@ -1,0 +1,9 @@
+﻿<NUnitProject>
+  <Settings activeconfig="Debug" />
+  <Config name="Debug" configfile="build_debug\bin\Atlanta.Application.Domain.Test.dll.config" binpathtype="Auto">
+
+    <assembly path="build_debug\bin\Atlanta.Application.Domain.Test.dll" />
+    <assembly path="build_debug\bin\Atlanta.Application.Services.Test.dll" />
+
+  </Config>
+</NUnitProject>
