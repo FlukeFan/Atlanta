@@ -16,6 +16,13 @@
             <arg line="..\..\Tools\Templates\GenerateSilverlightDtos.tt" />
         </exec>
 
+        <mkdir dir="generated\services" />
+        <exec program="TextTransform">
+            <arg line="-a ServiceAssembly!&quot;${build.dir}\bin\Atlanta.Application.Services.dll&quot;" />
+            <arg line="-a OutputFolder!&quot;${project::get-base-directory()}\generated\services&quot;" />
+            <arg line="..\..\Tools\Templates\GenerateSilverlightServices.tt" />
+        </exec>
+
         <mkdir dir="${build.dir}\client" />
         
         <copy file="..\..\SDKs\Silverlight\tools\Silverlight.js"  todir="${build.dir}" />

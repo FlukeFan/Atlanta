@@ -1,0 +1,34 @@
+<#@ template language="C#" hostspecific="True" #>
+<#@ assembly name="System.ServiceModel" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.ServiceModel" #>
+<#@ include file="Utility.tt" #>
+<# Run(); #>
+<#+
+    public void Run()
+    {
+        Console.WriteLine("Generating WCF Silverlight services");
+
+        string serviceAssemblyPath = GetCommandLineProperty("ServiceAssembly");
+        Console.WriteLine("Service assembly:" + serviceAssemblyPath);
+
+        string outputFolderPath = GetCommandLineProperty("OutputFolder");
+        Console.WriteLine("Output folder:" + outputFolderPath);
+        
+        Assembly serviceAssembly = Assembly.LoadFrom(serviceAssemblyPath);
+        foreach (Type serviceType in serviceAssembly.GetTypes())
+            foreach (object attribute in serviceType.GetCustomAttributes(false))
+                if (attribute.GetType() == typeof(ServiceContractAttribute))
+                {
+                    Console.WriteLine("Generating: " + serviceType.Name);
+                    SetData("ServiceType", serviceType);
+                    ProcessTemplate("GenerateSilverlightService.tt",
+                        Path.Combine(outputFolderPath, serviceType.Name.TrimStart('I') + "Client.cs"));
+                }
+
+        // Write flag file to indicate success
+        File.WriteAllText(  Path.Combine(   outputFolderPath,
+                                            Path.GetFileNameWithoutExtension(Host.TemplateFile) + ".flg"),
+                            DateTime.Now.ToString());
+    }
+#>

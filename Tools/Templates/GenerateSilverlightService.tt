@@ -1,0 +1,114 @@
+<#@ template language="C#" hostspecific="True" #>
+<#@ assembly name="System.ServiceModel" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.ServiceModel" #>
+<#@ include file="Utility.tt" #>
+<# Init(); #>
+// Generated service for <#=_serviceTypeInterfaceName#> (<#=DateTime.Now#>)
+
+using System;
+using System.ServiceModel;
+using System.Windows.Threading;
+
+using Atlanta.Application.Services.ServiceBase;
+
+namespace <#=_serviceNamespace#>
+{
+
+    [ServiceContract]
+    public interface <#=_serviceTypeInterfaceName#>
+    {
+
+<#
+        foreach (MethodInfo method in _methods)
+        {#>
+        // *** <#=method.Name#> ***
+        [OperationContract(AsyncPattern=true)]
+        IAsyncResult Begin<#=method.Name#>(<#=ParameterDeclaration(method)#>AsyncCallback callback, object state);
+        <#=SharpType(method.ReturnType)#> End<#=method.Name#>(IAsyncResult result);
+
+<#
+        }
+        #>
+    }
+    
+    public class <#=_serviceTypeName#>Client : ClientBase<<#=_serviceTypeInterfaceName#>>
+    {
+
+        private Dispatcher _dispatcher;
+
+        public <#=_serviceTypeName#>Client(EndpointAddress endpointAddress, Dispatcher dispatcher)
+            : base(new BasicHttpBinding(), endpointAddress)
+        {
+            _dispatcher = dispatcher;
+        }
+        
+<#
+        foreach (MethodInfo method in _methods)
+        {#>
+        // *** Start <#=method.Name#> ***
+        public event ServiceCallback <#=method.Name#>Completed;
+        
+        public virtual IAsyncResult <#=method.Name#>(<#=StripTrailingComma(ParameterDeclaration(method))#>)
+        {
+            return Channel.Begin<#=method.Name#>(<#=ParameterList(method)#><#=method.Name#>Response,
+                new ServiceCallStatus() { Callback = <#=method.Name#>Completed });
+        }
+
+        private void <#=method.Name#>Response(IAsyncResult result)
+        {
+            ServiceCallStatus serviceCallStatus = (ServiceCallStatus)result.AsyncState;
+            serviceCallStatus.AsyncResult = result;
+            if (serviceCallStatus.Callback != null)
+                ServiceCallStatus.InvokeResultOnUiThread(_dispatcher, serviceCallStatus);
+        }
+
+        public virtual <#=ServiceWrappedType(method)#> <#=method.Name#>(ServiceCallStatus serviceCallStatus)
+        {
+            <#=SharpType(method.ReturnType)#> serviceResult = Channel.End<#=method.Name#>(serviceCallStatus.AsyncResult);
+            serviceResult.ProcessException();
+<#      if (method.ReturnType.IsGenericType)
+        {#>
+            return serviceResult.Result;
+<#
+        }#>
+        }
+        // *** End <#=method.Name#> ***
+
+<#
+        }
+        #>
+    }
+    
+}
+
+<#+
+    
+    private Type _serviceType;
+    private string _serviceNamespace;
+    private string _serviceTypeInterfaceName;
+    private string _serviceTypeName;
+    private IList<MethodInfo> _methods = new List<MethodInfo>();
+
+    public void Init()
+    {
+        _serviceType = (Type)GetData("ServiceType");
+        _serviceNamespace = _serviceType.Namespace;
+        _serviceTypeInterfaceName = _serviceType.Name;
+        _serviceTypeName = _serviceTypeInterfaceName.TrimStart('I');
+        
+        foreach (MethodInfo method in _serviceType.GetMethods())
+            foreach (object attribute in method.GetCustomAttributes(false))
+                if (attribute.GetType() == typeof(OperationContractAttribute))
+                    _methods.Add(method);
+    }
+    
+    public string ServiceWrappedType(MethodInfo method)
+    {
+        if (!method.ReturnType.IsGenericType)
+            return "void";
+        
+        return SharpType(method.ReturnType.GetGenericArguments()[0]);
+    }
+    
+#>
