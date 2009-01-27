@@ -1,4 +1,6 @@
 
+using System;
+
 using NHibernate;
 using NHibernate.Cfg;
 
@@ -59,11 +61,12 @@ namespace Atlanta.Application.Services.ServiceBase
                     .CommitTransaction()
                     .Dispose();
             }
-            catch
+            catch (Exception e)
             {
                 repository
                     .Dispose();
-                throw;
+
+                returnValue = ServiceResult.Error(invocation.Method.ReturnType, e);
             }
 
             return returnValue;

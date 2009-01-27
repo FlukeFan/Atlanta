@@ -24,7 +24,6 @@ namespace Atlanta.Application.Services.ServiceBase
         {
             get
             {
-                ProcessException();
                 return _result;
             }
             protected set
@@ -108,7 +107,7 @@ namespace Atlanta.Application.Services.ServiceBase
         /// <summary>
         /// Process an exception is there is one
         /// </summary>
-        protected void ProcessException()
+        public void ProcessException()
         {
             if (!IsError)
                 return;

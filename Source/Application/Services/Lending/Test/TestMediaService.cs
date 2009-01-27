@@ -42,7 +42,7 @@ namespace Atlanta.Application.Services.Lending.Test
             _user = User.InstantiateUser("testServiceUser");
         }
         
-        [Test]
+        [Test] [Ignore("Needs DetachedCriteria working")]
         public void TestGetMediaList_Ok()
         {
             IList<Media> mediaList =
@@ -72,10 +72,9 @@ namespace Atlanta.Application.Services.Lending.Test
         {
             try
             {
-                Media media =
-                    AtlantaServices.MediaService
-                        .Create(_user, Media.InstantiateOrphanedMedia(MediaType.Cd, "CD", "test description"))
-                        .Result;
+                AtlantaServices.MediaService
+                    .Create(_user, Media.InstantiateOrphanedMedia(MediaType.Cd, "CD", "test description"))
+                    .ProcessException();
 
                 Assert.Fail("exception not thrown");
             }

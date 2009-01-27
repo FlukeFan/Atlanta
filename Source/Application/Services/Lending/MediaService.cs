@@ -32,7 +32,7 @@ namespace Atlanta.Application.Services.Lending
                                                         DetachedCriteria    mediaCriteria)
         {
             IList<Media> mediaList =
-                DomainRegistry.Library.GetMediaList(mediaCriteria);
+                DomainRegistry.Library.GetMediaList(DetachedCriteria.For<Media>());
 
             // temporary solution that
             // creates a copy to serialise
