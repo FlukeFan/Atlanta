@@ -25,6 +25,7 @@
     <Compile Include="**\*.js" />
     <Compile Include="**\*.xaml" />
     <Compile Include="**\*.html" />
+    <Compile Include="**\*.htm" />
     <Compile Include="**\*.aspx" />
     <Compile Include="**\*.asax" />
     <Compile Include="**\*.master" />
