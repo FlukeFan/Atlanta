@@ -12,7 +12,7 @@ namespace Atlanta.Application.Domain.DomainBase.Test
 {
 
     [TestFixture]
-    public class DomainTestBase
+    public abstract class DomainTestBase
     {
 
         [SetUp]

@@ -32,7 +32,9 @@
     <None Include="**\*.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="NHibernate" />
     <Reference Include="NHibernate.LambdaExtensions" />

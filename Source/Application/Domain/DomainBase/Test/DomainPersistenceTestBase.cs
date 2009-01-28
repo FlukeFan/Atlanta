@@ -10,7 +10,7 @@ namespace Atlanta.Application.Domain.DomainBase.Test
 {
 
     [TestFixture]
-    public class DomainPersistenceTestBase : DomainTestBase
+    public abstract class DomainPersistenceTestBase : DomainTestBase
     {
 
         private Repository _repository;
