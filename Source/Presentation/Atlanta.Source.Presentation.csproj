@@ -35,6 +35,9 @@
     <None Include="**\*.config" />
     <None Include="**\*.xml" />
     <Compile Include="**\*.tt" />
+    <Compile Include="..\Application\Domain\DomainBase\ClientQuery.cs">
+      <Link>Domain\DomainBase\ClientQuery.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System">

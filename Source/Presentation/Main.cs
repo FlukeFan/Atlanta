@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
+using Atlanta.Application.Domain.DomainBase;
 using Atlanta.Application.Domain.Lender;
 using Atlanta.Application.Services.Interfaces;
 using Atlanta.Application.Services.ServiceBase;
@@ -50,7 +51,7 @@ namespace Atlanta.Presentation
         {
             Write("Calling GetMediaList");
             User user = new User() { Id=1, Login="user" };
-            _mediaService.GetMediaList(user, null);
+            _mediaService.GetMediaList(user, ClientQuery.For<Media>());
         }
 
         private void MediaService_GetMediaListCompleted(ServiceCallStatus status)

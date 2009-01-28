@@ -48,8 +48,8 @@
           </resources>
 
           <sources>
+            <include name="..\Application\Domain\DomainBase\ClientQuery.cs" />
             <include name="**\*.cs" />
-            <exclude name="DosClient\**" />
           </sources>
           
         </csc>

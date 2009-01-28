@@ -164,6 +164,7 @@
             <uptodate property="generated.files.uptodate">
                 <sourcefiles>
                     <include name="__modelAssembly__" />
+                    <include name="__dtoConfig__" />
                 </sourcefiles>
                 <targetfiles>
                     <include name="__outputFolder__/GenerateSilverlightDtos.flg" />
@@ -174,6 +175,7 @@
 
             <if test="${not generated.files.uptodate}">
             
+                <delete dir="__outputFolder__" />
                 <mkdir dir="__outputFolder__" />
                 <exec program="TextTransform">
                     <arg line="-a ModelAssembly!&quot;__modelAssembly__&quot;" />
@@ -212,6 +214,7 @@
 
             <if test="${not generated.files.uptodate}">
             
+                <delete dir="__outputFolder__" />
                 <mkdir dir="__outputFolder__" />
                 <exec program="TextTransform">
                     <arg line="-a ServiceAssembly!&quot;__serviceAssembly__&quot;" />

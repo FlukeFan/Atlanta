@@ -22,8 +22,8 @@ namespace Atlanta.Application.Services.Interfaces
         ///  Get a list of Media for the system Library
         /// </summary>
         [OperationContract]
-        ServiceResult<IList<Media>> GetMediaList(   User                user,
-                                                    DetachedCriteria    mediaCriteria);
+        ServiceResult<IList<Media>> GetMediaList(   User            user,
+                                                    ClientQuery     mediaCriteria);
 
         /// <summary>
         ///  Create a Media in the system Library

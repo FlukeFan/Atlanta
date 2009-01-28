@@ -28,8 +28,8 @@ namespace Atlanta.Application.Services.Lending
         /// <summary>
         ///  Get a list of Media for the system Library
         /// </summary>
-        public ServiceResult<IList<Media>> GetMediaList(User                user,
-                                                        DetachedCriteria    mediaCriteria)
+        public ServiceResult<IList<Media>> GetMediaList(User            user,
+                                                        ClientQuery     mediaCriteria)
         {
             IList<Media> mediaList =
                 DomainRegistry.Library.GetMediaList(DetachedCriteria.For<Media>());

@@ -47,8 +47,8 @@ namespace Atlanta.Application.Services.Lending.Test
         {
             IList<Media> mediaList =
                 AtlantaServices.MediaService
-                    .GetMediaList(_user, DetachedCriteria.For<Media>()
-                                            .Add<Media>(m => m.Type == MediaType.Book))
+                    .GetMediaList(_user, ClientQuery.For<Media>())
+                                            //.Add<Media>(m => m.Type == MediaType.Book))
                     .Result;
 
             Assert.AreEqual(2, mediaList.Count);
@@ -59,8 +59,8 @@ namespace Atlanta.Application.Services.Lending.Test
             //  (i.e., the returned objects are disconnected)
             IList<Media> mediaList2 =
                 AtlantaServices.MediaService
-                    .GetMediaList(_user, DetachedCriteria.For<Media>()
-                                            .Add<Media>(m => m.Name == media1.Name))
+                    .GetMediaList(_user, ClientQuery.For<Media>())
+                                            //.Add<Media>(m => m.Name == media1.Name))
                     .Result;
 
             Assert.AreEqual(1, mediaList2.Count);
@@ -100,8 +100,7 @@ namespace Atlanta.Application.Services.Lending.Test
         {
             Media mediaCopy =
                 AtlantaServices.MediaService
-                    .GetMediaList(_user, DetachedCriteria.For<Media>()
-                                            .Add<Media>(m => m.Name == "CD")).Result[0];
+                    .GetMediaList(_user, ClientQuery.For<Media>()).Result[0];
 
             mediaCopy.ModifyDetails(mediaCopy.Type, "modified CD name", "new description");
 
@@ -117,8 +116,7 @@ namespace Atlanta.Application.Services.Lending.Test
         {
             Media mediaCopy =
                 AtlantaServices.MediaService
-                    .GetMediaList(_user, DetachedCriteria.For<Media>()
-                                            .Add<Media>(m => m.Name == "CD")).Result[0];
+                    .GetMediaList(_user, ClientQuery.For<Media>()).Result[0];
 
             AtlantaServices.MediaService
                 .Delete(_user, mediaCopy);
