@@ -4,14 +4,20 @@
 
     <target name="onBuild">
 
-        <servicecontroller action="Start" service="w3svc" />
+        <if test="${not file::exists(build.dir + '/results/vfolder.flg')}">
 
-        <mkiisdir   dirpath="${build.dir}"
-                    vdirname="atlanta"
-                    enabledirbrowsing="true"
-                    />
+            <servicecontroller action="Start" service="w3svc" />
 
-        <exec program="CScript.exe" commandline="c:\inetpub\AdminScripts\adsutil.vbs set w3svc/1/root/Atlanta/MimeMap &quot;.xap,application/x-silverlight-app&quot;" />
+            <mkiisdir   dirpath="${build.dir}"
+                        vdirname="atlanta"
+                        enabledirbrowsing="true"
+                        />
+
+            <exec program="CScript.exe" commandline="c:\inetpub\AdminScripts\adsutil.vbs set w3svc/1/root/Atlanta/MimeMap &quot;.xap,application/x-silverlight-app&quot;" />
+            
+            <touch file="${build.dir}/results/vfolder.flg" />
+
+        </if>
 
         <cscLibrary output="Atlanta.Application.Services">
 

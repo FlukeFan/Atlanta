@@ -149,6 +149,82 @@
 
     </taskdef>
 
+    <taskdef name="generateDomainDtos">
+
+        <stringparams>
+            <stringparam name="outputFolder" />
+            <stringparam name="modelAssembly" />
+            <stringparam name="dtoConfig" />
+        </stringparams>
+
+        <do>
+
+            <echo message="Code generating Domain DTOs to [__outputFolder__]" />
+
+            <uptodate property="generated.files.uptodate">
+                <sourcefiles>
+                    <include name="__modelAssembly__" />
+                </sourcefiles>
+                <targetfiles>
+                    <include name="__outputFolder__/GenerateSilverlightDtos.flg" />
+                </targetfiles>
+            </uptodate>
+
+            <echo message="flag file up to date: ${generated.files.uptodate}"/>
+
+            <if test="${not generated.files.uptodate}">
+            
+                <mkdir dir="__outputFolder__" />
+                <exec program="TextTransform">
+                    <arg line="-a ModelAssembly!&quot;__modelAssembly__&quot;" />
+                    <arg line="-a DtoConfig!&quot;__dtoConfig__&quot;" />
+                    <arg line="-a OutputFolder!&quot;__outputFolder__&quot;" />
+                    <arg line="${project.dir}/Tools/Templates/GenerateSilverlightDtos.tt" />
+                </exec>
+        
+            </if>
+
+        </do>
+
+    </taskdef>
+
+    <taskdef name="generateSilverlightServices">
+
+        <stringparams>
+            <stringparam name="outputFolder" />
+            <stringparam name="serviceAssembly" />
+        </stringparams>
+
+        <do>
+
+            <echo message="Code generating Silverlight services to [__outputFolder__]" />
+
+            <uptodate property="generated.files.uptodate">
+                <sourcefiles>
+                    <include name="__serviceAssembly__" />
+                </sourcefiles>
+                <targetfiles>
+                    <include name="__outputFolder__/GenerateSilverlightServices.flg" />
+                </targetfiles>
+            </uptodate>
+
+            <echo message="flag file up to date: ${generated.files.uptodate}"/>
+
+            <if test="${not generated.files.uptodate}">
+            
+                <mkdir dir="__outputFolder__" />
+                <exec program="TextTransform">
+                    <arg line="-a ServiceAssembly!&quot;__serviceAssembly__&quot;" />
+                    <arg line="-a OutputFolder!&quot;__outputFolder__&quot;" />
+                    <arg line="${project.dir}/Tools/Templates/GenerateSilverlightServices.tt" />
+                </exec>
+        
+            </if>
+
+        </do>
+
+    </taskdef>
+
 </project>
 
 

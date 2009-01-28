@@ -4,6 +4,7 @@
 
     <property name="hasGeneratedCode"   value="false"/>
     <property name="hasBuildTmp"        value="false"/>
+    <property name="current.dir"        value="${project::get-base-directory()}"/>
 
 
     <target name="build">

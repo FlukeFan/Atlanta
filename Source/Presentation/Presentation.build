@@ -7,24 +7,16 @@
     </target>
 
     <target name="onBuild">
-    
-        <mkdir dir="generated\domain" />
-        <exec program="TextTransform">
-            <arg line="-a ModelAssembly!&quot;${build.dir}\bin\Atlanta.Application.Domain.dll&quot;" />
-            <arg line="-a DtoConfig!&quot;${project::get-base-directory()}\DtoConfig.xml&quot;" />
-            <arg line="-a OutputFolder!&quot;${project::get-base-directory()}\generated\domain&quot;" />
-            <arg line="..\..\Tools\Templates\GenerateSilverlightDtos.tt" />
-        </exec>
 
-        <mkdir dir="generated\services" />
-        <exec program="TextTransform">
-            <arg line="-a ServiceAssembly!&quot;${build.dir}\bin\Atlanta.Application.Services.dll&quot;" />
-            <arg line="-a OutputFolder!&quot;${project::get-base-directory()}\generated\services&quot;" />
-            <arg line="..\..\Tools\Templates\GenerateSilverlightServices.tt" />
-        </exec>
+        <generateDomainDtos outputFolder="${current.dir}/generated/domain"
+                            modelAssembly="${build.dir}/bin/Atlanta.Application.Domain.dll"
+                            dtoConfig="${current.dir}/DtoConfig.xml" />
+                            
+        <generateSilverlightServices    outputFolder="${current.dir}/generated/services"
+                                        serviceAssembly="${build.dir}/bin/Atlanta.Application.Services.dll" />
+
 
         <mkdir dir="${build.dir}\client" />
-        
         <copy file="..\..\SDKs\Silverlight\tools\Silverlight.js"  todir="${build.dir}" />
         <copy file="default.htm"                                  todir="${build.dir}" />
         
@@ -62,8 +54,23 @@
           
         </csc>
 
-        <delete file="${build.dir}\Atlanta.xap" />
-        <exec program="..\..\SDKs\Silverlight\tools\chiron.exe" commandline="/directory:${build.dir}\client /xap:${build.dir}\Atlanta.xap" />
+        <uptodate property="generated.files.uptodate">
+            <sourcefiles>
+                <include name="${build.dir}/client/**" />
+            </sourcefiles>
+            <targetfiles>
+                <include name="${build.dir}\Atlanta.xap" />
+            </targetfiles>
+        </uptodate>
+
+        <echo message="flag file up to date: ${generated.files.uptodate}"/>
+
+        <if test="${not generated.files.uptodate}">
+        
+            <delete file="${build.dir}\Atlanta.xap" />
+            <exec program="..\..\SDKs\Silverlight\tools\chiron.exe" commandline="/directory:${build.dir}\client /xap:${build.dir}\Atlanta.xap" />
+    
+        </if>
 
     </target>
 

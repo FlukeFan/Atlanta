@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://broloco.atlanta/nant.xsd" elementFormDefault="qualified" targetNamespace="http://broloco.atlanta/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 01/16/2009 16:21:27</xs:documentation>
+    <xs:documentation>NAnt schema generated at 01/28/2009 12:59:48</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -211,6 +211,8 @@
         <xs:element name="cscLibrary" type="nant:cscLibrary" />
         <xs:element name="cscLibraryTest" type="nant:cscLibraryTest" />
         <xs:element name="generateStaticProperties" type="nant:generateStaticProperties" />
+        <xs:element name="generateDomainDtos" type="nant:generateDomainDtos" />
+        <xs:element name="generateSilverlightServices" type="nant:generateSilverlightServices" />
         <xs:element name="runTest" type="nant:runTest" />
         <xs:element name="runTestWithCoverage" type="nant:runTestWithCoverage" />
         <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##other" processContents="strict" />
@@ -4487,6 +4489,8 @@
         <xs:element name="cscLibrary" type="nant:cscLibrary" />
         <xs:element name="cscLibraryTest" type="nant:cscLibraryTest" />
         <xs:element name="generateStaticProperties" type="nant:generateStaticProperties" />
+        <xs:element name="generateDomainDtos" type="nant:generateDomainDtos" />
+        <xs:element name="generateSilverlightServices" type="nant:generateSilverlightServices" />
         <xs:element name="runTest" type="nant:runTest" />
         <xs:element name="runTestWithCoverage" type="nant:runTestWithCoverage" />
         <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##other" processContents="strict" />
@@ -4714,6 +4718,8 @@
         <xs:element name="cscLibrary" type="nant:cscLibrary" />
         <xs:element name="cscLibraryTest" type="nant:cscLibraryTest" />
         <xs:element name="generateStaticProperties" type="nant:generateStaticProperties" />
+        <xs:element name="generateDomainDtos" type="nant:generateDomainDtos" />
+        <xs:element name="generateSilverlightServices" type="nant:generateSilverlightServices" />
         <xs:element name="runTest" type="nant:runTest" />
         <xs:element name="runTestWithCoverage" type="nant:runTestWithCoverage" />
         <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##other" processContents="strict" />
@@ -4980,6 +4986,8 @@
         <xs:element name="cscLibrary" type="nant:cscLibrary" />
         <xs:element name="cscLibraryTest" type="nant:cscLibraryTest" />
         <xs:element name="generateStaticProperties" type="nant:generateStaticProperties" />
+        <xs:element name="generateDomainDtos" type="nant:generateDomainDtos" />
+        <xs:element name="generateSilverlightServices" type="nant:generateSilverlightServices" />
         <xs:element name="runTest" type="nant:runTest" />
         <xs:element name="runTestWithCoverage" type="nant:runTestWithCoverage" />
         <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##other" processContents="strict" />
@@ -5332,6 +5340,25 @@
     <xs:attribute name="unless" use="optional" />
     <xs:anyAttribute namespace="##other" processContents="skip" />
   </xs:complexType>
+  <xs:complexType name="generateDomainDtos">
+    <xs:attribute name="outputFolder" use="required" />
+    <xs:attribute name="modelAssembly" use="required" />
+    <xs:attribute name="dtoConfig" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+    <xs:anyAttribute namespace="##other" processContents="skip" />
+  </xs:complexType>
+  <xs:complexType name="generateSilverlightServices">
+    <xs:attribute name="outputFolder" use="required" />
+    <xs:attribute name="serviceAssembly" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+    <xs:anyAttribute namespace="##other" processContents="skip" />
+  </xs:complexType>
   <xs:complexType name="runTest">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="1" maxOccurs="1" name="testDependencies" type="nant:NAnt.Core.Types.RawXml" />
@@ -5568,6 +5595,8 @@
       <xs:element name="cscLibrary" type="nant:cscLibrary" />
       <xs:element name="cscLibraryTest" type="nant:cscLibraryTest" />
       <xs:element name="generateStaticProperties" type="nant:generateStaticProperties" />
+      <xs:element name="generateDomainDtos" type="nant:generateDomainDtos" />
+      <xs:element name="generateSilverlightServices" type="nant:generateSilverlightServices" />
       <xs:element name="runTest" type="nant:runTest" />
       <xs:element name="runTestWithCoverage" type="nant:runTestWithCoverage" />
       <xs:element name="tarfileset" type="nant:NAnt.Compression.Types.TarFileSet" />
@@ -5804,6 +5833,8 @@
         <xs:element name="cscLibrary" type="nant:cscLibrary" />
         <xs:element name="cscLibraryTest" type="nant:cscLibraryTest" />
         <xs:element name="generateStaticProperties" type="nant:generateStaticProperties" />
+        <xs:element name="generateDomainDtos" type="nant:generateDomainDtos" />
+        <xs:element name="generateSilverlightServices" type="nant:generateSilverlightServices" />
         <xs:element name="runTest" type="nant:runTest" />
         <xs:element name="runTestWithCoverage" type="nant:runTestWithCoverage" />
         <xs:element name="tarfileset" type="nant:NAnt.Compression.Types.TarFileSet" />
