@@ -33,11 +33,13 @@ namespace Atlanta.Application.Domain.DomainBase
             BinaryExpression be = (BinaryExpression)expression.Body;
             ClientQueryExpression queryExpression = new ClientQueryExpression();
             queryExpression.Property = FindMember(be.Left);
+            Type propertyType = FindType(be.Left);
+
             queryExpression.Operator = be.NodeType;
 
             var valueExpression = System.Linq.Expressions.Expression.Lambda(be.Right).Compile();
             object value = valueExpression.DynamicInvoke();
-            queryExpression.Operand = value;
+            queryExpression.Operand = ConvertType(value, propertyType);
 
             return queryExpression;
         }
@@ -70,6 +72,39 @@ namespace Atlanta.Application.Domain.DomainBase
             }
 
             return member;
+        }
+
+        private static Type FindType(Expression expression)
+        {
+            MemberExpression me = null;
+            if (expression is MemberExpression)
+                me = (MemberExpression)expression;
+
+            if (expression is UnaryExpression)
+            {
+                UnaryExpression unaryExpression = (UnaryExpression)expression;
+
+                if (unaryExpression.NodeType != ExpressionType.Convert)
+                    throw new Exception("Cannot interpret member from " + expression.ToString());
+
+                me = (MemberExpression)unaryExpression.Operand;
+            }
+
+            if (me == null)
+                throw new Exception("Could not determine member type from " + expression.ToString());
+
+            return me.Type;
+        }
+
+        private static object ConvertType(object value, Type type)
+        {
+            if (type.IsAssignableFrom(value.GetType()))
+                return value;
+
+            if (type.IsEnum)
+                return Enum.ToObject(type, value);
+
+            throw new Exception("Cannot convert '" + value.ToString() + "' to " + type.ToString());
         }
 
     }
