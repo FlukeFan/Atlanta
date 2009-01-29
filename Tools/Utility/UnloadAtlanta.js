@@ -11,5 +11,6 @@ catch (e)
     for (p in e)
         WScript.StdErr.WriteLine(p + "=" + e[p]);
 
-    WScript.Quit(1);
+    // don't error
+    //WScript.Quit(1);
 }
