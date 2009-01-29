@@ -49,6 +49,7 @@
 
           <sources>
             <include name="..\Application\Domain\DomainBase\ClientQuery.cs" />
+            <include name="..\Application\Domain\DomainBase\ClientQueryExpression.cs" />
             <include name="**\*.cs" />
           </sources>
           

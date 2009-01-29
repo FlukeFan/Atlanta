@@ -38,6 +38,9 @@
     <Compile Include="..\Application\Domain\DomainBase\ClientQuery.cs">
       <Link>Domain\DomainBase\ClientQuery.cs</Link>
     </Compile>
+    <Compile Include="..\Application\Domain\DomainBase\ClientQueryExpression.cs">
+      <Link>Domain\DomainBase\ClientQueryExpression.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System">

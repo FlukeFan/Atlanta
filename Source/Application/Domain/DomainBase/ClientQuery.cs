@@ -9,25 +9,6 @@ namespace Atlanta.Application.Domain.DomainBase
 {
 
     /// <summary>
-    /// An expression from a client query
-    /// </summary>
-    [DataContract]
-    public class ClientQueryExpression
-    {
-        /// <summary> Target class of query </summary>
-        [DataMember]
-        public string Property { get; set; }
-
-        /// <summary> Target class of query </summary>
-        [DataMember]
-        public string Operator { get; set; }
-
-        /// <summary> Target class of query </summary>
-        [DataMember]
-        public object Operand { get; set; }
-    }
-
-    /// <summary>
     /// Serialisable class for client query criteria
     /// </summary>
     [DataContract]
@@ -61,6 +42,7 @@ namespace Atlanta.Application.Domain.DomainBase
         /// </summary>
         public ClientQuery Add<T>(Expression<Func<T, bool>> expression)
         {
+            Expressions.Add(ClientQueryExpression.For(expression));
             return this;
         }
 

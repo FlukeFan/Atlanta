@@ -1,4 +1,6 @@
 ﻿
+using System.Linq.Expressions;
+
 using NUnit.Framework;
 
 namespace Atlanta.Application.Domain.DomainBase.Test
@@ -18,7 +20,7 @@ namespace Atlanta.Application.Domain.DomainBase.Test
     public class TestClientQuery : DomainTestBase
     {
 
-        [Test] [Ignore("working on client expressions using Lambdas")]
+        [Test]
         public void TestCreateQuery()
         {
             ClientQuery query =
@@ -28,7 +30,7 @@ namespace Atlanta.Application.Domain.DomainBase.Test
             Assert.AreEqual("Atlanta.Application.Domain.DomainBase.Test.QueryClass", query.ForClass);
             Assert.AreEqual(1, query.Expressions.Count);
             Assert.AreEqual("Name", query.Expressions[0].Property);
-            Assert.AreEqual("Eq", query.Expressions[0].Operator);
+            Assert.AreEqual(ExpressionType.Equal, query.Expressions[0].Operator);
             Assert.AreEqual("test name", query.Expressions[0].Operand);
         }
 
