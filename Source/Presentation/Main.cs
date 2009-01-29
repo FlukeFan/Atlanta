@@ -24,6 +24,7 @@ namespace Atlanta.Presentation
     {
 
         private Button _test1;
+        private Button _test2;
         private ScrollViewer _scrollViewer;
         private StackPanel _messages;
         private MediaServiceClient _mediaService;
@@ -38,11 +39,14 @@ namespace Atlanta.Presentation
             _mediaService = new MediaServiceClient(new EndpointAddress("http://" + System.Windows.Application.Current.Host.Source.Host + "/atlanta/web/services/MediaService.svc"), Dispatcher);
             _mediaService.GetMediaListCompleted += new Atlanta.Application.Services.ServiceBase.ServiceCallback(MediaService_GetMediaListCompleted);
 
-            _test1 = (Button)FindName("_test1");
             _scrollViewer = (ScrollViewer)FindName("_scrollViewer");
             _messages = (StackPanel)FindName("_messages");
 
+            _test1 = (Button)FindName("_test1");
+            _test2 = (Button)FindName("_test2");
+
             _test1.Click += new RoutedEventHandler(Test1_Click);
+            _test2.Click += new RoutedEventHandler(Test2_Click);
 
             Write("Loaded");
         }
@@ -64,6 +68,13 @@ namespace Atlanta.Presentation
             {
                 Write("Media: " + media.Id + ", " + media.Name + ", " + media.Type + ", " + media.Description);
             }
+        }
+
+        private void Test2_Click(object sender, RoutedEventArgs e)
+        {
+            Write("Calling GetMediaList");
+            User user = new User() { Id=1, Login="user" };
+            _mediaService.GetMediaList(user, ClientQuery.For<Media>().Add<Media>(m => m.Type == MediaType.Book));
         }
 
         private void Write(string message)

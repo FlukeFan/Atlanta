@@ -1,9 +1,12 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using System.Text;
+
+using Atlanta.Application.Domain.Lender;
 
 namespace Atlanta.Application.Domain.DomainBase
 {
@@ -12,6 +15,7 @@ namespace Atlanta.Application.Domain.DomainBase
     /// Serialisable class for client query criteria
     /// </summary>
     [DataContract]
+    [KnownType(typeof(MediaType))]
     public class ClientQuery
     {
 
