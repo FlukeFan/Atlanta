@@ -31,13 +31,6 @@ namespace Atlanta.Application.Domain.DomainBase
         ICriteria CreateQuery(DetachedCriteria detachedCriteria);
 
         /// <summary>
-        /// Create a query (NHibernate ICriteria)
-        /// </summary>
-        /// <param name="detachedCriteria">ClientQuery instance</param>
-        /// <returns>NHibernate ICriteria</returns>
-        ICriteria CreateQuery(ClientQuery detachedCriteria);
-
-        /// <summary>
         /// Create a query to count the number of rows (clears orders and paging and adds a RowCount projection).
         /// </summary>
         /// <param name="detachedCriteria">Detached criteria query</param>

@@ -4,7 +4,9 @@ using NHibernate.LambdaExtensions;
 
 using NUnit.Framework;
 
-namespace Atlanta.Application.Domain.DomainBase.Test
+using Atlanta.Application.Domain.DomainBase.Test;
+
+namespace Atlanta.Application.Services.ServiceBase.Test
 {
 
     [TestFixture]

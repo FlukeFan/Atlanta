@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace Atlanta.Application.Domain.DomainBase
+namespace Atlanta.Application.Services.ServiceBase
 {
 
     /// <summary>

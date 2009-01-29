@@ -3,7 +3,10 @@ using System.Linq.Expressions;
 
 using NUnit.Framework;
 
-namespace Atlanta.Application.Domain.DomainBase.Test
+using Atlanta.Application.Domain.DomainBase;
+using Atlanta.Application.Domain.DomainBase.Test;
+
+namespace Atlanta.Application.Services.ServiceBase.Test
 {
 
     public enum QueryClassType
@@ -38,7 +41,7 @@ namespace Atlanta.Application.Domain.DomainBase.Test
                     .Add((QueryClass q) => q.Type == QueryClassType.First)
                     .Add((QueryClass q) => q.RelatedTo == relation);
 
-            Assert.AreEqual("Atlanta.Application.Domain.DomainBase.Test.QueryClass", query.ForClass);
+            Assert.AreEqual("Atlanta.Application.Services.ServiceBase.Test.QueryClass", query.ForClass);
             Assert.AreEqual(3, query.Expressions.Count);
 
             Assert.AreEqual("Name", query.Expressions[0].Property);

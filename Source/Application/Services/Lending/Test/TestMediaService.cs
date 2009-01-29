@@ -11,6 +11,7 @@ using Atlanta.Application.Domain.DomainBase;
 using Atlanta.Application.Domain.Lender;
 
 using Atlanta.Application.Services.Interfaces;
+using Atlanta.Application.Services.ServiceBase;
 using Atlanta.Application.Services.ServiceBase.Test;
 
 namespace Atlanta.Application.Services.Lending.Test

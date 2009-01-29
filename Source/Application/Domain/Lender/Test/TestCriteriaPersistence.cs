@@ -43,8 +43,8 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             IList<Media> filteredList;
             {
-                ClientQuery filter =
-                    ClientQuery.For<Media>()
+                DetachedCriteria filter =
+                    DetachedCriteria.For<Media>()
                         .Add<Media>(m => m.Name == "CD");
 
                 filteredList =
@@ -55,8 +55,8 @@ namespace Atlanta.Application.Domain.Lender.Test
             }
 
             {
-                ClientQuery filter =
-                    ClientQuery.For<Media>()
+                DetachedCriteria filter =
+                    DetachedCriteria.For<Media>()
                         .Add<Media>(m => m.Type == MediaType.Dvd);
 
                 filteredList =
@@ -67,8 +67,8 @@ namespace Atlanta.Application.Domain.Lender.Test
             }
 
             {
-                ClientQuery filter =
-                    ClientQuery.For<Media>()
+                DetachedCriteria filter =
+                    DetachedCriteria.For<Media>()
                         .Add<Media>(m => m.Type == MediaType.Dvd)
                         .Add<Media>(m => m.Name == "CD");
 
@@ -79,8 +79,8 @@ namespace Atlanta.Application.Domain.Lender.Test
             }
 
             {
-                ClientQuery filter =
-                    ClientQuery.For<Media>()
+                DetachedCriteria filter =
+                    DetachedCriteria.For<Media>()
                         .Add<Media>(m => m.Type != MediaType.Dvd);
 
                 filteredList =

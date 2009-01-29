@@ -20,6 +20,8 @@
     <!-- debug build by default -->
     <call target="debug" />
 
+    <!-- unload any running instances -->
+    <exec program="CScript.exe" commandline="${project.dir}/Tools/Utility/UnloadAtlanta.js" />
 
     <target name="onBuild">
 

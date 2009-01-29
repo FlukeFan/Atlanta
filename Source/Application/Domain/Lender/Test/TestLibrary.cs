@@ -49,7 +49,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         public void GetMedaList_Ok()
         {
             Library library = Repository.Load<Library>(_libraryId);
-            IList<Media> mediaList = library.GetMediaList(ClientQuery.For<Media>().Add<Media>(m => m.Type == MediaType.Dvd));
+            IList<Media> mediaList = library.GetMediaList(DetachedCriteria.For<Media>().Add<Media>(m => m.Type == MediaType.Dvd));
 
             Assert.AreEqual(1, mediaList.Count);
         }

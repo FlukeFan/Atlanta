@@ -8,7 +8,7 @@ using System.Text;
 
 using Atlanta.Application.Domain.Lender;
 
-namespace Atlanta.Application.Domain.DomainBase
+namespace Atlanta.Application.Services.ServiceBase
 {
 
     /// <summary>

@@ -8,7 +8,7 @@ using System.Text;
 
 using NHibernate.Criterion;
 
-namespace Atlanta.Application.Domain.DomainBase
+namespace Atlanta.Application.Services.ServiceBase
 {
 
     /// <summary>
@@ -28,9 +28,9 @@ namespace Atlanta.Application.Domain.DomainBase
         }
 
         /// <summary>
-        /// Conversion entry point
+        /// Convert to NHibernate DetachedCriteria
         /// </summary>
-        public static DetachedCriteria ToDetachedCriteria(ClientQuery query)
+        public static DetachedCriteria ToDetachedCriteria(this ClientQuery query)
         {
             Type criteriaType = GetType(query.ForClass);
             DetachedCriteria criteria = DetachedCriteria.For(criteriaType);
