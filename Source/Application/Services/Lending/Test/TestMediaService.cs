@@ -42,13 +42,13 @@ namespace Atlanta.Application.Services.Lending.Test
             _user = User.InstantiateUser("testServiceUser");
         }
         
-        [Test] [Ignore("Needs DetachedCriteria working")]
+        [Test]
         public void TestGetMediaList_Ok()
         {
             IList<Media> mediaList =
                 AtlantaServices.MediaService
-                    .GetMediaList(_user, ClientQuery.For<Media>())
-                                            //.Add<Media>(m => m.Type == MediaType.Book))
+                    .GetMediaList(_user, ClientQuery.For<Media>()
+                                            .Add<Media>(m => m.Type == MediaType.Book))
                     .Result;
 
             Assert.AreEqual(2, mediaList.Count);
@@ -59,8 +59,8 @@ namespace Atlanta.Application.Services.Lending.Test
             //  (i.e., the returned objects are disconnected)
             IList<Media> mediaList2 =
                 AtlantaServices.MediaService
-                    .GetMediaList(_user, ClientQuery.For<Media>())
-                                            //.Add<Media>(m => m.Name == media1.Name))
+                    .GetMediaList(_user, ClientQuery.For<Media>()
+                                            .Add<Media>(m => m.Name == media1.Name))
                     .Result;
 
             Assert.AreEqual(1, mediaList2.Count);

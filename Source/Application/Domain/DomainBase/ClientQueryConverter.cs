@@ -24,6 +24,7 @@ namespace Atlanta.Application.Domain.DomainBase
             _converters = new Dictionary<ExpressionType, Func<string, object, ICriterion>>();
 
             _converters[ExpressionType.Equal] = NHibernate.Criterion.Expression.Eq;
+            _converters[ExpressionType.NotEqual] = NotEqual;
         }
 
         /// <summary>
@@ -44,6 +45,9 @@ namespace Atlanta.Application.Domain.DomainBase
 
         private static ICriterion Convert(ClientQueryExpression expression)
         {
+            if (!_converters.ContainsKey(expression.Operator))
+                throw new Exception("No converter defined for: " + expression.Operator);
+
             Func<string, object, ICriterion> converter = _converters[expression.Operator];
             return converter(expression.Property, expression.Operand);
         }
@@ -59,6 +63,11 @@ namespace Atlanta.Application.Domain.DomainBase
                 }
             }
             throw new Exception("Type not found: " + type);
+        }
+
+        private static ICriterion NotEqual(string property, object value)
+        {
+            return NHibernate.Criterion.Expression.Not(NHibernate.Criterion.Expression.Eq(property, value));
         }
 
     }

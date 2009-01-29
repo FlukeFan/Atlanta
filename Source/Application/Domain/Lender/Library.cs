@@ -69,7 +69,7 @@ namespace Atlanta.Application.Domain.Lender
         /// <summary>
         ///  Get a list of Media in the Library using the specified criteria.
         /// </summary>
-        virtual public IList<Media> GetMediaList(DetachedCriteria mediaCriteria)
+        virtual public IList<Media> GetMediaList(ClientQuery mediaCriteria)
         {
             return
                 DomainRegistry.Repository.CreateQuery(mediaCriteria)

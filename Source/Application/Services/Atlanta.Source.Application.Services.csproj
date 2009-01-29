@@ -37,13 +37,17 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
-    <Reference Include="Atlanta.Application.Domain" />
-    <Reference Include="Atlanta.Application.Domain.Test" />
     <Reference Include="NHibernate" />
     <Reference Include="NHibernate.LambdaExtensions" />
     <Reference Include="Spring.Aop" />
     <Reference Include="Spring.Core" />
     <Reference Include="nunit.framework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Atlanta.Source.Application.Domain.csproj">
+      <Project>{0118F8D0-3CFE-4BE0-A0C5-5C925FDAD534}</Project>
+      <Name>Atlanta.Application.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <Target Name="Build">

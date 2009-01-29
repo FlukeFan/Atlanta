@@ -69,6 +69,12 @@ namespace Atlanta.Application.Domain.DomainBase
         }
 
         /// <summary> Create a query (ICriteria) </summary>
+        public ICriteria CreateQuery(ClientQuery detachedCriteria)
+        {
+            return CreateQuery(ClientQueryConverter.ToDetachedCriteria(detachedCriteria));
+        }
+
+        /// <summary> Create a query (ICriteria) </summary>
         public ICriteria CreateCountQuery(DetachedCriteria detachedCriteria)
         {
             ICriteria executableCriteria = detachedCriteria.GetExecutableCriteria(_session);
