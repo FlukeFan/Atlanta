@@ -44,6 +44,7 @@ namespace Atlanta.Application.Services.ServiceBase
 
             ServiceBehaviorAttribute serviceBehavior = (ServiceBehaviorAttribute)serviceHost.Description.Behaviors[typeof(ServiceBehaviorAttribute)];
             serviceBehavior.InstanceContextMode = InstanceContextMode.Single;
+            serviceBehavior.ConcurrencyMode = ConcurrencyMode.Multiple;
 
             ServiceMetadataBehavior metadataBehavior = new ServiceMetadataBehavior();
             metadataBehavior.HttpGetEnabled = true;

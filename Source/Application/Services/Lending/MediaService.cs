@@ -14,8 +14,7 @@ namespace Atlanta.Application.Services.Lending
     /// <summary>
     ///  Media services
     /// </summary>
-    public class MediaService : ServiceObjectBase,
-                                IMediaService
+    public class MediaService : IMediaService
     {
 
         /// <summary>
@@ -58,7 +57,7 @@ namespace Atlanta.Application.Services.Lending
         public ServiceResult<Media> Modify( User    user,
                                             Media   modifiedMediaCopy)
         {
-            Media loadedMedia = Repository.Load<Media>(modifiedMediaCopy.Id);
+            Media loadedMedia = DomainRegistry.Repository.Load<Media>(modifiedMediaCopy.Id);
 
             return ServiceResult<Media>
                 .Return(loadedMedia.OwningLibrary.Modify(loadedMedia, modifiedMediaCopy));
@@ -70,7 +69,7 @@ namespace Atlanta.Application.Services.Lending
         public ServiceResult Delete(User    user,
                                     Media   mediaCopy)
         {
-            Media loadedMedia = Repository.Load<Media>(mediaCopy.Id);
+            Media loadedMedia = DomainRegistry.Repository.Load<Media>(mediaCopy.Id);
             loadedMedia.OwningLibrary.Delete(loadedMedia);
             return ServiceResult.Void;
         }

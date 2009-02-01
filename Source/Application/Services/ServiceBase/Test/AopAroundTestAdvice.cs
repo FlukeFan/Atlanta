@@ -24,8 +24,6 @@ namespace Atlanta.Application.Services.ServiceBase.Test
         {
             Repository repository = ServiceTestBase.GetRepository();
 
-            ((IServiceBase) invocation.This).Repository = repository;
-
             DomainRegistry.Repository = repository;
             DomainRegistry.Library = null;
 

@@ -47,8 +47,6 @@ namespace Atlanta.Application.Services.ServiceBase
                 new Repository(Repository.SessionFactory)
                     .BeginTransaction();
 
-            ((IServiceBase)invocation.This).Repository = repository;
-
             DomainRegistry.Repository = repository;
             DomainRegistry.Library = null;
 

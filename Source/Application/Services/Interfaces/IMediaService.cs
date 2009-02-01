@@ -15,7 +15,7 @@ namespace Atlanta.Application.Services.Interfaces
     /// Interface for Media service
     /// </summary>
     [ServiceContract()]
-    public interface IMediaService : IServiceBase
+    public interface IMediaService
     {
 
         /// <summary>
