@@ -1,12 +1,6 @@
 
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.ServiceModel;
-
-using NHibernate.Criterion;
 
 using Atlanta.Application.Domain.DomainBase;
 using Atlanta.Application.Domain.Lender;
@@ -20,7 +14,6 @@ namespace Atlanta.Application.Services.Lending
     /// <summary>
     ///  Media services
     /// </summary>
-    [ServiceBehavior(InstanceContextMode=InstanceContextMode.Single)]
     public class MediaService : ServiceObjectBase,
                                 IMediaService
     {

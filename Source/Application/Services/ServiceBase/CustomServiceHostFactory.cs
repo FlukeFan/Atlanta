@@ -42,6 +42,9 @@ namespace Atlanta.Application.Services.ServiceBase
             serviceHost.Description.Name = serviceType.Name;
             serviceHost.AddServiceEndpoint(serviceType.ToString(), new BasicHttpBinding(), "");
 
+            ServiceBehaviorAttribute serviceBehavior = (ServiceBehaviorAttribute)serviceHost.Description.Behaviors[typeof(ServiceBehaviorAttribute)];
+            serviceBehavior.InstanceContextMode = InstanceContextMode.Single;
+
             ServiceMetadataBehavior metadataBehavior = new ServiceMetadataBehavior();
             metadataBehavior.HttpGetEnabled = true;
             serviceHost.Description.Behaviors.Add(metadataBehavior);
