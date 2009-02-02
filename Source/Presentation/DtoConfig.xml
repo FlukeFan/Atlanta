@@ -4,6 +4,7 @@
     <exclude types="Atlanta\.Application\.Domain\.Common\.*" />
     <exclude types="Atlanta\.Application\.Domain\.DomainBase\.DomainRegistry" />
     <exclude types="Atlanta\.Application\.Domain\.DomainBase\.Graph" />
+    <exclude types="Atlanta\.Application\.Domain\.DomainBase\.IGraph" />
     <exclude types="Atlanta\.Application\.Domain\.DomainBase\.IRepository" />
     <exclude types="Atlanta\.Application\.Domain\.DomainBase\.Repository" />
 </dtoTypes>

@@ -55,6 +55,43 @@ namespace Atlanta.Application.Domain.DomainBase.Test
             Assert.AreEqual(0, parentCopy.ChildList.Count);
         }
 
+        [Test]
+        public void TestCopySingleObjectIgnoreReferenceType()
+        {
+            Parent parent = Parent.Create().SetId(1).SetName("parent1");
+            Child child = new Child() { Id=2, Name="child2", Parent=parent };
+
+            Child childCopy = child.Graph().Copy();
+
+            Assert.AreNotSame(child, childCopy);
+            Assert.AreEqual(2, childCopy.Id);
+            Assert.AreEqual("child2", childCopy.Name);
+            Assert.AreEqual(null, childCopy.Parent);
+        }
+
+        [Test]
+        public void TestCopySingleObjectAddReferenceType()
+        {
+            Parent parent = Parent.Create().SetId(1).SetName("parent1");
+            Child child = new Child() { Id=2, Name="child2", Parent=parent };
+
+            Child childCopy =
+                child
+                    .Graph()
+                    .Add(c => c.Parent)
+                    .Copy();
+
+            Assert.AreNotSame(child, childCopy);
+            Assert.AreEqual(2, childCopy.Id);
+            Assert.AreEqual("child2", childCopy.Name);
+
+            Assert.IsNotNull(childCopy.Parent, "childCopy.Parent not copied");
+            Assert.AreNotSame(parent, childCopy.Parent);
+            Assert.AreEqual(1, childCopy.Parent.Id);
+            Assert.AreEqual("parent1", childCopy.Parent.Name);
+            Assert.AreEqual(0, childCopy.Parent.ChildList.Count);
+        }
+
     }
 
 }
