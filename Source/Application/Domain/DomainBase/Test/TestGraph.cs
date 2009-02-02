@@ -92,6 +92,46 @@ namespace Atlanta.Application.Domain.DomainBase.Test
             Assert.AreEqual(0, childCopy.Parent.ChildList.Count);
         }
 
+        [Test]
+        public void TestCopyNullValue()
+        {
+            Parent parent = null;
+
+            Parent parentCopy = parent.Graph().Copy();
+
+            Assert.IsNull(parent, "parent is not null");
+        }
+
+        [Test]
+        public void TestCopyNullReference()
+        {
+            Child child = new Child() { Id=1, Name="child2", Parent=null };
+
+            Child childCopy =
+                child
+                    .Graph()
+                    .Add(c => c.Parent)
+                    .Copy();
+
+            Assert.IsNull(child.Parent, "parent is not null");
+        }
+
+        [Test]
+        public void TestCopyList()
+        {
+            Parent parent1 = Parent.Create().SetId(1).SetName("parent1");
+            Parent parent2 = Parent.Create().SetId(2).SetName("parent2");
+            IList<Parent> parentList = new List<Parent>() { parent1, parent2 };
+
+            IList<Parent> parentListCopy = parentList.Graph().Copy();
+
+            Assert.AreNotSame(parentList, parentListCopy);
+            Assert.AreEqual(parentList.Count, parentListCopy.Count);
+            Assert.AreNotSame(parentList[0], parentListCopy[0]);
+            Assert.AreNotSame(parentList[1], parentListCopy[1]);
+            Assert.AreEqual(1, parentListCopy[0].Id);
+        }
+
     }
 
 }

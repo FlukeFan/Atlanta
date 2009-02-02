@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -60,11 +61,22 @@ namespace Atlanta.Application.Domain.DomainBase
         /// </summary>
         public T Copy()
         {
-            T target = CreateBlankCopy();
-            CopyValues(target);
-            CopySubGraphs(target);
+            if (_source == null)
+                return default(T);
 
-            return target;
+            if (_source is IList)
+                return CopyList();
+
+            return (T)CopySingleObject(typeof(T), _source);
+        }
+
+        /// <summary>
+        /// Add a copy of the selected property to the graph
+        /// </summary>
+        public Graph<T> Add<U>(Expression<Func<T, U>> property)
+        {
+            _subGraphs.Add(FindMember(property.Body), new Graph<U>());
+            return this;
         }
 
         object IGraph.Copy()
@@ -77,13 +89,38 @@ namespace Atlanta.Application.Domain.DomainBase
             _source = (T)source;
         }
 
-        /// <summary>
-        /// Add a copy of the selected property to the graph
-        /// </summary>
-        public Graph<T> Add<U>(Expression<Func<T, U>> property)
+        private object CopySingleObject(Type type, object source)
         {
-            _subGraphs.Add(FindMember(property.Body), new Graph<U>());
-            return this;
+            object target = Activator.CreateInstance(type, true);
+            CopyValues(source, target);
+            CopySubGraphs(source, target);
+            return target;
+        }
+
+        private Type FindListType()
+        {
+            if (typeof(T).IsGenericType)
+                return typeof(T).GetGenericArguments()[0];
+
+            return typeof(object);
+        }
+
+        private IList CreateGenericList(Type type)
+        {
+            return null;
+        }
+
+        private T CopyList()
+        {
+            Type targetType = FindListType();
+            IList listCopy = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(new Type[] { targetType }));
+
+            foreach (object source in (IList)_source)
+            {
+                listCopy.Add(CopySingleObject(targetType, source));
+            }
+
+            return (T)listCopy;
         }
 
         private MemberInfo FindMember(Expression expression)
@@ -108,7 +145,7 @@ namespace Atlanta.Application.Domain.DomainBase
             return me.Member;
         }
 
-        private void CopySubGraphs(T target)
+        private void CopySubGraphs(object source, object target)
         {
             foreach (MemberInfo member in _subGraphs.Keys)
             {
@@ -116,15 +153,15 @@ namespace Atlanta.Application.Domain.DomainBase
                 if (member is PropertyInfo)
                 {
                     PropertyInfo property = (PropertyInfo)member;
-                    graph.SetSource(property.GetValue(_source, null));
+                    graph.SetSource(property.GetValue(source, null));
                     property.SetValue(target, graph.Copy(), null);
                 }
             }
         }
 
-        private void CopyValues(T target)
+        private void CopyValues(object source, object target)
         {
-            Type targetType = typeof(T);
+            Type targetType = target.GetType();
             while (targetType != null)
             {
                 foreach (FieldInfo field in targetType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
@@ -132,21 +169,11 @@ namespace Atlanta.Application.Domain.DomainBase
                     if (field.FieldType.IsValueType
                         || typeof(string).IsAssignableFrom(field.FieldType))
                     {
-                        field.SetValue(target, field.GetValue(_source));
+                        field.SetValue(target, field.GetValue(source));
                     }
                 }
                 targetType = targetType.BaseType;
             }
-        }
-
-        private T CreateBlankCopy()
-        {
-            ConstructorInfo constructor =
-                typeof(T).GetConstructor(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance,
-                                        null, new Type[] {}, null);
-
-            object copy = (T)constructor.Invoke(null);
-            return (T)copy;
         }
 
     }
