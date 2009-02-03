@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using NUnit.Framework;
 using NHibernate.Criterion;
@@ -34,7 +35,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             DomainRegistry.Library = null;
 
             _libraryId = library.Id;
-            _mediaId = library.ReadonlyOwnedMedia[0].Id;
+            _mediaId = library.OwnedMediaEnumeration.First().Id;
         }
 
         [Test]
@@ -42,7 +43,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         {
             Library library = Library.InstantiateLibrary();
 
-            Assert.AreEqual(0, library.ReadonlyOwnedMedia.Count);
+            Assert.AreEqual(0, library.OwnedMediaEnumeration.Count());
         }
 
         [Test]
@@ -62,10 +63,10 @@ namespace Atlanta.Application.Domain.Lender.Test
             Media media = Media.InstantiateOrphanedMedia(MediaType.Dvd, "test dvd", "test description");
             Media newMedia = library.Create(media);
 
-            Assert.AreEqual(1, library.ReadonlyOwnedMedia.Count);
-            Assert.AreEqual(newMedia, library.ReadonlyOwnedMedia[0]);
+            Assert.AreEqual(1, library.OwnedMediaEnumeration.Count());
+            Assert.AreEqual(newMedia, library.OwnedMediaEnumeration.First());
             Assert.AreEqual(library, newMedia.OwningLibrary);
-            Assert.AreEqual("test dvd", library.ReadonlyOwnedMedia[0].Name);
+            Assert.AreEqual("test dvd", library.OwnedMediaEnumeration.First().Name);
         }
 
         [Test]
@@ -98,7 +99,7 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             Media modifiedMedia = library.Modify(existingMedia, mediaClientCopy);
 
-            Assert.AreEqual(1, library.ReadonlyOwnedMedia.Count);
+            Assert.AreEqual(1, library.OwnedMediaEnumeration.Count());
             Assert.AreEqual(existingMedia, modifiedMedia);
             Assert.AreEqual(MediaType.Cd, modifiedMedia.Type);
             Assert.AreEqual("test name changed", modifiedMedia.Name);
@@ -113,7 +114,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             library.Create(Media.InstantiateOrphanedMedia(MediaType.Cd, "test2", "test object 2"));
             library.Create(Media.InstantiateOrphanedMedia(MediaType.Dvd, "test", "test object 3"));
 
-            Media existingMedia = library.ReadonlyOwnedMedia[0];
+            Media existingMedia = library.OwnedMediaEnumeration.First();
             Media mediaClientCopy = (Media)MakeCopy(existingMedia);
 
             Media modifiedMedia = library.Modify(existingMedia, mediaClientCopy);
@@ -128,7 +129,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             }
             catch (DuplicationException e)
             {
-                Assert.AreEqual(library.ReadonlyOwnedMedia[2], e.Duplicate);
+                Assert.AreEqual(library.OwnedMediaEnumeration.Skip(2).First(), e.Duplicate);
             }
 
             try
@@ -140,7 +141,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             }
             catch (DuplicationException e)
             {
-                Assert.AreEqual(library.ReadonlyOwnedMedia[1], e.Duplicate);
+                Assert.AreEqual(library.OwnedMediaEnumeration.Skip(1).First(), e.Duplicate);
             }
         }
 
@@ -152,7 +153,7 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             library.Delete(media);
 
-            Assert.AreEqual(0, library.ReadonlyOwnedMedia.Count);
+            Assert.AreEqual(0, library.OwnedMediaEnumeration.Count());
         }
 
         [Test]
@@ -168,7 +169,7 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             library = Repository.Load<Library>(library.Id);
 
-            Assert.AreEqual(0, library.ReadonlyOwnedMedia.Count);
+            Assert.AreEqual(0, library.OwnedMediaEnumeration.Count());
         }
 
         [Test]
@@ -223,7 +224,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         {
             Library library = Repository.Load<Library>(_libraryId);
 
-            Assert.AreEqual(3, library.ReadonlyOwnedMedia.Count);
+            Assert.AreEqual(3, library.OwnedMediaEnumeration.Count());
         }
 
         [Test]
@@ -236,7 +237,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             Repository.Clear();
 
             library = Repository.Load<Library>(_libraryId);
-            Assert.AreEqual(4, library.ReadonlyOwnedMedia.Count);
+            Assert.AreEqual(4, library.OwnedMediaEnumeration.Count());
         }
 
         [Test]
@@ -251,7 +252,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             Repository.Clear();
 
             library = Repository.Load<Library>(_libraryId);
-            Assert.AreEqual(2, library.ReadonlyOwnedMedia.Count);
+            Assert.AreEqual(2, library.OwnedMediaEnumeration.Count());
         }
 
     }

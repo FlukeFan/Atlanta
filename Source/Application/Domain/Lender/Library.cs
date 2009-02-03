@@ -46,7 +46,7 @@ namespace Atlanta.Application.Domain.Lender
 
         /// <summary> Read-only wrapper of list </summary>
         [StringVisible(false)]
-        public virtual IList<Media> ReadonlyOwnedMedia { get { return new List<Media>(_ownedMedia).AsReadOnly(); } }
+        public virtual IEnumerable<Media> OwnedMediaEnumeration { get { return OwnedMedia; } }
 
 
         private void ValidateNoMediaWithNameAndType(Media media)
