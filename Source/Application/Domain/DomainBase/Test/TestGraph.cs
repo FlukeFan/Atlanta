@@ -1,6 +1,7 @@
 ﻿
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 using NUnit.Framework;
 
@@ -28,7 +29,8 @@ namespace Atlanta.Application.Domain.DomainBase.Test
         public string Name { get; set; }
         public Parent Parent { get; set; }
         protected IList<Grandchild> Children { get; set; }
-        public IEnumerable ChildrenEnumeration { get { return Children; } }
+        public IEnumerable<Grandchild> ChildrenEnumeration { get { return Children; } }
+        public Child Add(Grandchild grandchild) { Children.Add(grandchild); return this; }
     }
 
     public class Grandchild : TestGraphRoot
@@ -130,6 +132,28 @@ namespace Atlanta.Application.Domain.DomainBase.Test
             Assert.AreNotSame(parentList[0], parentListCopy[0]);
             Assert.AreNotSame(parentList[1], parentListCopy[1]);
             Assert.AreEqual(1, parentListCopy[0].Id);
+        }
+
+        [Test]
+        public void TestEnumeration()
+        {
+            Child child = new Child() { Id=1, Name="child2", Parent=null };
+            child.Add(new Grandchild() { Id=2, Name="granchild" });
+
+            Child childCopy =
+                child
+                    .Graph()
+                    .Add(c => c.ChildrenEnumeration)
+                    .Copy();
+
+            Assert.AreNotSame(child, childCopy);
+            Assert.AreEqual(1, childCopy.Id);
+
+            Assert.AreNotSame(child.ChildrenEnumeration, childCopy.ChildrenEnumeration);
+            Assert.AreEqual(1, childCopy.ChildrenEnumeration.Count());
+            Assert.AreNotSame(child.ChildrenEnumeration.First(), childCopy.ChildrenEnumeration.First());
+            Assert.AreEqual(2, childCopy.ChildrenEnumeration.First().Id);
+            Assert.AreEqual("granchild", childCopy.ChildrenEnumeration.First().Name);
         }
 
     }

@@ -153,6 +153,13 @@ namespace Atlanta.Application.Domain.DomainBase
                 if (member is PropertyInfo)
                 {
                     PropertyInfo property = (PropertyInfo)member;
+
+                    if (property.Name.EndsWith("Enumeration"))
+                    {
+                        property = property.DeclaringType.GetProperty(property.Name.Substring(0, property.Name.Length - 11),
+                            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                    }
+
                     graph.SetSource(property.GetValue(source, null));
                     property.SetValue(target, graph.Copy(), null);
                 }
