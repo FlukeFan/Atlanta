@@ -43,14 +43,13 @@ namespace Atlanta.Application.Domain.DomainBase
     public class Graph<T> : IGraph
     {
 
-        private T _source;
+        private object _source;
         private IDictionary<MemberInfo, IGraph> _subGraphs = new Dictionary<MemberInfo, IGraph>();
 
-        private Graph() { }
+        /// <summary> Constructor </summary>
+        public Graph() { }
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
+        /// <summary> Constructor </summary>
         public Graph(T source)
         {
             _source = source;
@@ -61,13 +60,7 @@ namespace Atlanta.Application.Domain.DomainBase
         /// </summary>
         public T Copy()
         {
-            if (_source == null)
-                return default(T);
-
-            if (_source is IList)
-                return CopyList();
-
-            return (T)CopySingleObject(typeof(T), _source);
+            return (T)((IGraph)this).Copy();
         }
 
         /// <summary>
@@ -75,18 +68,32 @@ namespace Atlanta.Application.Domain.DomainBase
         /// </summary>
         public Graph<T> Add<U>(Expression<Func<T, U>> property)
         {
-            _subGraphs.Add(FindMember(property.Body), new Graph<U>());
+            return Add(property, new Graph<U>());
+        }
+
+        /// <summary>
+        /// Add a copy of the selected property to the graph using the supplied Graph
+        /// </summary>
+        public Graph<T> Add<U>(Expression<Func<T, U>> property, IGraph subGraph)
+        {
+            _subGraphs.Add(FindMember(property.Body), subGraph);
             return this;
         }
 
         object IGraph.Copy()
         {
-            return Copy();
+            if (_source == null)
+                return default(T);
+
+            if (_source is IList)
+                return CopyList();
+
+            return CopySingleObject(typeof(T), _source);
         }
 
         void IGraph.SetSource(object source)
         {
-            _source = (T)source;
+            _source = source;
         }
 
         private object CopySingleObject(Type type, object source)
@@ -102,7 +109,7 @@ namespace Atlanta.Application.Domain.DomainBase
             if (typeof(T).IsGenericType)
                 return typeof(T).GetGenericArguments()[0];
 
-            return typeof(object);
+            return typeof(T);
         }
 
         private IList CreateGenericList(Type type)
@@ -110,7 +117,7 @@ namespace Atlanta.Application.Domain.DomainBase
             return null;
         }
 
-        private T CopyList()
+        private object CopyList()
         {
             Type targetType = FindListType();
             IList listCopy = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(new Type[] { targetType }));
@@ -120,7 +127,7 @@ namespace Atlanta.Application.Domain.DomainBase
                 listCopy.Add(CopySingleObject(targetType, source));
             }
 
-            return (T)listCopy;
+            return listCopy;
         }
 
         private MemberInfo FindMember(Expression expression)

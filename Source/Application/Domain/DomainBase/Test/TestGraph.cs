@@ -156,6 +156,56 @@ namespace Atlanta.Application.Domain.DomainBase.Test
             Assert.AreEqual("granchild", childCopy.ChildrenEnumeration.First().Name);
         }
 
+        [Test]
+        public void TestSpecifiedSubGraph()
+        {
+            Parent parent = Parent.Create().SetId(1).SetName("parent");
+            Child child = new Child() { Id=2, Name="child", Parent=parent };
+            parent.ChildList.Add(child);
+
+            Parent parentCopy =
+                parent
+                    .Graph()
+                    .Add(p => p.ChildList, new Graph<Child>()
+                        .Add(c => c.Parent))
+                    .Copy();
+
+            Assert.AreNotEqual(parent, parentCopy);
+            Assert.AreEqual(1, parentCopy.Id);
+            Child childCopy = parentCopy.ChildList[0];
+            Assert.AreNotEqual(child, childCopy);
+            Assert.AreEqual(2, childCopy.Id);
+            Assert.AreNotEqual(parentCopy, childCopy.Parent);
+            Assert.AreEqual(1, childCopy.Parent.Id);
+        }
+
+        [Test]
+        public void TestDeepGraph()
+        {
+            Parent parent = Parent.Create().SetId(1).SetName("parent");
+            Child child = new Child() { Id=2, Name="child", Parent=parent };
+            parent.ChildList.Add(child);
+            Grandchild grandchild = new Grandchild() { Id=3, Name="granchild", Parent=child };
+            child.Add(grandchild);
+
+            Parent parentCopy =
+                parent
+                    .Graph()
+                    .Add(p => p.ChildList, new Graph<Child>()
+                        .Add(c => c.ChildrenEnumeration, new Graph<Grandchild>()
+                            .Add(g => g.Parent)))
+                    .Copy();
+
+            Assert.AreNotEqual(parent, parentCopy);
+            Child childCopy = parentCopy.ChildList[0];
+            Assert.AreNotEqual(child, childCopy);
+            Assert.AreEqual(2, childCopy.Id);
+            Child grandchildParent = childCopy.ChildrenEnumeration.First().Parent;
+            Assert.AreNotEqual(child, grandchildParent);
+            Assert.AreNotEqual(childCopy, grandchildParent);
+            Assert.AreEqual(2, grandchildParent.Id);
+        }
+
     }
 
 }
