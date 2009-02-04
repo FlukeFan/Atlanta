@@ -61,7 +61,9 @@ namespace Atlanta.Application.Domain.Lender
 
             if (mediaWithNameAndType.Count != 0)
             {
-                throw new DuplicationException(mediaWithNameAndType[0]);
+                Media duplicateMedia = mediaWithNameAndType[0];
+                string duplicateValue = duplicateMedia.Type + ", " + duplicateMedia.Name;
+                throw new DuplicationException(mediaWithNameAndType[0], duplicateValue);
             }
         }
 

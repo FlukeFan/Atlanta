@@ -90,14 +90,22 @@ namespace Atlanta.Presentation
         private void Test3_Click(object sender, RoutedEventArgs e)
         {
             User user = new User() { Id=1, Login="user" };
-            Media media = new Media() { Name="media" + DateTime.Now.ToString(), Description="media", Type=MediaType.Book };
+            Media media = new Media() { Name="media " + DateTime.Now.ToString(), Description="media", Type=MediaType.Book };
             _mediaService.Create(user, media);
         }
 
         private void MediaService_CreateCompleted(ServiceCallStatus status)
         {
-            _lastCreatedMedia = _mediaService.Create(status);
-            Write("Media created id=" + _lastCreatedMedia.Id);
+            try
+            {
+                _lastCreatedMedia = _mediaService.Create(status);
+                Write("Media created: " + _lastCreatedMedia.Name + " (" + _lastCreatedMedia.Id + ")");
+                _test4.IsEnabled = true;
+            }
+            catch (DuplicationException de)
+            {
+                Write("Attempt to create duplicate Media: " + de.DuplicateValue + " (" + de.DuplicateId + ")");
+            }
         }
 
         private void Test4_Click(object sender, RoutedEventArgs e)

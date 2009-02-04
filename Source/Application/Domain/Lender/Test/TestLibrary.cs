@@ -106,7 +106,8 @@ namespace Atlanta.Application.Domain.Lender.Test
         public void CreateMedia_FailDuplicate()
         {
             Library library = Repository.Load<Library>(_libraryId);
-            library.Create(Media.InstantiateOrphanedMedia(MediaType.Dvd, "test dvd", "test description"));
+            Media first = library.Create(Media.InstantiateOrphanedMedia(MediaType.Dvd, "test dvd", "test description"));
+            Repository.Flush();
 
             Media media = Media.InstantiateOrphanedMedia(MediaType.Dvd, "test dvd", "test description 2");
 
@@ -117,7 +118,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             }
             catch (DuplicationException e)
             {
-                Assert.AreEqual("test description", ((Media)e.Duplicate).Description);
+                Assert.AreEqual(first.Id, e.DuplicateId);
             }
         }
 
@@ -162,7 +163,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             }
             catch (DuplicationException e)
             {
-                Assert.AreEqual(library.OwnedMediaEnumeration.Skip(2).First(), e.Duplicate);
+                Assert.AreEqual(library.OwnedMediaEnumeration.Skip(2).First().Id, e.DuplicateId);
             }
 
             try
@@ -174,7 +175,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             }
             catch (DuplicationException e)
             {
-                Assert.AreEqual(library.OwnedMediaEnumeration.Skip(1).First(), e.Duplicate);
+                Assert.AreEqual(library.OwnedMediaEnumeration.Skip(1).First().Id, e.DuplicateId);
             }
         }
 

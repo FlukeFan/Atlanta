@@ -94,7 +94,7 @@ namespace Atlanta.Application.Services.ServiceBase
             serviceResult.IsError = true;
             serviceResult.ExceptionMessage = exception.Message;
             serviceResult.ExceptionDetail = exception.ToString();
-            serviceResult.ExceptionClass = exception.GetType().AssemblyQualifiedName;
+            serviceResult.ExceptionClass = exception.GetType().FullName;
             serviceResult.Properties = new Dictionary<string, object>();
 
             foreach (PropertyInfo property in exception.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
@@ -116,7 +116,14 @@ namespace Atlanta.Application.Services.ServiceBase
             if (!IsError)
                 return;
 
-            Type exceptionType = Type.GetType(ExceptionClass);
+            Type exceptionType = null;
+            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                if (exceptionType == null)
+                {
+                    exceptionType = assembly.GetType(ExceptionClass);
+                }
+            }
 
             if (exceptionType == null)
                 throw new Exception("Unrecognised exception type (" + ExceptionClass + ")\r\n" + ExceptionMessage);

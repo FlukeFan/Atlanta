@@ -11,28 +11,20 @@ namespace Atlanta.Application.Domain.DomainBase
     public class DuplicationException : Exception
     {
 
-        private DomainObjectBase _duplicate;
+        private DuplicationException(string message) : base(message) { }
 
-        private DuplicationException(string message) : base(message)
+        /// <summary> Constructor </summary>
+        public DuplicationException(DomainObjectBase duplicate, string duplicateValue)
         {
+            DuplicateId = duplicate.Id;
+            DuplicateValue = duplicateValue;
         }
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public DuplicationException(DomainObjectBase duplicate)
-        {
-            _duplicate = duplicate;
-        }
+        /// <summary> The duplicate object's Id  </summary>
+        public long DuplicateId { get; protected set; }
 
-        /// <summary>
-        /// The existing duplicate domain object (specific to the field and context of the exception)
-        /// </summary>
-        public DomainObjectBase Duplicate
-        {
-            get { return _duplicate; }
-            set { _duplicate = value; }
-        }
+        /// <summary> The duplicate object's value  </summary>
+        public string DuplicateValue { get; protected set; }
 
     }
 }

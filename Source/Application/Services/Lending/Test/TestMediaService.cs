@@ -81,7 +81,7 @@ namespace Atlanta.Application.Services.Lending.Test
             }
             catch (DuplicationException duplicationException)
             {
-                Assert.AreEqual("A test cd", (duplicationException.Duplicate as Media).Description);
+                Assert.AreEqual("Cd, CD", duplicationException.DuplicateValue);
             }
         }
 
