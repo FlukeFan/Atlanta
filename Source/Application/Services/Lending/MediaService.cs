@@ -23,22 +23,9 @@ namespace Atlanta.Application.Services.Lending
         public ServiceResult<IList<Media>> GetMediaList(User            user,
                                                         ClientQuery     mediaCriteria)
         {
-            IList<Media> mediaList =
-                DomainRegistry.Library.GetMediaList(mediaCriteria.ToDetachedCriteria());
-
-            // temporary solution that
-            // creates a copy to serialise
-            // across a web-service
-            IList<Media> mediaListCopy = new List<Media>();
-            foreach (Media sourceMedia in mediaList)
-            {
-                Media copy = Media.InstantiateOrphanedMedia(sourceMedia.Type, sourceMedia.Name, sourceMedia.Description);
-                PropertyInfo propertyInfo = typeof(Media).GetProperty("Id");
-                propertyInfo.SetValue(copy, sourceMedia.Id, null);
-                mediaListCopy.Add(copy);
-            }
-
-            return ServiceResult<IList<Media>>.Return(mediaListCopy);
+            return ServiceResult<IList<Media>>
+                .Return(DomainRegistry.Library.GetMediaList(mediaCriteria.ToDetachedCriteria())
+                    .Graph().Copy());
         }
 
         /// <summary>
@@ -48,7 +35,8 @@ namespace Atlanta.Application.Services.Lending
                                             Media   orphanedMedia)
         {
             return ServiceResult<Media>
-                .Return(DomainRegistry.Library.Create(orphanedMedia).Graph().Copy());
+                .Return(DomainRegistry.Library.Create(orphanedMedia)
+                    .Graph().Copy());
         }
 
         /// <summary>
@@ -60,7 +48,8 @@ namespace Atlanta.Application.Services.Lending
             Media loadedMedia = DomainRegistry.Repository.Load<Media>(modifiedMediaCopy.Id);
 
             return ServiceResult<Media>
-                .Return(loadedMedia.OwningLibrary.Modify(loadedMedia, modifiedMediaCopy));
+                .Return(loadedMedia.OwningLibrary.Modify(loadedMedia, modifiedMediaCopy)
+                    .Graph().Copy());
         }
 
         /// <summary>
