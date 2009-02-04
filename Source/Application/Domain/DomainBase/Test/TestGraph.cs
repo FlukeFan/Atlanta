@@ -135,6 +135,24 @@ namespace Atlanta.Application.Domain.DomainBase.Test
         }
 
         [Test]
+        public void TestCopyListAndSubGraph()
+        {
+            Parent parent = Parent.Create().SetId(3).SetName("parent3");
+            Child child1 = new Child() { Id=1, Name="child1", Parent=parent };
+            Child child2 = new Child() { Id=2, Name="child2", Parent=parent };
+            IList<Child> childList = new List<Child>() { child1, child2 };
+
+            IList<Child> childListCopy =
+                childList
+                    .GraphList()
+                    .Add(c => c.Parent)
+                    .CopyList();
+
+            Assert.AreEqual(2, childListCopy.Count);
+            Assert.AreEqual(3, childListCopy[1].Parent.Id);
+        }
+
+        [Test]
         public void TestEnumeration()
         {
             Child child = new Child() { Id=1, Name="child2", Parent=null };

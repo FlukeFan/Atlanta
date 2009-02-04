@@ -25,7 +25,9 @@ namespace Atlanta.Application.Services.Lending
         {
             return ServiceResult<IList<Media>>
                 .Return(DomainRegistry.Library.GetMediaList(mediaCriteria.ToDetachedCriteria())
-                    .Graph().Copy());
+                    .GraphList()
+                    .Add(m => m.OwningLibrary)
+                    .CopyList());
         }
 
         /// <summary>

@@ -25,6 +25,14 @@ namespace Atlanta.Application.Domain.DomainBase
             return new Graph<T>(source);
         }
 
+        /// <summary>
+        /// Create a Graph&lt;T&gt; for an IEnumerable object"/>
+        /// </summary>
+        public static Graph<T> GraphList<T>(this IList<T> source)
+        {
+            return new Graph<T>(source);
+        }
+
     }
 
     /// <summary>
@@ -57,6 +65,12 @@ namespace Atlanta.Application.Domain.DomainBase
             (this as IGraph).SetSource(source);
         }
 
+        /// <summary> Constructor </summary>
+        public Graph(IEnumerable<T> source)
+        {
+            (this as IGraph).SetSource(source);
+        }
+
         /// <summary>
         /// Return a copy of the selected graph of objects
         /// </summary>
@@ -64,6 +78,15 @@ namespace Atlanta.Application.Domain.DomainBase
         {
             DomainRegistry.Repository.Flush();
             return (T)((IGraph)this).Copy();
+        }
+
+        /// <summary>
+        /// Return a copy of the selected graph of objects as an IList
+        /// </summary>
+        public IList<T> CopyList()
+        {
+            DomainRegistry.Repository.Flush();
+            return (IList<T>)((IGraph)this).Copy();
         }
 
         /// <summary>
@@ -89,7 +112,7 @@ namespace Atlanta.Application.Domain.DomainBase
                 return default(T);
 
             if (_source is IList)
-                return CopyList();
+                return CopyIntoNewList();
 
             return CopySingleObject(typeof(T), _source);
         }
@@ -128,7 +151,7 @@ namespace Atlanta.Application.Domain.DomainBase
             return null;
         }
 
-        private object CopyList()
+        private object CopyIntoNewList()
         {
             Type targetType = FindListType();
             IList listCopy = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(new Type[] { targetType }));
