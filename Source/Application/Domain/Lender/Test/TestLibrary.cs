@@ -56,6 +56,28 @@ namespace Atlanta.Application.Domain.Lender.Test
         }
 
         [Test]
+        public void GetGraphCopy()
+        {
+            Library library = Repository.Load<Library>(_libraryId);
+            Assert.AreNotEqual(typeof(Library), library.GetType(), "not a proxy");
+
+            Library libraryCopy =
+                library
+                    .Graph()
+                    .Add(l => l.OwnedMediaEnumeration)
+                    .Copy();
+
+            Assert.AreNotSame(library, libraryCopy);
+            Assert.AreEqual(typeof(Library), libraryCopy.GetType());
+            Assert.AreEqual(_libraryId, libraryCopy.Id);
+            Assert.AreEqual(3, libraryCopy.OwnedMediaEnumeration.Count());
+
+            Media mediaCopy = libraryCopy.OwnedMediaEnumeration.First();
+            Assert.AreEqual(typeof(Media), mediaCopy.GetType());
+            Assert.AreEqual(_mediaId, mediaCopy.Id);
+        }
+
+        [Test]
         public void CreateMedia_Ok()
         {
             Library library = Library.InstantiateLibrary();

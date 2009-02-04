@@ -6,6 +6,8 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
+using NHibernate.Proxy;
+
 namespace Atlanta.Application.Domain.DomainBase
 {
 
@@ -52,7 +54,7 @@ namespace Atlanta.Application.Domain.DomainBase
         /// <summary> Constructor </summary>
         public Graph(T source)
         {
-            _source = source;
+            (this as IGraph).SetSource(source);
         }
 
         /// <summary>
@@ -93,7 +95,15 @@ namespace Atlanta.Application.Domain.DomainBase
 
         void IGraph.SetSource(object source)
         {
-            _source = source;
+            if (source is INHibernateProxy)
+            {
+                INHibernateProxy proxy = (INHibernateProxy)source;
+                _source = proxy.HibernateLazyInitializer.GetImplementation();
+            }
+            else
+            {
+                _source = source;
+            }
         }
 
         private object CopySingleObject(Type type, object source)
