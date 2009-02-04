@@ -48,8 +48,7 @@
         </copy>
 
         <copy   file="Remote/web.config"
-                todir="${build.dir}"
-                overwrite="true">
+                todir="${build.dir}">
             <filterchain>
                 <replacestring from="Database=?" to="Database=${build.dir}/LendingLibraryIntegrationTest.fdb" />
             </filterchain>

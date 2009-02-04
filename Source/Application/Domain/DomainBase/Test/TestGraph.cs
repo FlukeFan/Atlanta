@@ -41,7 +41,7 @@ namespace Atlanta.Application.Domain.DomainBase.Test
 
 
     [TestFixture]
-    public class TestGraph : DomainTestBase
+    public class TestGraph : DomainPersistenceTestBase
     {
 
         [Test]

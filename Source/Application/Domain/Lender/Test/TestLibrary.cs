@@ -78,6 +78,17 @@ namespace Atlanta.Application.Domain.Lender.Test
         }
 
         [Test]
+        public void GraphAndEnsureIdIsPopulated()
+        {
+            Library library = Repository.Load<Library>(_libraryId);
+            Media newMedia = library.Create(Media.InstantiateOrphanedMedia(MediaType.Book, "a book", "a book"));
+
+            Media mediaCopy = newMedia.Graph().Copy();
+
+            Assert.AreNotEqual(0m, mediaCopy.Id, "Id not populated");
+        }
+
+        [Test]
         public void CreateMedia_Ok()
         {
             Library library = Library.InstantiateLibrary();

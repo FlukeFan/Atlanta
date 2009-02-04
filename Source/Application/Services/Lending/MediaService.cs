@@ -48,7 +48,7 @@ namespace Atlanta.Application.Services.Lending
                                             Media   orphanedMedia)
         {
             return ServiceResult<Media>
-                .Return(DomainRegistry.Library.Create(orphanedMedia));
+                .Return(DomainRegistry.Library.Create(orphanedMedia).Graph().Copy());
         }
 
         /// <summary>

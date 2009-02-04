@@ -60,6 +60,9 @@ namespace Atlanta.Application.Services.ServiceBase
         /// <summary> is return value an error </summary>
         [DataMember] public bool IsError { get; protected set; }
 
+        /// <summary> full detail of exception </summary>
+        [DataMember] public string ExceptionDetail { get; protected set; }
+
         /// <summary> message to pass to the constructor of the exception </summary>
         [DataMember] public string ExceptionMessage { get; protected set; }
 
@@ -90,6 +93,7 @@ namespace Atlanta.Application.Services.ServiceBase
             ServiceResult serviceResult = (ServiceResult)Activator.CreateInstance(resultType, true);
             serviceResult.IsError = true;
             serviceResult.ExceptionMessage = exception.Message;
+            serviceResult.ExceptionDetail = exception.ToString();
             serviceResult.ExceptionClass = exception.GetType().AssemblyQualifiedName;
             serviceResult.Properties = new Dictionary<string, object>();
 

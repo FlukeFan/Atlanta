@@ -42,6 +42,7 @@ namespace Atlanta.Application.Services.ServiceBase
     {
         [DataMember] public bool IsVoid { get; set; }
         [DataMember] public bool IsError { get; set; }
+        [DataMember] public string ExceptionDetail { get; set; }
         [DataMember] public string ExceptionMessage { get; set; }
         [DataMember] public string ExceptionClass { get; set; }
         [DataMember] public IDictionary<string, object> Properties { get; set; }
@@ -54,7 +55,7 @@ namespace Atlanta.Application.Services.ServiceBase
             Type exceptionType = Type.GetType(ExceptionClass);
 
             if (exceptionType == null)
-                throw new Exception("Unrecognised exception type (" + ExceptionClass + ")\r\n" + ExceptionMessage);
+                throw new Exception("Unrecognised exception type (" + ExceptionClass + ")\r\n" + ExceptionMessage + "\r\n" + ExceptionDetail);
 
             ConstructorInfo messageConstructor = exceptionType.GetConstructor(new Type[] { typeof(string) });
             if (messageConstructor == null)

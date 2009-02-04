@@ -34,7 +34,7 @@ namespace Atlanta.Presentation
 
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
-            HtmlPage.Window.Alert(e.ExceptionObject.ToString());
+            MessageBox.Show(e.ExceptionObject.ToString());
         }
 
     }

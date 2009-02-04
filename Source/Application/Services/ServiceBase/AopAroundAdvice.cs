@@ -43,28 +43,25 @@ namespace Atlanta.Application.Services.ServiceBase
         /// </summary>
         public object Invoke(IMethodInvocation invocation)
         {
-            Repository repository =
-                new Repository(Repository.SessionFactory)
-                    .BeginTransaction();
-
-            DomainRegistry.Repository = repository;
-            DomainRegistry.Library = null;
-
             object returnValue = null;
-            try
-            {
-                returnValue = invocation.Proceed();
 
-                repository
-                    .CommitTransaction()
-                    .Dispose();
-            }
-            catch (Exception e)
+            using (Repository repository = new Repository(Repository.SessionFactory))
             {
-                repository
-                    .Dispose();
+                repository.BeginTransaction();
 
-                returnValue = ServiceResult.Error(invocation.Method.ReturnType, e);
+                DomainRegistry.Repository = repository;
+                DomainRegistry.Library = null;
+
+                try
+                {
+                    returnValue = invocation.Proceed();
+
+                    repository.CommitTransaction();
+                }
+                catch (Exception e)
+                {
+                    returnValue = ServiceResult.Error(invocation.Method.ReturnType, e);
+                }
             }
 
             return returnValue;

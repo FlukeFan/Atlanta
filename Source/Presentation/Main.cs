@@ -25,9 +25,12 @@ namespace Atlanta.Presentation
 
         private Button _test1;
         private Button _test2;
+        private Button _test3;
+        private Button _test4;
         private ScrollViewer _scrollViewer;
         private StackPanel _messages;
         private MediaServiceClient _mediaService;
+        private Media _lastCreatedMedia;
 
         public Main()
         {
@@ -37,16 +40,23 @@ namespace Atlanta.Presentation
         private void Main_Loaded(object sender, RoutedEventArgs e)
         {
             _mediaService = new MediaServiceClient(new EndpointAddress("http://" + System.Windows.Application.Current.Host.Source.Host + "/atlanta/web/services/MediaService.svc"), Dispatcher);
-            _mediaService.GetMediaListCompleted += new Atlanta.Application.Services.ServiceBase.ServiceCallback(MediaService_GetMediaListCompleted);
+            _mediaService.GetMediaListCompleted += MediaService_GetMediaListCompleted;
+            _mediaService.CreateCompleted += MediaService_CreateCompleted;
+            _mediaService.ModifyCompleted += MediaService_ModifyCompleted;
 
             _scrollViewer = (ScrollViewer)FindName("_scrollViewer");
             _messages = (StackPanel)FindName("_messages");
 
             _test1 = (Button)FindName("_test1");
             _test2 = (Button)FindName("_test2");
+            _test3 = (Button)FindName("_test3");
+            _test4 = (Button)FindName("_test4");
 
             _test1.Click += new RoutedEventHandler(Test1_Click);
             _test2.Click += new RoutedEventHandler(Test2_Click);
+            _test3.Click += new RoutedEventHandler(Test3_Click);
+            _test4.Click += new RoutedEventHandler(Test4_Click);
+            _test4.IsEnabled = false;
 
             Write("Loaded");
         }
@@ -75,6 +85,28 @@ namespace Atlanta.Presentation
             Write("Calling GetMediaList");
             User user = new User() { Id=1, Login="user" };
             _mediaService.GetMediaList(user, ClientQuery.For<Media>().Add<Media>(m => m.Type == MediaType.Book));
+        }
+
+        private void Test3_Click(object sender, RoutedEventArgs e)
+        {
+            User user = new User() { Id=1, Login="user" };
+            Media media = new Media() { Name="media" + DateTime.Now.ToString(), Description="media", Type=MediaType.Book };
+            _mediaService.Create(user, media);
+        }
+
+        private void MediaService_CreateCompleted(ServiceCallStatus status)
+        {
+            _lastCreatedMedia = _mediaService.Create(status);
+            Write("Media created id=" + _lastCreatedMedia.Id);
+        }
+
+        private void Test4_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void MediaService_ModifyCompleted(ServiceCallStatus status)
+        {
+            throw new NotImplementedException();
         }
 
         private void Write(string message)

@@ -62,6 +62,7 @@ namespace Atlanta.Application.Domain.DomainBase
         /// </summary>
         public T Copy()
         {
+            DomainRegistry.Repository.Flush();
             return (T)((IGraph)this).Copy();
         }
 

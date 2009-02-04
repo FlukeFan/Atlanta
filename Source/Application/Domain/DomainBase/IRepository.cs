@@ -62,6 +62,11 @@ namespace Atlanta.Application.Domain.DomainBase
         /// </summary>
         void Delete(object existingObject);
 
+        /// <summary>
+        /// Flush any pending changes to the repository
+        /// </summary>
+        void Flush();
+
     }
 
 }
