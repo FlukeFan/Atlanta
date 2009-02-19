@@ -1,0 +1,18 @@
+﻿<project name="Design" default="none" xsi:schemaLocation="http://broloco.atlanta/nant.xsd ..\SDKs\nant-0.86\schema\nant.xsd" xmlns="http://broloco.atlanta/nant.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <include buildfile="${build.includes.file}" />
+
+
+    <target name="onBuild">
+
+        <copy todir="${build.dir}\design">
+            <fileset>
+                <include name="**\*.htm"/>
+                <include name="**\*.css"/>
+            </fileset>
+        </copy>
+
+    </target>
+
+
+</project>

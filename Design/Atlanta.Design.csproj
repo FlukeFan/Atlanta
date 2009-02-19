@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <ProjectGuid>{FF05CBB0-17F5-478F-A010-A345A4B53FEB}</ProjectGuid>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <OutputPath>..\build_debug\bin</OutputPath>
+    <StartAction>URL</StartAction>
+    <StartURL>http://localhost/atlanta/design</StartURL>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="**\*.build" />
+    <Compile Include="**\*.css" />
+    <None Include="**\*.config" />
+    <None Include="**\*.xml" />
+    <None Include="**\*.htm" />
+  </ItemGroup>
+  <Target Name="Build">
+  </Target>
+  <Target Name="Clean">
+  </Target>
+  <Target Name="Rebuild">
+  </Target>
+</Project>

@@ -87,6 +87,7 @@
 
     <target name="onBuildChain">
 
+        <nant buildfile="Design\Design.build"           inheritall="true"   target="build"/>
         <nant buildfile="Source\Source.build"           inheritall="true"   target="build"/>
 
     </target>
@@ -104,6 +105,7 @@
     <target name="onClean">
 
         <nant buildfile="Source\Source.build"           inheritall="true"   target="clean"/>
+        <nant buildfile="Design\Design.build"           inheritall="true"   target="clean"/>
 
         <delete dir="${build.dir}" failonerror="false" />
 
