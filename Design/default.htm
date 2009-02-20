@@ -154,6 +154,55 @@
             </p>
             
             <h3>Part 2 - Pattern Implementations</h3>
+            <p>
+                This section details the specific .NET technologies used to implement the
+                architecture described in Part 1 above.
+            </p>
+
+            <h4>Business Logic Layer</h4>
+            <p>
+                The relational database is implemented using the embedded client for
+                <a target="_blank" href="http://www.firebirdsql.org/">Firebird RDBMS</a>.
+            </p>
+            <p>
+                The Domain Model is implemented using regular POCOs.  The object-relational-mapping
+                is implemented using NHibernate which combines:  Data Mapper, Lazy Load, Identity Map, and Unit of Work.
+            </p>
+            <p>
+                The Repository is implemented by a thin wrapper exposing a subset of the NHibernate ISession interface,
+                and the NHibernate ICriteria interface provides the Query Object implementation.
+            </p>
+
+            <h4>Services Layer</h4>
+            <p>
+                The core Service Layer logic is implemented using a POCO.  This class is proxied using
+                Spring.Net's AOP framework to implement interception and apply the following advice
+                to the methods:
+            </p>
+            <ul>
+                <li>Logging (using log4net - TODO);</li>
+                <li>Auditing (using the NHibernate IInterceptor interface - TODO);</li>
+                <li>Transaction Handling (using the NHibernate ISession interface);</li>
+                <li>Exception Handling (rolling back transactions, and handling serialisation of exceptions).</li>
+            </ul>
+            <p>
+                The Remote Facade is exposed using WCF, and is hosted in IIS.  This process combines both
+                the Services Layer and the Business Logic Layer.
+            </p>
+
+            <h4>Presentation Layer</h4>
+            <p>
+                The Passive View is implemented in Silverlight, and exposed to the controller through
+                interfaces.
+            </p>
+            <p>
+                The presentation controller is a regular POCO that communicates with the view's interfaces,
+                and with the WCF service
+                through a generated proxy (custom generated using
+                <a target="_blank" href="http://www.olegsych.com/2007/12/text-template-transformation-toolkit/">T4</a>
+                templates), allowing the controllers to be cross compiled to the regular .NET
+                framework and tested in isolation using NUnit.
+            </p>
 
             <h2>Analysis Model</h2>
 
