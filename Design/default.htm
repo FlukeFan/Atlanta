@@ -69,13 +69,92 @@
                 <li>Time Boxing;</li>
                 <li>Requirements Freeze;</li>
                 <li>Sustainable Development;</li>
+                <li>Whole Team Together;</li>
                 <li>Pair Programming;</li>
                 <li>e.t.c., ...</li>
             </ul>
 
             <h2>Architecture</h2>
-                <h3>Architecture Patterns</h3>
-                <h3>Architecture Implementation</h3>
+            
+            <p>
+                The architecture of Atlanta is described in two parts:
+            </p>
+            <ul>
+                <li>
+                    Part 1 describes the architecture using Design Patterns.
+                    Note that these patterns describe the architecture of the system
+                    in a technology agnostic fashion - they could just as easily be describing
+                    a system implemented in Java;
+                </li>
+                <li>
+                    Part 2 desribes the (.NET specific) technologies used to implement the patterns discussed in Part 1.
+                </li>
+            </ul>
+
+            <h3>Part 1 - Architectural Patterns</h3>
+            
+            <p>
+                The Atlanta architecture is a
+                Layered Application with three principal layers:
+            </p>
+            <ul>
+                <li>Business Logic;</li>
+                <li>Services;</li>
+                <li>Presentation.</li>
+            </ul>
+            
+            <h4>Business Logic Layer</h4>
+            <p>
+                The core business logic is implemented using a
+                <a target="_blank" href="http://martinfowler.com/eaaCatalog/domainModel.html">Domain Model</a>.
+            </p>
+            <p>
+                The model is persisted in a relational database using a
+                <a target="_blank" href="http://martinfowler.com/eaaCatalog/dataMapper.html">Data Mapper</a>.
+                <a target="_blank" href="http://martinfowler.com/eaaCatalog/lazyLoad.html">Lazy Load</a>
+                allows the model to traverse associations without explicit data
+                access code, while an
+                <a target="_blank" href="http://martinfowler.com/eaaCatalog/identityMap.html">Identity Map</a>
+                maintains reference equality throughout the domain.
+                Changes to the model are tracked (and ultimately persisted) using a
+                <a target="_blank" href="http://martinfowler.com/eaaCatalog/unitOfWork.html">Unit of Work</a>.
+            </p>
+            <p>
+                Data access is hidden behind a
+                <a target="_blank" href="http://martinfowler.com/eaaCatalog/repository.html">Repository</a>,
+                and a
+                <a target="_blank" href="http://martinfowler.com/eaaCatalog/queryObject.html">Query Object</a>
+                is used to allow interrogation of the database in an object-oriented fashion
+                while keeping the model free of the internal mechanism.
+            </p>
+
+            <h4>Services Layer</h4>
+            <p>
+                A <a target="_blank" href="http://martinfowler.com/eaaCatalog/serviceLayer.html">Service Layer</a>
+                is employed as an application boundary where aspects can be applied
+                consistently across a range of methods (AOP).
+                While the Service Layer is aware of persistence mechanisms, it is kept
+                free of business logic and merely acts as an entry point into the
+                Domain Model.
+            </p>
+            <p>
+                A <a target="_blank" href="http://martinfowler.com/eaaCatalog/remoteFacade.html">Remote Facade</a>
+                exposes the coarse grained interface across the wire.
+            </p>
+
+            <h4>Presentation Layer</h4>
+            <p>
+                The presentation logic uses a variation on
+                Model View Controller,
+                specifically
+                <a target="_blank" href="http://martinfowler.com/eaaDev/PassiveScreen.html">Passive View</a>.
+                The controller talks to the model using the Remote Facade exposed
+                from the services layer, and is responsible for controlling the
+                state and input from the view.
+            </p>
+
+            
+            <h3>Part 2 - Pattern Implementations</h3>
 
             <h2>Analysis Model</h2>
 
