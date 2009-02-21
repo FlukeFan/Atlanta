@@ -12,6 +12,7 @@
     <Compile Include="**\*.css" />
     <None Include="**\*.config" />
     <None Include="**\*.xml" />
+    <None Include="**\*.xsl" />
     <None Include="**\*.htm" />
   </ItemGroup>
   <Target Name="Build">

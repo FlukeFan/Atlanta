@@ -1,0 +1,79 @@
+<!-- Title of use case - describes goal as short active verb phrase -->
+<UseCase Name="">
+
+    <!-- (optional) Longer description of the goal, if required -->
+    <Context        Description="" />
+
+    <!-- (optional) design scope (system considered black box) -->
+    <!--<Scope          Description=""> -->
+
+    <!--
+        created     (goal only)
+        draft       (main scenario in place)
+        complete    (extensions/text complete)
+        implemented (implementation in place)
+        changed     (changed since implementation)
+    -->
+    <Status         Value="" />
+
+    <!-- summary / user-goal / subfunction -->
+    <Level          Name="" />
+
+    <PrimaryActor   Name=""/>
+
+    <!-- Stakeholders, and interests -->
+    <!-- <Stakeholder    Name="" Interests=""> -->
+
+    <Preconditions  Description="" />
+
+    <Trigger        Description="" />
+
+    <Guarantees
+        Success=""
+        Minimal="" />
+
+    <MainSteps>
+        <Step Id="1">
+            ...
+            <!-- to call another use case ...
+            <Call Name="">
+            -->
+        </Step>
+        <Step Id="2">
+            ...
+        </Step>
+    </MainSteps>
+
+    <!--
+    <Extensions>
+        <Extension
+                Id="1a"
+                Description="">
+            <Step Id="1a1">
+                ...
+            </Step>
+            <Step Id="1a2">
+                ...
+            </Step>
+        </Extension>
+    </Extensions>
+    -->
+
+    <!--
+    <TechnologyDataVariations>
+        <Step Id="">
+        </Step>
+    </TechnologyDataVariations>
+    -->
+
+    <!--
+    <Notes>
+        <Note Id="1">
+            ...
+        </Note>
+    </Notes>
+    -->
+
+</UseCase>
+
+

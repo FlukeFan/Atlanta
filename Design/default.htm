@@ -68,6 +68,7 @@
                     <ul><li>with preference to shorter iterations - e.g., 1 week</li></ul></li>
                 <li>Time Boxing;</li>
                 <li>Requirements Freeze;</li>
+                <li>YAGNI;</li>
                 <li>Sustainable Development;</li>
                 <li>Whole Team Together;</li>
                 <li>Pair Programming;</li>
@@ -205,8 +206,64 @@
             </p>
 
             <h2>Analysis Model</h2>
+            <p>
+                The Analysis Model provides a ubiquitous language that is structure around
+                the Atlanta Domain Model.  This language is used consistently when discussing
+                Atlanta functionality, and throughout the use cases.
+            </p>
+            <p>
+                The nouns (which often correspond to a class in the Domain Model) are described in
+                the following sub-sections.
+            </p>
+
+            <h3>User</h3>
+            <p>
+                ...
+            </p>
+
+            <h3>Library</h3>
+            <p>
+                ...
+            </p>
+
+            <h3>Media</h3>
+            <p>
+                ...
+            </p>
+
 
             <h2>Use Cases</h2>
+            <p>
+                The Use Cases define the behavioural requirements for the Atlanta Lending Library.
+                The Use Cases are
+                <a target="_blank" href="http://en.wikipedia.org/wiki/Use_case#Degree_of_detail">fully dressed</a>,
+                and use the language of the Analysis Model defined above.
+            </p>
+            <p>
+                The Use Cases use the following actors:
+            </p>
+            <ul>
+                <li>Administrator: a human who performs administrative actions on the system;</li>
+                <li>Librarian: a human who uses the system to perform lending tasks on the system.</li>
+            </ul>
+            
+            <h3>Links to Use Cases</h3>
+            <h4>Opening</h4>
+            <ul>
+                <li><a href="UseCases/Opening/Login.xml">Login</a></li>
+                <li><a>Librarian Registers Workplace</a></li>
+            </ul>
+            <h4>Administration</h4>
+            <ul>
+                <li><a>Configure Users</a></li>
+                <li><a>Configure Libraries</a></li>
+            </ul>
+            <h4>Lending</h4>
+            <ul>
+                <li><a>Manage Media</a></li>
+                <li><a>Librarian Loans Media to Customer</a></li>
+                <li><a>Customer Returns Media to Librarian</a></li>
+            </ul>
 
         </div>
 

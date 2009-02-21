@@ -9,6 +9,8 @@
             <fileset>
                 <include name="**\*.htm"/>
                 <include name="**\*.css"/>
+                <include name="**\*.xml"/>
+                <include name="**\*.xsl"/>
             </fileset>
         </copy>
 
