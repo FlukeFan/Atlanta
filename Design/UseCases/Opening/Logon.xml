@@ -1,0 +1,62 @@
+<?xml-stylesheet type="text/xsl" href="../UseCaseToHtml.xsl"?>
+<UseCase Name="Logon">
+
+    <Context        Description="Actor supplies login credentials to gain access to the system."/>
+    <Level          Name="user-goal" />
+    <PrimaryActor   Name="Administrator/Librarian"/>
+
+    <Preconditions  Description="Actor is not logged on to the system." />
+    <Trigger        Description="Actor indicates wish to log on to the system." />
+
+    <Guarantees
+        Success="The actor is logged on."
+        Minimal="The actor is not logged on." />
+
+    <MainSteps>
+        <Step Id="1">
+            System requests login credentials.
+        </Step>
+        <Step Id="2">
+            Actor provides a login and password.
+        </Step>
+        <Step Id="3">
+            System verifies that there is a User with the supplied
+            login, and validates the supplied password against the User.
+        </Step>
+        <Step Id="4">
+            System confirms User's Name and grants the actor access.
+        </Step>
+    </MainSteps>
+
+    <Extensions>
+        <Extension
+                Id="3a"
+                Description="System fails to validate the actor's login and password">
+            <Step Id="3a1">
+                System informs the actor that their login credentials cannot be validated.
+                Use case resumes at step 1.
+            </Step>
+        </Extension>
+    </Extensions>
+
+    <!--
+    <TechnologyDataVariations>
+        <Step Id="">
+        </Step>
+    </TechnologyDataVariations>
+    -->
+
+    <Notes>
+        <Note Id="1">
+            Is there any requirement to be able to lock users out of the system
+            after unsuccessful attempts?
+        </Note>
+        <Note Id="2">
+            The system currently grants the actor full access to the system.
+            The system could be extended to only grant access to allocated functionality.
+        </Note>
+    </Notes>
+
+</UseCase>
+
+

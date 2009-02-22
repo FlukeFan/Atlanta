@@ -217,8 +217,20 @@
             </p>
 
             <h3>User</h3>
+            <table class="umlClass">
+                <tr><th>User</th></tr>
+
+                <tr class="umlAttribute"><td>Login : string</td></tr>
+                <tr class="umlAttribute"><td>Password : string</td></tr>
+                <tr class="umlAttribute"><td>Name : string</td></tr>
+
+                <tr class="umlSeparator"><td></td></tr>
+
+                <tr class="umlOperation"><td>void Validate(password)</td></tr>
+            </table>
             <p>
-                ...
+                Human actors have a corresponding User in the system.  Each User has a
+                'login' and 'password', and a human identifiable 'name'.
             </p>
 
             <h3>Library</h3>
@@ -250,7 +262,7 @@
             <h3>Links to Use Cases</h3>
             <h4>Opening</h4>
             <ul>
-                <li><a href="UseCases/Opening/Login.xml">Login</a></li>
+                <li><a href="UseCases/Opening/Logon.xml">Logon</a></li>
                 <li><a>Librarian Registers Workplace</a></li>
             </ul>
             <h4>Administration</h4>
