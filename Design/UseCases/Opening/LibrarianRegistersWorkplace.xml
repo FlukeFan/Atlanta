@@ -9,29 +9,47 @@
     <Trigger        Description="Actor indicates wish to register their workplace." />
 
     <Guarantees
-        Success="The actor's workplace is update."
-        Minimal="The actor's workplace remains unchanged." />
+        Success="The User's workplace is updated."
+        Minimal="The User's workplace remains unchanged." />
 
     <MainSteps>
         <Step Id="1">
-            ...
+            System provides a list of existing Libraries.
+        </Step>
+        <Step Id="2">
+            Actor selects a Library.
+        </Step>
+        <Step Id="3">
+            System registers the selected Library as the User's workplace,
+            and confirms registration to actor.
         </Step>
     </MainSteps>
 
-    <!--
     <Extensions>
         <Extension
-                Id="1a"
-                Description="">
-            <Step Id="1a1">
-                ...
+                Id="3a"
+                Description="User has existing workplace registered">
+            <Step Id="3a1">
+                System prompts actor to confirm that the existing workplace
+                should be changed.
             </Step>
-            <Step Id="1a2">
-                ...
+            <Step Id="3a2">
+                Actor confirms they wish to change the registered workplace.
+            </Step>
+            <Extension
+                    Id="3a2a"
+                    Description="The actor does not confirm they wish to change the registered workplace">
+                <Step Id="3a2a1">
+                    System confirms that the workplace has not been changed.
+                    Use case ends.
+                </Step>
+            </Extension>
+            <Step Id="3a3">
+                System registers the selected Library as the User's workplace,
+                and confirms registration to actor.
             </Step>
         </Extension>
     </Extensions>
-    -->
 
     <!--
     <TechnologyDataVariations>
