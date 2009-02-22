@@ -1,0 +1,53 @@
+<?xml-stylesheet type="text/xsl" href="../UseCaseToHtml.xsl"?>
+<UseCase Name="Configure Libraries">
+
+    <Context        Description="Actor creates, modifies, or deletes Libraries."/>
+    <Level          Name="user-goal" />
+    <PrimaryActor   Name="Administrator"/>
+
+    <Preconditions  Description="Actor is logged on and identified by a User." />
+    <Trigger        Description="Actor indicates wish to configure Libraries." />
+
+    <Guarantees
+        Success="A Library is create, modified, or deleted."
+        Minimal="The existing Libraries remain unchanged." />
+
+    <MainSteps>
+        <Step Id="1">
+            ...
+        </Step>
+    </MainSteps>
+
+    <!--
+    <Extensions>
+        <Extension
+                Id="1a"
+                Description="">
+            <Step Id="1a1">
+                ...
+            </Step>
+            <Step Id="1a2">
+                ...
+            </Step>
+        </Extension>
+    </Extensions>
+    -->
+
+    <!--
+    <TechnologyDataVariations>
+        <Step Id="">
+        </Step>
+    </TechnologyDataVariations>
+    -->
+
+    <!--
+    <Notes>
+        <Note Id="1">
+            ...
+        </Note>
+    </Notes>
+    -->
+
+</UseCase>
+
+

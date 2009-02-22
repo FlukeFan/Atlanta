@@ -223,22 +223,48 @@
                 <tr class="umlAttribute"><td>Login : string</td></tr>
                 <tr class="umlAttribute"><td>Password : string</td></tr>
                 <tr class="umlAttribute"><td>Name : string</td></tr>
+                <tr class="umlAttribute"><td>Workplace : (0..1) Library</td></tr>
 
                 <tr class="umlSeparator"><td></td></tr>
 
-                <tr class="umlOperation"><td>void Validate(password)</td></tr>
+                <tr class="umlOperation"><td>Validate(password)</td></tr>
             </table>
             <p>
                 Human actors have a corresponding User in the system.  Each User has a
                 'login' and 'password', and a human identifiable 'name'.
             </p>
 
+            <h3>Customer</h3>
+            <table class="umlClass">
+                <tr><th>Customer</th></tr>
+
+                <tr class="umlSeparator"><td></td></tr>
+
+            </table>
+            <p>
+                ...
+            </p>
+
             <h3>Library</h3>
+            <table class="umlClass">
+                <tr><th>Library</th></tr>
+
+                <tr class="umlAttribute"><td>OwnedMedia : (0..*) Media</td></tr>
+
+                <tr class="umlSeparator"><td></td></tr>
+
+            </table>
             <p>
                 ...
             </p>
 
             <h3>Media</h3>
+            <table class="umlClass">
+                <tr><th>Media</th></tr>
+
+                <tr class="umlSeparator"><td></td></tr>
+
+            </table>
             <p>
                 ...
             </p>
@@ -263,18 +289,18 @@
             <h4>Opening</h4>
             <ul>
                 <li><a href="UseCases/Opening/Logon.xml">Logon</a></li>
-                <li><a>Librarian Registers Workplace</a></li>
+                <li><a href="UseCases/Opening/LibrarianRegistersWorkplace.xml">Librarian Registers Workplace</a></li>
             </ul>
             <h4>Administration</h4>
             <ul>
-                <li><a>Configure Users</a></li>
-                <li><a>Configure Libraries</a></li>
+                <li><a href="UseCases/Administration/ConfigureUsers.xml">Configure Users</a></li>
+                <li><a href="UseCases/Administration/ConfigureLibraries.xml">Configure Libraries</a></li>
             </ul>
             <h4>Lending</h4>
             <ul>
-                <li><a>Manage Media</a></li>
-                <li><a>Librarian Loans Media to Customer</a></li>
-                <li><a>Customer Returns Media to Librarian</a></li>
+                <li><a href="UseCases/Lending/ManageLibraryMedia.xml">Manage Library Media</a></li>
+                <li><a href="UseCases/Lending/LibrarianLoansMediaToCustomer.xml">Librarian Loans Media to Customer</a></li>
+                <li><a href="UseCases/Lending/CustomerReturnsMediaToLibrary.xml">Customer Returns Media to Library</a></li>
             </ul>
 
         </div>

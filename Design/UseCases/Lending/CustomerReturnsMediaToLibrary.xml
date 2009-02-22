@@ -1,0 +1,53 @@
+<?xml-stylesheet type="text/xsl" href="../UseCaseToHtml.xsl"?>
+<UseCase Name="Customer Returns Media to Library">
+
+    <Context        Description="Actor registers return of previously loaned Media."/>
+    <Level          Name="user-goal" />
+    <PrimaryActor   Name="Librarian"/>
+
+    <Preconditions  Description="Actor is logged on and identified by a User and a Library (from User's workplace)." />
+    <Trigger        Description="Actor indicates wish to register return of Media." />
+
+    <Guarantees
+        Success="Previously loaned Media is registered as returned to the Library."
+        Minimal="The existing Library's Media remain unchanged." />
+
+    <MainSteps>
+        <Step Id="1">
+            ...
+        </Step>
+    </MainSteps>
+
+    <!--
+    <Extensions>
+        <Extension
+                Id="1a"
+                Description="">
+            <Step Id="1a1">
+                ...
+            </Step>
+            <Step Id="1a2">
+                ...
+            </Step>
+        </Extension>
+    </Extensions>
+    -->
+
+    <!--
+    <TechnologyDataVariations>
+        <Step Id="">
+        </Step>
+    </TechnologyDataVariations>
+    -->
+
+    <!--
+    <Notes>
+        <Note Id="1">
+            ...
+        </Note>
+    </Notes>
+    -->
+
+</UseCase>
+
+
