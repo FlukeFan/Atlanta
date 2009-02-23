@@ -14,24 +14,94 @@
 
     <MainSteps>
         <Step Id="1">
-            ...
+            Actor indicates wish to create a User.
+        </Step>
+        <Step Id="2">
+            System prompts actor for the following information:
+            <ul>
+                <li>User login;</li>
+                <li>User password;</li>
+                <li>(confirmation of the password);</li>
+                <li>User name.</li>
+            </ul>
+        </Step>
+        <Step Id="3">
+            Actor supplies the requested information.
+        </Step>
+        <Step Id="4">
+            System verifies the login and name are unique.
+        </Step>
+        <Step Id="5">
+            System creates a User as specified, and confirms
+            the creation to the actor.
         </Step>
     </MainSteps>
 
-    <!--
     <Extensions>
         <Extension
                 Id="1a"
-                Description="">
+                Description="Actor indicates wish to modify a User">
             <Step Id="1a1">
-                ...
+                System presents a list of the existing Users.
             </Step>
             <Step Id="1a2">
-                ...
+                Actor selects a User.
+            </Step>
+            <Step Id="1a3">
+                System presents the details of the selected User.
+            </Step>
+            <Step Id="1a4">
+                Actor modifies any of the following information:
+                <ul>
+                    <li>User login;</li>
+                    <li>New User password (and confirmation of new password);</li>
+                    <li>User name.</li>
+                </ul>
+            </Step>
+            <Step Id="1a5">
+                System verifies the login and name are unique.
+            </Step>
+            <Extension
+                    Id="1a5a"
+                    Description="The login or name is not unique">
+                <Step Id="1a5a1">
+                    System informs the actor that the login or name is already in use.
+                    Processing continues at step 1a4.
+                </Step>
+            </Extension>
+            <Step Id="1a6">
+                System modifies the User as specified, and
+                confirms the modification to the actor.
+            </Step>
+        </Extension>
+        <Extension
+                Id="1b"
+                Description="Actor indicates wish to delete a User">
+            <Step Id="1b1">
+                System presents a list of the existing Users.
+            </Step>
+            <Step Id="1b2">
+                Actor selects a User.
+            </Step>
+            <Step Id="1b3">
+                System prompts for confirmation of deletion.
+            </Step>
+            <Step Id="1b4">
+                Actor confirms deletion.
+            </Step>
+            <Step Id="1b5">
+                System deletes the User, and confirms deletion to actor.
+            </Step>
+        </Extension>
+        <Extension
+                Id="4a"
+                Description="The login or name is not unique">
+            <Step Id="4a1">
+                    System informs the actor that the login or name is already in use.
+                    Processing continues at step 3.
             </Step>
         </Extension>
     </Extensions>
-    -->
 
     <!--
     <TechnologyDataVariations>

@@ -101,6 +101,11 @@ th {
     font-style:italic;
     }
 
+ul {
+	margin-top: 6px;
+	margin-bottom: 12px;
+    }
+
 li {
 	font-size:11px;
 	font-family:verdana, arial, helvetica, sans-serif;
