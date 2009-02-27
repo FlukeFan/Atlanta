@@ -256,6 +256,9 @@
             <p>
                 Libraries are containers for Media, and provide a workplace for Users.
             </p>
+            <ul>
+                <li>Library names are unique throughout the system.</li>
+            </ul>
 
             <h3>Media</h3>
             <table class="umlClass">
@@ -274,6 +277,10 @@
                 Media are contained in a Library and are loaned to Customers.
                 Media records a history of its loan to each Customer.
             </p>
+            <ul>
+                <li>The combination of Media title and type are unique within a Library;</li>
+                <li>A Media can have at most 1 Loan without a return date.</li>
+            </ul>
 
             <h3>Customer</h3>
             <table class="umlClass">
@@ -290,12 +297,22 @@
             <table class="umlClass">
                 <tr><th>Loan</th></tr>
 
+                <tr class="umlAttribute"><td>Loaned : datetime</td></tr>
+                <tr class="umlAttribute"><td>Returned : (0..1) datetime</td></tr>
+                <tr class="umlAttribute"><td>Media : Media</td></tr>
+                <tr class="umlAttribute"><td>Customer : Customer</td></tr>
+
                 <tr class="umlSeparator"><td></td></tr>
 
+                <tr class="umlOperation"><td>Returned()</td></tr>
             </table>
             <p>
-                ...
+                A Loan describes a relationship between a Customer and a Media detailing when
+                the Customer was loaned the Media, and when it was returned to the Library.
             </p>
+            <ul>
+                <li>When a Loan is initially created, there is no 'returned' date.</li>
+            </ul>
 
 
             <h2>Use Cases</h2>

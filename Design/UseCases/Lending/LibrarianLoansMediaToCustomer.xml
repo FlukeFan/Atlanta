@@ -14,24 +14,50 @@
 
     <MainSteps>
         <Step Id="1">
-            ...
+            System presents a list of the Media in the Library that do not have a Loan
+            without a return date.
+        </Step>
+        <Step Id="2">
+            Actor selects a Media.
+        </Step>
+        <Step Id="3">
+            System presents a list of the Customers in the system.
+        </Step>
+        <Step Id="4">
+            Actor selects a Customer.
+        </Step>
+        <Step Id="5">
+            System prompts actor to confirm the Customer's details are correct.
+        </Step>
+        <Step Id="6">
+            Actor confirms details are accurate.
+        </Step>
+        <Step Id="7">
+            System creates a Loan for the selected Media and Customer, and
+            adds it to the Media's Loan history.
+            System confirms to actor that Media has been loaned to the Customer.
         </Step>
     </MainSteps>
 
-    <!--
     <Extensions>
         <Extension
-                Id="1a"
-                Description="">
-            <Step Id="1a1">
-                ...
+                Id="4a"
+                Description="The Customer is not in the system">
+            <Step Id="4a1">
+                Actor performs <Call Name="Manage Customers" />, and selects the newly created/updated Customer.
+                    Processing continues at step 5.
             </Step>
-            <Step Id="1a2">
-                ...
+        </Extension>
+
+        <Extension
+                Id="6a"
+                Description="The Customer details are not accurate">
+            <Step Id="6a1">
+                Actor performs <Call Name="Manage Customers" />, and selects the newly created/updated Customer.
+                    Processing continues at step 5.
             </Step>
         </Extension>
     </Extensions>
-    -->
 
     <!--
     <TechnologyDataVariations>
@@ -40,13 +66,12 @@
     </TechnologyDataVariations>
     -->
 
-    <!--
     <Notes>
         <Note Id="1">
-            ...
+            Customers are not associated with a Library, so they can be loaned Media
+            from multiple Libraries.
         </Note>
     </Notes>
-    -->
 
 </UseCase>
 
