@@ -14,24 +14,33 @@
 
     <MainSteps>
         <Step Id="1">
-            ...
+            System presents a list of the Media in the Library that have a Loan
+            without a return date.
+        </Step>
+        <Step Id="2">
+            Actor selects matching Media from list.
+        </Step>
+        <Step Id="3">
+            System prompts actor to confirm that Media and Customer details are correct.
+        </Step>
+        <Step Id="4">
+            Actor confirms details are correct.
+        </Step>
+        <Step Id="5">
+            System updates Loan's return date and confirms to actor that
+            Media has been returned.
         </Step>
     </MainSteps>
 
-    <!--
     <Extensions>
         <Extension
-                Id="1a"
-                Description="">
-            <Step Id="1a1">
-                ...
-            </Step>
-            <Step Id="1a2">
-                ...
+                Id="4a"
+                Description="The Media or Customer details are incorrect">
+            <Step Id="4a1">
+                Processing continues at step 1.
             </Step>
         </Extension>
     </Extensions>
-    -->
 
     <!--
     <TechnologyDataVariations>
@@ -40,13 +49,13 @@
     </TechnologyDataVariations>
     -->
 
-    <!--
     <Notes>
         <Note Id="1">
-            ...
+            The Media may have been physically returned to the Library before the start of this
+            Use Case (e.g., an overnight drop-off box).  In this scenario the return
+            date on the Loan is not related to the physical return of the Media.
         </Note>
     </Notes>
-    -->
 
 </UseCase>
 

@@ -59,12 +59,12 @@
         </Extension>
     </Extensions>
 
-    <!--
     <TechnologyDataVariations>
-        <Step Id="">
+        <Step Id="1">
+            The ideal situation would be for both Media and Customer to be bar-coded
+            for instant (and unambiguous) selection from the system lists.
         </Step>
     </TechnologyDataVariations>
-    -->
 
     <Notes>
         <Note Id="1">
