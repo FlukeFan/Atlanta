@@ -29,9 +29,12 @@
             Actor supplies the requested information.
         </Step>
         <Step Id="4">
-            System verifies the login and name are unique.
+            System verifies the password and confirmed password match.
         </Step>
         <Step Id="5">
+            System verifies the login and name are unique.
+        </Step>
+        <Step Id="6">
             System creates a User as specified, and confirms
             the creation to the actor.
         </Step>
@@ -59,17 +62,28 @@
                 </ul>
             </Step>
             <Step Id="1a5">
-                System verifies the login and name are unique.
+                System verifies the password and confirmed password match.
             </Step>
             <Extension
                     Id="1a5a"
-                    Description="The login or name is not unique">
+                    Description="The password and confirmed password do not match">
                 <Step Id="1a5a1">
-                    System informs the actor that the login or name is already in use.
+                    System informs the actor that the password and confirmed password do not match.
                     Processing continues at step 1a4.
                 </Step>
             </Extension>
             <Step Id="1a6">
+                System verifies the login and name are unique.
+            </Step>
+            <Extension
+                    Id="1a6a"
+                    Description="The login or name is not unique">
+                <Step Id="1a6a1">
+                    System informs the actor that the login or name is already in use.
+                    Processing continues at step 1a4.
+                </Step>
+            </Extension>
+            <Step Id="1a7">
                 System modifies the User as specified, and
                 confirms the modification to the actor.
             </Step>
@@ -95,8 +109,16 @@
         </Extension>
         <Extension
                 Id="4a"
-                Description="The login or name is not unique">
+                Description="The password and confirmed password do not match">
             <Step Id="4a1">
+                    System informs the actor that the password and confirmed password do not match.
+                    Processing continues at step 3.
+            </Step>
+        </Extension>
+        <Extension
+                Id="5a"
+                Description="The login or name is not unique">
+            <Step Id="5a1">
                     System informs the actor that the login or name is already in use.
                     Processing continues at step 3.
             </Step>
