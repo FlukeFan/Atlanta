@@ -3,7 +3,7 @@
 
     <Context        Description="Actor supplies login credentials to gain access to the system."/>
     <Level          Name="user-goal" />
-    <PrimaryActor   Name="Administrator/Librarian"/>
+    <PrimaryActor   Name="User"/>
 
     <Preconditions  Description="Actor is not logged on to the system." />
     <Trigger        Description="Actor indicates wish to log on to the system." />
