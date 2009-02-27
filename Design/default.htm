@@ -250,6 +250,8 @@
 
                 <tr class="umlSeparator"><td></td></tr>
 
+                <tr class="umlOperation"><td>Add(media)</td></tr>
+                <tr class="umlOperation"><td>Remove(media)</td></tr>
             </table>
             <p>
                 Libraries are containers for Media, and provide a workplace for Users.
@@ -258,6 +260,24 @@
             <h3>Media</h3>
             <table class="umlClass">
                 <tr><th>Media</th></tr>
+                <tr class="umlAttribute"><td>Title : string</td></tr>
+                <tr class="umlAttribute"><td>Type : (Book | CD | DVD)</td></tr>
+                <tr class="umlAttribute"><td>Summary : string</td></tr>
+                <tr class="umlAttribute"><td>LoanHistory : (0..*) Loan</td></tr>
+
+                <tr class="umlSeparator"><td></td></tr>
+
+                <tr class="umlOperation"><td>LoanTo(Customer)</td></tr>
+                <tr class="umlOperation"><td>ReturnToLibrary()</td></tr>
+            </table>
+            <p>
+                Media are contained in a Library and are loaned to Customers.
+                Media records a history of its loan to each Customer.
+            </p>
+
+            <h3>Customer</h3>
+            <table class="umlClass">
+                <tr><th>Customer</th></tr>
 
                 <tr class="umlSeparator"><td></td></tr>
 
@@ -266,9 +286,9 @@
                 ...
             </p>
 
-            <h3>Customer</h3>
+            <h3>Loan</h3>
             <table class="umlClass">
-                <tr><th>Customer</th></tr>
+                <tr><th>Loan</th></tr>
 
                 <tr class="umlSeparator"><td></td></tr>
 

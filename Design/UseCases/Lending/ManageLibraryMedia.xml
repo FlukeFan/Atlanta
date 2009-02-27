@@ -14,24 +14,107 @@
 
     <MainSteps>
         <Step Id="1">
-            ...
+            Actor indicates wish to create new Media in the Library.
+        </Step>
+        <Step Id="2">
+            System prompts actor for the following information:
+            <ul>
+                <li>Media title;</li>
+                <li>Media type;</li>
+                <li>Media summary.</li>
+            </ul>
+        </Step>
+        <Step Id="3">
+            Actor supplies the requested information.
+        </Step>
+        <Step Id="4">
+            System verifies the combination of title and type are unique within the Library.
+        </Step>
+        <Step Id="5">
+            System creates the Media as specified, adds it to the Library, and confirms
+            the creation to the actor.
         </Step>
     </MainSteps>
 
-    <!--
     <Extensions>
         <Extension
                 Id="1a"
-                Description="">
+                Description="Actor indicates wish to modify a Media">
             <Step Id="1a1">
-                ...
+                System presents a list of the existing Media in the Library.
             </Step>
             <Step Id="1a2">
-                ...
+                Actor selects a Media.
+            </Step>
+            <Step Id="1a3">
+                System presents the details of the selected Media.
+            </Step>
+            <Step Id="1a4">
+                Actor modifies any of the following information:
+                <ul>
+                    <li>Media title;</li>
+                    <li>Media type;</li>
+                    <li>Media summary.</li>
+                </ul>
+            </Step>
+            <Step Id="1a5">
+                System verifies the combination of title and type are unique within the Library.
+            </Step>
+            <Extension
+                    Id="1a5a"
+                    Description="The combination of title and type are not unique">
+                <Step Id="1a5a1">
+                    System informs the actor that the title/type combination is already in use.
+                    Processing continues at step 1a4.
+                </Step>
+            </Extension>
+            <Step Id="1a6">
+                System modifies the Media as specified, and
+                confirms the modification to the actor.
+            </Step>
+        </Extension>
+
+        <Extension
+                Id="1b"
+                Description="Actor indicates wish to delete a Media">
+            <Step Id="1b1">
+                System presents a list of the existing Media in the Library.
+            </Step>
+            <Step Id="1b2">
+                Actor selects a Media.
+            </Step>
+            <Step Id="1b3">
+                System prompts for confirmation of deletion.
+            </Step>
+            <Step Id="1b4">
+                Actor confirms deletion.
+            </Step>
+            <Step Id="1b4">
+                System verifies that the Media does not have any history of Loans.
+            </Step>
+            <Extension
+                    Id="1b4a"
+                    Description="The Media has a history of Loans">
+                <Step Id="1b4a1">
+                    System informs the actor that the Media has a Loan history and cannot be deleted.
+                    Processing continues at step 1b2.
+                </Step>
+            </Extension>
+            <Step Id="1b5">
+                System removes the Media from the Library, deletes it, and confirms the
+                deletion to the actor.
+            </Step>
+        </Extension>
+
+        <Extension
+                Id="4a"
+                Description="The combination of title and type are not unique">
+            <Step Id="4a1">
+                System informs the actor that the title/type combination is already in use.
+                Processing continues at step 3.
             </Step>
         </Extension>
     </Extensions>
-    -->
 
     <!--
     <TechnologyDataVariations>

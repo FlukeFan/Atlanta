@@ -88,7 +88,8 @@
                 Actor confirms deletion.
             </Step>
             <Step Id="1b5">
-                System deletes the Library, and the Library's Media.
+                System deletes the Library, the Library's Media, and the Media's
+                Loan history.
             </Step>
         </Extension>
 
@@ -100,7 +101,6 @@
                     Processing continues at step 3.
             </Step>
         </Extension>
-
     </Extensions>
 
     <!--
