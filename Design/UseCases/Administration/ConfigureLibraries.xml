@@ -14,24 +14,94 @@
 
     <MainSteps>
         <Step Id="1">
-            ...
+            Actor indicates wish to create a Library.
+        </Step>
+        <Step Id="2">
+            System prompts actor for the following information:
+            <ul>
+                <li>Library name;</li>
+                <li>Library description.</li>
+            </ul>
+        </Step>
+        <Step Id="3">
+            Actor supplies the requested information.
+        </Step>
+        <Step Id="4">
+            System verifies the name is unique.
+        </Step>
+        <Step Id="5">
+            System creates a Library as specified, and confirms
+            the creation to the actor.
         </Step>
     </MainSteps>
 
-    <!--
     <Extensions>
         <Extension
                 Id="1a"
-                Description="">
+                Description="Actor indicates wish to modify a Library">
             <Step Id="1a1">
-                ...
+                System presents a list of the existing Libraries.
             </Step>
             <Step Id="1a2">
-                ...
+                Actor selects a Library.
+            </Step>
+            <Step Id="1a3">
+                System presents the details of the selected Library.
+            </Step>
+            <Step Id="1a4">
+                Actor modifies any of the following information:
+                <ul>
+                    <li>Library name;</li>
+                    <li>Library description.</li>
+                </ul>
+            </Step>
+            <Step Id="1a5">
+                System verifies the name is unique.
+            </Step>
+            <Extension
+                    Id="1a5a"
+                    Description="The name is not unique">
+                <Step Id="1a5a1">
+                    System informs the actor that the name is already in use.
+                    Processing continues at step 1a4.
+                </Step>
+            </Extension>
+            <Step Id="1a6">
+                System modifies the Library as specified, and
+                confirms the modification to the actor.
             </Step>
         </Extension>
+
+        <Extension
+                Id="1b"
+                Description="Actor indicates wish to delete a Library">
+            <Step Id="1b1">
+                System presents a list of the existing Libraries.
+            </Step>
+            <Step Id="1b2">
+                Actor selects a Library.
+            </Step>
+            <Step Id="1b3">
+                System prompts for confirmation of deletion.
+            </Step>
+            <Step Id="1b4">
+                Actor confirms deletion.
+            </Step>
+            <Step Id="1b5">
+                System deletes the Library, and the Library's Media.
+            </Step>
+        </Extension>
+
+        <Extension
+                Id="4a"
+                Description="The name is not unique">
+            <Step Id="4a1">
+                    System informs the actor that the name is already in use.
+                    Processing continues at step 3.
+            </Step>
+        </Extension>
+
     </Extensions>
-    -->
 
     <!--
     <TechnologyDataVariations>
