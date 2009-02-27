@@ -285,13 +285,22 @@
             <h3>Customer</h3>
             <table class="umlClass">
                 <tr><th>Customer</th></tr>
+                <tr class="umlAttribute"><td>Name : string</td></tr>
+                <tr class="umlAttribute"><td>PostalCode : string</td></tr>
+                <tr class="umlAttribute"><td>AddressDetail : string</td></tr>
+                <tr class="umlAttribute"><td>Telephone : string</td></tr>
 
                 <tr class="umlSeparator"><td></td></tr>
 
             </table>
             <p>
-                ...
+                Customers correspond to a human that can be loaned Media.  Address detail is
+                used to flesh out any information required to complete an address (e.g., it might
+                be enough to have a postal code and just a house number in the address detail).
             </p>
+            <ul>
+                <li>The combination of Customer name and postal code are unique.</li>
+            </ul>
 
             <h3>Loan</h3>
             <table class="umlClass">

@@ -1,0 +1,104 @@
+<?xml-stylesheet type="text/xsl" href="../UseCaseToHtml.xsl"?>
+<UseCase Name="Manage Customers">
+
+    <Context        Description="Actor creates or modifies the Customers in the system."/>
+    <Level          Name="user-goal" />
+    <PrimaryActor   Name="Librarian"/>
+
+    <Preconditions  Description="Actor is logged on and identified by a User." />
+    <Trigger        Description="Actor indicates wish to manage the system's Customers." />
+
+    <Guarantees
+        Success="Customer is created or modified."
+        Minimal="The existing Customers remain unchanged." />
+
+    <MainSteps>
+        <Step Id="1">
+            Actor indicates wish to create a new Customer.
+        </Step>
+        <Step Id="2">
+            System prompts actor for the following information:
+            <ul>
+                <li>Customer name;</li>
+                <li>Customer postal code;</li>
+                <li>Customer address detail;</li>
+                <li>Customer telephone number.</li>
+            </ul>
+        </Step>
+        <Step Id="3">
+            Actor supplies the requested information.
+        </Step>
+        <Step Id="4">
+            System verifies the combination of name and postal code are unique.
+        </Step>
+        <Step Id="5">
+            System creates the Customer as specified and confirms
+            the creation to the actor.
+        </Step>
+    </MainSteps>
+
+    <Extensions>
+        <Extension
+                Id="1a"
+                Description="Actor indicates wish to modify a Customer">
+            <Step Id="1a1">
+                System presents a list of existing Customers.
+            </Step>
+            <Step Id="1a2">
+                Actor selects a Customer.
+            </Step>
+            <Step Id="1a3">
+                System presents the details of the selected Customer.
+            </Step>
+            <Step Id="1a4">
+                Actor modifies any of the following information:
+                <ul>
+                    <li>Customer name;</li>
+                    <li>Customer postal code;</li>
+                    <li>Customer address detail;</li>
+                    <li>Customer telephone number.</li>
+                </ul>
+            </Step>
+            <Step Id="1a5">
+                System verifies the combination of name and postal code are unique.
+            </Step>
+            <Extension
+                    Id="1a5a"
+                    Description="The combination of name and postal code are not unique">
+                <Step Id="1a5a1">
+                    System informs the actor that the name/postal code combination is already in use.
+                    Processing continues at step 1a4.
+                </Step>
+            </Extension>
+            <Step Id="1a6">
+                System modifies the Customer as specified, and
+                confirms the modification to the actor.
+            </Step>
+        </Extension>
+
+        <Extension
+                Id="4a"
+                Description="The combination of name and postal code are not unique">
+            <Step Id="4a1">
+                System informs the actor that the name/postal code combination is already in use.
+                Processing continues at step 3.
+            </Step>
+        </Extension>
+    </Extensions>
+
+    <!--
+    <TechnologyDataVariations>
+        <Step Id="">
+        </Step>
+    </TechnologyDataVariations>
+    -->
+
+    <Notes>
+        <Note Id="1">
+            There is currently no functionality to delete Customers from the system.
+        </Note>
+    </Notes>
+
+</UseCase>
+
+

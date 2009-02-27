@@ -103,12 +103,13 @@
         </Extension>
     </Extensions>
 
-    <!--
     <TechnologyDataVariations>
-        <Step Id="">
+        <Step Id="1">
+            Deletion of a Library with many Media and Loans could be a lengthy process.
+            There might be a need to mark a Library as 'soft-deleted', and then do the deletion
+            as multiple smaller offline transactions.
         </Step>
     </TechnologyDataVariations>
-    -->
 
     <!--
     <Notes>
