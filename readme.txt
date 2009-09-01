@@ -14,6 +14,8 @@ To build:
 
 That's it!
 
+(Note: on Vista use "Run as administrator")
+
 Access the application using:
 
 http://localhost/atlanta            (the example application)
