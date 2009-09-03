@@ -195,10 +195,13 @@ namespace Atlanta.Application.Domain.DomainBase
                 {
                     PropertyInfo property = (PropertyInfo)member;
 
-                    if (property.Name.EndsWith("Enumeration"))
+                    if (typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
                     {
-                        property = property.DeclaringType.GetProperty(property.Name.Substring(0, property.Name.Length - 11),
+                        PropertyInfo listProperty = property.DeclaringType.GetProperty(property.Name + "List",
                             BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
+                        if (listProperty != null)
+                            property = listProperty;
                     }
 
                     graph.SetSource(property.GetValue(source, null));

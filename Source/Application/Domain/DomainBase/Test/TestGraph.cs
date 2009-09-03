@@ -25,12 +25,12 @@ namespace Atlanta.Application.Domain.DomainBase.Test
 
     public class Child : TestGraphRoot
     {
-        public Child() { Children = new List<Grandchild>(); }
+        public Child() { ChildrenList = new List<Grandchild>(); }
         public string Name { get; set; }
         public Parent Parent { get; set; }
-        protected IList<Grandchild> Children { get; set; }
-        public IEnumerable<Grandchild> ChildrenEnumeration { get { return Children; } }
-        public Child Add(Grandchild grandchild) { Children.Add(grandchild); return this; }
+        protected IList<Grandchild> ChildrenList { get; set; }
+        public IEnumerable<Grandchild> Children { get { return ChildrenList; } }
+        public Child Add(Grandchild grandchild) { ChildrenList.Add(grandchild); return this; }
     }
 
     public class Grandchild : TestGraphRoot
@@ -161,17 +161,17 @@ namespace Atlanta.Application.Domain.DomainBase.Test
             Child childCopy =
                 child
                     .Graph()
-                    .Add(c => c.ChildrenEnumeration)
+                    .Add(c => c.Children)
                     .Copy();
 
             Assert.AreNotSame(child, childCopy);
             Assert.AreEqual(1, childCopy.Id);
 
-            Assert.AreNotSame(child.ChildrenEnumeration, childCopy.ChildrenEnumeration);
-            Assert.AreEqual(1, childCopy.ChildrenEnumeration.Count());
-            Assert.AreNotSame(child.ChildrenEnumeration.First(), childCopy.ChildrenEnumeration.First());
-            Assert.AreEqual(2, childCopy.ChildrenEnumeration.First().Id);
-            Assert.AreEqual("granchild", childCopy.ChildrenEnumeration.First().Name);
+            Assert.AreNotSame(child.Children, childCopy.Children);
+            Assert.AreEqual(1, childCopy.Children.Count());
+            Assert.AreNotSame(child.Children.First(), childCopy.Children.First());
+            Assert.AreEqual(2, childCopy.Children.First().Id);
+            Assert.AreEqual("granchild", childCopy.Children.First().Name);
         }
 
         [Test]
@@ -210,7 +210,7 @@ namespace Atlanta.Application.Domain.DomainBase.Test
                 parent
                     .Graph()
                     .Add(p => p.ChildList, new Graph<Child>()
-                        .Add(c => c.ChildrenEnumeration, new Graph<Grandchild>()
+                        .Add(c => c.Children, new Graph<Grandchild>()
                             .Add(g => g.Parent)))
                     .Copy();
 
@@ -218,7 +218,7 @@ namespace Atlanta.Application.Domain.DomainBase.Test
             Child childCopy = parentCopy.ChildList[0];
             Assert.AreNotEqual(child, childCopy);
             Assert.AreEqual(2, childCopy.Id);
-            Child grandchildParent = childCopy.ChildrenEnumeration.First().Parent;
+            Child grandchildParent = childCopy.Children.First().Parent;
             Assert.AreNotEqual(child, grandchildParent);
             Assert.AreNotEqual(childCopy, grandchildParent);
             Assert.AreEqual(2, grandchildParent.Id);

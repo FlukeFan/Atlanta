@@ -18,12 +18,10 @@ namespace Atlanta.Application.Domain.Lender
     public partial class Library : DomainObjectBase
     {
 
-        private IList<Media> _ownedMedia;
-
-
         /// <summary> constructor </summary>
         protected Library()
         {
+            OwnedMediaList = new List<Media>();
         }
 
 
@@ -31,22 +29,18 @@ namespace Atlanta.Application.Domain.Lender
         public static Library InstantiateLibrary()
         {
             Library library = new Library();
-            library._ownedMedia = new List<Media>();
             DomainRegistry.Repository.Insert(library);
             return library;
         }
 
 
         /// <summary> Media collection </summary>
-        protected virtual IList<Media> OwnedMedia
-        {
-            get { return _ownedMedia; }
-            set { _ownedMedia = value; }
-        }
+        protected virtual IList<Media> OwnedMediaList
+        { get; set; }
 
         /// <summary> Read-only wrapper of list </summary>
         [StringVisible(false)]
-        public virtual IEnumerable<Media> OwnedMediaEnumeration { get { return OwnedMedia; } }
+        public virtual IEnumerable<Media> OwnedMedia { get { return OwnedMediaList; } }
 
 
         private void ValidateNoMediaWithNameAndType(Media media)
@@ -88,7 +82,7 @@ namespace Atlanta.Application.Domain.Lender
             ValidateNoMediaWithNameAndType(media);
 
             Media newMedia = Media.InstantiateMedia(this, media.Type, media.Name, media.Description);
-            OwnedMedia.Add(newMedia);
+            OwnedMediaList.Add(newMedia);
 
             return newMedia;
         }
@@ -115,7 +109,7 @@ namespace Atlanta.Application.Domain.Lender
         /// </summary>
         virtual public void Delete(Media media)
         {
-            OwnedMedia.Remove(media);
+            OwnedMediaList.Remove(media);
         }
 
     }
