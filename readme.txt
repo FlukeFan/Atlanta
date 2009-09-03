@@ -2,7 +2,7 @@
 Atlanta
 =======
 
-A project to demonstrate best practices to create an enterprise application.
+A project to demonstrate building an enterprise application.
 
 Prerequisites:
     .Net Framework 3.5
