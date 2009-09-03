@@ -40,7 +40,7 @@ namespace Atlanta.Application.Domain.DomainBase
                         if (_sessionFactory == null)
                         {
                             _configuration = new Configuration();
-                            _configuration.AddAssembly(typeof(DomainObjectBase).Assembly);
+                            ConfigureMapping(_configuration);
                             _sessionFactory = _configuration.BuildSessionFactory();
                         }
                     }
@@ -54,6 +54,12 @@ namespace Atlanta.Application.Domain.DomainBase
         public ISession Session
         {
             get { return _session; }
+        }
+
+        /// <summary> Configure domain mapping </summary>
+        public static void ConfigureMapping(Configuration configuration)
+        {
+            configuration.AddAssembly(typeof(DomainObjectBase).Assembly);
         }
 
         /// <summary> Create a query (ICriteria) </summary>
