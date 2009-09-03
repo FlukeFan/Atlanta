@@ -93,62 +93,6 @@
     </taskdef>
 
 
-    <taskdef name="generateStaticProperties">
-
-        <stringparams>
-            <stringparam name="outputFolder" />
-            <stringparam name="generateSuccessFlagFile" />
-        </stringparams>
-
-        <nodeparams>
-            <nodeparam name="mappingFiles" />
-        </nodeparams>
-
-        <do>
-
-            <property name="generateSuccessFlagFileWithPath" value="${build.dir}/results/__generateSuccessFlagFile__"/>
-            <echo message="Code generating static properties to [__outputFolder__]" />
-
-            <uptodate property="generated.files.uptodate">
-                <sourcefiles>
-                    <include name="${project.dir}/Tools/Templates/*.tt" />
-                    <__mappingFiles__/>
-                </sourcefiles>
-                <targetfiles>
-                    <include name="${generateSuccessFlagFileWithPath}"/>
-                </targetfiles>
-            </uptodate>
-
-            <echo message="flag file up to date: ${generated.files.uptodate}"/>
-
-            <if test="${not generated.files.uptodate}">
-
-                <foreach item="File" property="mappingFile">
-                    <in>
-                        <items>
-                            <__mappingFiles__/>
-                        </items>
-                    </in>
-                    <do>
-                        <property name="generatedFile" value="__outputFolder__/${path::get-file-name(mappingFile)}.cs" />
-                        <echo message="Processing ${mappingFile} to ${generatedFile}" />
-
-                        <exec program="TextTransform">
-                            <arg line="-a mappingFile!${mappingFile}" />
-                            <arg line="-out ${generatedFile}" />
-                            <arg line="${project.dir}/Tools/Templates/StaticProperties.tt" />
-                        </exec>
-                    </do>
-                </foreach>
-
-                <touch file="${generateSuccessFlagFileWithPath}" />
-
-            </if>
-
-        </do>
-
-    </taskdef>
-
     <taskdef name="generateDomainDtos">
 
         <stringparams>
