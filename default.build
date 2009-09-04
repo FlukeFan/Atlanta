@@ -41,12 +41,6 @@
                 <include name="**" />
             </fileset>
         </copy>
-        <copy todir="${build.dir}/bin">
-            <fileset basedir="SDKs\NhLambdaExtensions">
-                <exclude name="**/.svn/**" />
-                <include name="**" />
-            </fileset>
-        </copy>
 
         <!-- Firebird embedded client binaries -->
         <copy todir="${build.dir}/bin">

@@ -208,6 +208,34 @@
             <param name="criteria">the DetachedCriteria instance</param>
             <returns>returns null (or value-type default)</returns>
         </member>
+        <member name="M:NHibernate.LambdaExtensions.DetachedCriteriaExtensions.GetCriteriaByAlias(NHibernate.Criterion.DetachedCriteria,System.Linq.Expressions.Expression{System.Func{System.Object}})">
+            <summary>
+            Alows to get a sub criteria by alias.
+            Will return null if the criteria does not exists
+            </summary>
+            <param name="criteria">criteria instance</param>
+            <param name="alias">Lambda expression returning alias reference</param>
+            <returns>The "sub criteria"</returns>
+        </member>
+        <member name="M:NHibernate.LambdaExtensions.DetachedCriteriaExtensions.GetCriteriaByPath``1(NHibernate.Criterion.DetachedCriteria,System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+            Allows to get a sub criteria by path.  Will return null if the criteria does
+            not exists.
+            </summary>
+            <typeparam name="T">Type (same as criteria type)</typeparam>
+            <param name="criteria">criteria instance</param>
+            <param name="expression">Lambda expression returning association path</param>
+            <returns>The "sub criteria"</returns>
+        </member>
+        <member name="M:NHibernate.LambdaExtensions.DetachedCriteriaExtensions.GetCriteriaByPath(NHibernate.Criterion.DetachedCriteria,System.Linq.Expressions.Expression{System.Func{System.Object}})">
+            <summary>
+            Allows to get a sub criteria by path.  Will return null if the criteria does
+            not exists.
+            </summary>
+            <param name="criteria">criteria instance</param>
+            <param name="expression">Lambda expression returning association path</param>
+            <returns>The "sub criteria"</returns>
+        </member>
         <member name="T:NHibernate.LambdaExtensions.LambdaSubqueryType">
             <summary>
             Subquery type enumeration
@@ -480,6 +508,34 @@
             <param name="alias">Lambda expression returning alias reference</param>
             <param name="lockMode">the lock mode</param>
             <returns>criteria instance</returns>
+        </member>
+        <member name="M:NHibernate.LambdaExtensions.ICriteriaExtensions.GetCriteriaByAlias(NHibernate.ICriteria,System.Linq.Expressions.Expression{System.Func{System.Object}})">
+            <summary>
+            Alows to get a sub criteria by alias.
+            Will return null if the criteria does not exists
+            </summary>
+            <param name="criteria">criteria instance</param>
+            <param name="alias">Lambda expression returning alias reference</param>
+            <returns>The "sub criteria"</returns>
+        </member>
+        <member name="M:NHibernate.LambdaExtensions.ICriteriaExtensions.GetCriteriaByPath``1(NHibernate.ICriteria,System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+            Allows to get a sub criteria by path.  Will return null if the criteria does
+            not exists.
+            </summary>
+            <typeparam name="T">Type (same as criteria type)</typeparam>
+            <param name="criteria">criteria instance</param>
+            <param name="expression">Lambda expression returning association path</param>
+            <returns>The "sub criteria"</returns>
+        </member>
+        <member name="M:NHibernate.LambdaExtensions.ICriteriaExtensions.GetCriteriaByPath(NHibernate.ICriteria,System.Linq.Expressions.Expression{System.Func{System.Object}})">
+            <summary>
+            Allows to get a sub criteria by path.  Will return null if the criteria does
+            not exists.
+            </summary>
+            <param name="criteria">criteria instance</param>
+            <param name="expression">Lambda expression returning association path</param>
+            <returns>The "sub criteria"</returns>
         </member>
         <member name="T:NHibernate.LambdaExtensions.ISessionExtensions">
             <summary>
@@ -923,12 +979,86 @@
             <param name="value">The value for the Property.</param>
             <returns>A NHibernate.Criterion.LikeExpression.</returns>
         </member>
+        <member name="M:NHibernate.LambdaExtensions.SqlExpression.Like``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.String,NHibernate.Criterion.MatchMode)">
+            <summary>
+            Apply a "like" constraint to the named property
+            </summary>
+            <param name="expression">lambda expression returning type's property</param>
+            <param name="value">The value for the Property.</param>
+            <param name="matchMode">The MatchMode.</param>
+            <returns>A NHibernate.Criterion.LikeExpression.</returns>
+        </member>
+        <member name="M:NHibernate.LambdaExtensions.SqlExpression.Like``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.String,NHibernate.Criterion.MatchMode,System.Nullable{System.Char})">
+            <summary>
+            Apply a "like" constraint to the named property
+            </summary>
+            <param name="expression">lambda expression returning type's property</param>
+            <param name="value">The value for the Property.</param>
+            <param name="matchMode">The MatchMode.</param>
+            <param name="escapeChar">The escape character.</param>
+            <returns>A NHibernate.Criterion.LikeExpression.</returns>
+        </member>
         <member name="M:NHibernate.LambdaExtensions.SqlExpression.Like(System.Linq.Expressions.Expression{System.Func{System.Object}},System.Object)">
             <summary>
             Apply a "like" constraint to the named property
             </summary>
             <param name="expression">lambda expression returning type's property</param>
             <param name="value">The value for the Property.</param>
+            <returns>A NHibernate.Criterion.LikeExpression.</returns>
+        </member>
+        <member name="M:NHibernate.LambdaExtensions.SqlExpression.Like(System.Linq.Expressions.Expression{System.Func{System.Object}},System.String,NHibernate.Criterion.MatchMode)">
+            <summary>
+            Apply a "like" constraint to the named property
+            </summary>
+            <param name="expression">lambda expression returning type's property</param>
+            <param name="value">The value for the Property.</param>
+            <param name="matchMode">The MatchMode.</param>
+            <returns>A NHibernate.Criterion.LikeExpression.</returns>
+        </member>
+        <member name="M:NHibernate.LambdaExtensions.SqlExpression.Like(System.Linq.Expressions.Expression{System.Func{System.Object}},System.String,NHibernate.Criterion.MatchMode,System.Nullable{System.Char})">
+            <summary>
+            Apply a "like" constraint to the named property
+            </summary>
+            <param name="expression">lambda expression returning type's property</param>
+            <param name="value">The value for the Property.</param>
+            <param name="matchMode">The MatchMode.</param>
+            <param name="escapeChar">The escape character.</param>
+            <returns>A NHibernate.Criterion.LikeExpression.</returns>
+        </member>
+        <member name="M:NHibernate.LambdaExtensions.SqlExpression.InsensitiveLike``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Object)">
+            <summary>
+            A case-insensitive "like", similar to Postgres "ilike" operator
+            </summary>
+            <typeparam name="T">generic type</typeparam>
+            <param name="expression">lambda expression returning type's property</param>
+            <param name="value">The value for the Property.</param>
+            <returns>A NHibernate.Criterion.LikeExpression.</returns>
+        </member>
+        <member name="M:NHibernate.LambdaExtensions.SqlExpression.InsensitiveLike``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.String,NHibernate.Criterion.MatchMode)">
+            <summary>
+            A case-insensitive "like", similar to Postgres "ilike" operator
+            </summary>
+            <typeparam name="T">generic type</typeparam>
+            <param name="expression">lambda expression returning type's property</param>
+            <param name="value">The value for the Property.</param>
+            <param name="matchMode">The matching mode</param>
+            <returns>A NHibernate.Criterion.LikeExpression.</returns>
+        </member>
+        <member name="M:NHibernate.LambdaExtensions.SqlExpression.InsensitiveLike(System.Linq.Expressions.Expression{System.Func{System.Object}},System.Object)">
+            <summary>
+            A case-insensitive "like", similar to Postgres "ilike" operator
+            </summary>
+            <param name="expression">lambda expression returning type's property</param>
+            <param name="value">The value for the Property.</param>
+            <returns>A NHibernate.Criterion.LikeExpression.</returns>
+        </member>
+        <member name="M:NHibernate.LambdaExtensions.SqlExpression.InsensitiveLike(System.Linq.Expressions.Expression{System.Func{System.Object}},System.String,NHibernate.Criterion.MatchMode)">
+            <summary>
+            A case-insensitive "like", similar to Postgres "ilike" operator
+            </summary>
+            <param name="expression">lambda expression returning type's property</param>
+            <param name="value">The value for the Property.</param>
+            <param name="matchMode">The matching mode</param>
             <returns>A NHibernate.Criterion.LikeExpression.</returns>
         </member>
         <member name="M:NHibernate.LambdaExtensions.SqlExpression.IsNull``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
@@ -995,6 +1125,14 @@
             <param name="values">An ICollection of values.</param>
             <returns>An NHibernate.Criterion.InExpression.</returns>
         </member>
+        <member name="M:NHibernate.LambdaExtensions.SqlExpression.In``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Object[])">
+            <summary>
+            Apply an "in" constraint to the named property
+            </summary>
+            <param name="expression">lambda expression returning type's property</param>
+            <param name="values">An object[] of values.</param>
+            <returns>An NHibernate.Criterion.InExpression.</returns>
+        </member>
         <member name="M:NHibernate.LambdaExtensions.SqlExpression.In(System.Linq.Expressions.Expression{System.Func{System.Object}},System.Collections.ICollection)">
             <summary>
             Apply an "in" constraint to the named property
@@ -1003,7 +1141,15 @@
             <param name="values">An ICollection of values.</param>
             <returns>An NHibernate.Criterion.InExpression.</returns>
         </member>
-        <member name="M:NHibernate.LambdaExtensions.SqlExpression.In``2(System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.ICollection{``1})">
+        <member name="M:NHibernate.LambdaExtensions.SqlExpression.In(System.Linq.Expressions.Expression{System.Func{System.Object}},System.Object[])">
+            <summary>
+            Apply an "in" constraint to the named property
+            </summary>
+            <param name="expression">lambda expression returning type's property</param>
+            <param name="values">An ICollection of values.</param>
+            <returns>An NHibernate.Criterion.InExpression.</returns>
+        </member>
+        <member name="M:NHibernate.LambdaExtensions.SqlExpression.InG``2(System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.ICollection{``1})">
             <summary>
             Apply an "in" constraint to the named property.
             </summary>
@@ -1013,7 +1159,7 @@
             <param name="values">An System.Collections.Generic.ICollection&lt;U> of values.</param>
             <returns>An NHibernate.Criterion.InExpression.</returns>
         </member>
-        <member name="M:NHibernate.LambdaExtensions.SqlExpression.In``1(System.Linq.Expressions.Expression{System.Func{``0}},System.Collections.Generic.ICollection{``0})">
+        <member name="M:NHibernate.LambdaExtensions.SqlExpression.InG``1(System.Linq.Expressions.Expression{System.Func{``0}},System.Collections.Generic.ICollection{``0})">
             <summary>
             Apply an "in" constraint to the named property.
             </summary>

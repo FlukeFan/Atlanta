@@ -32,7 +32,7 @@ namespace Atlanta.Application.Services.ServiceBase.Test
 
             DetachedCriteria convertedCriteria = ClientQueryConverter.ToDetachedCriteria(clientQuery);
 
-            Assert.AreEqual(criteria.CriteriaClass, convertedCriteria.CriteriaClass);
+            Assert.AreEqual(criteria.EntityOrClassName, convertedCriteria.EntityOrClassName);
             Assert.AreEqual(criteria.ToString(), convertedCriteria.ToString());
         }
 

@@ -78,7 +78,7 @@ namespace Atlanta.Application.Domain.DomainBase
         public ICriteria CreateCountQuery(DetachedCriteria detachedCriteria)
         {
             ICriteria executableCriteria = detachedCriteria.GetExecutableCriteria(_session);
-            executableCriteria.Orders.Clear();
+            executableCriteria.ClearOrders();
             return executableCriteria.SetFirstResult(0).SetProjection(Projections.RowCount());
         }
 
@@ -86,7 +86,7 @@ namespace Atlanta.Application.Domain.DomainBase
         public ICriteria CreateCountQuery(ICriteria criteria)
         {
             ICriteria criteriaClone = CriteriaTransformer.Clone(criteria);
-            criteriaClone.Orders.Clear();
+            criteriaClone.ClearOrders();
             return criteriaClone.SetFirstResult(0).SetProjection(Projections.RowCount());
         }
 

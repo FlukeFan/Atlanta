@@ -74,8 +74,7 @@
                     schemaExport.SetDelimiter(";");
                     schemaExport.Execute(   false,  // output to console
                                             true,   // export only
-                                            false,  // drop only
-                                            true);  // format nice
+                                            false); // drop only
                 }
 
             ]]>
