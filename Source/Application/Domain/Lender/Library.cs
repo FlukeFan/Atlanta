@@ -18,10 +18,12 @@ namespace Atlanta.Application.Domain.Lender
     public partial class Library : DomainObjectBase
     {
 
+        private IList<Media> _ownedMedia;
+
         /// <summary> constructor </summary>
         protected Library()
         {
-            OwnedMediaList = new List<Media>();
+            OwnedMedia = new List<Media>();
         }
 
 
@@ -33,15 +35,13 @@ namespace Atlanta.Application.Domain.Lender
             return library;
         }
 
-
-        /// <summary> Media collection </summary>
-        [StringVisible(false)] // TODO: to figure out how to make this protected and auto-mapped??
-        public virtual IList<Media> OwnedMediaList
-        { get; protected set; }
-
         /// <summary> Read-only wrapper of list </summary>
         [StringVisible(false)]
-        public virtual IEnumerable<Media> OwnedMedia { get { return OwnedMediaList; } }
+        public virtual IEnumerable<Media> OwnedMedia
+        {
+            get { return _ownedMedia; }
+            protected set { _ownedMedia = (value as IList<Media>); }
+        }
 
 
         private void ValidateNoMediaWithNameAndType(Media media)
@@ -83,7 +83,7 @@ namespace Atlanta.Application.Domain.Lender
             ValidateNoMediaWithNameAndType(media);
 
             Media newMedia = Media.InstantiateMedia(this, media.Type, media.Name, media.Description);
-            OwnedMediaList.Add(newMedia);
+            _ownedMedia.Add(newMedia);
 
             return newMedia;
         }
@@ -110,7 +110,7 @@ namespace Atlanta.Application.Domain.Lender
         /// </summary>
         virtual public void Delete(Media media)
         {
-            OwnedMediaList.Remove(media);
+            _ownedMedia.Remove(media);
         }
 
     }

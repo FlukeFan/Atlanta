@@ -31,13 +31,6 @@ namespace Atlanta.Application.Domain.DomainBase
             return type.IsSubclassOf(typeof(DomainObjectBase));
         }
 
-        /// <summary> Map private property </summary>
-        public static bool IsPrivatePropertyMapped(PropertyInfo propertyInfo)
-        {
-            Console.WriteLine(propertyInfo.Name);
-            return false;
-        }
-
         /// <summary> Identity convention </summary>
         public class IdentityConvention : IIdConvention
         {
