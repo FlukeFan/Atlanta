@@ -35,8 +35,9 @@ namespace Atlanta.Application.Domain.Lender
 
 
         /// <summary> Media collection </summary>
-        protected virtual IList<Media> OwnedMediaList
-        { get; set; }
+        [StringVisible(false)] // TODO: to figure out how to make this protected and auto-mapped??
+        public virtual IList<Media> OwnedMediaList
+        { get; protected set; }
 
         /// <summary> Read-only wrapper of list </summary>
         [StringVisible(false)]
@@ -48,7 +49,7 @@ namespace Atlanta.Application.Domain.Lender
             IList<Media> mediaWithNameAndType =
                 DomainRegistry.Repository
                     .CreateQuery<Media>()
-                    .Add<Media>(m => m.OwningLibrary == this)
+                    .Add<Media>(m => m.Library == this)
                     .Add<Media>(m => m.Type == media.Type)
                     .Add<Media>(m => m.Name == media.Name)
                     .List<Media>();

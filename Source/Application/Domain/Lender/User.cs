@@ -18,6 +18,11 @@ namespace Atlanta.Application.Domain.Lender
         private string      _login;
 
         /// <summary> constructor </summary>
+        protected User()
+        {
+        }
+
+        /// <summary> constructor </summary>
         protected User(string login)
         {
             Login = login;

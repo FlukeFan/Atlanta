@@ -98,7 +98,7 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             Assert.AreEqual(1, library.OwnedMedia.Count());
             Assert.AreEqual(newMedia, library.OwnedMedia.First());
-            Assert.AreEqual(library, newMedia.OwningLibrary);
+            Assert.AreEqual(library, newMedia.Library);
             Assert.AreEqual("test dvd", library.OwnedMedia.First().Name);
         }
 

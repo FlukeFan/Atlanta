@@ -26,7 +26,7 @@ namespace Atlanta.Application.Services.Lending
             return ServiceResult<IList<Media>>
                 .Return(DomainRegistry.Library.GetMediaList(mediaCriteria.ToDetachedCriteria())
                     .GraphList()
-                    .Add(m => m.OwningLibrary)
+                    .Add(m => m.Library)
                     .CopyList());
         }
 
@@ -50,7 +50,7 @@ namespace Atlanta.Application.Services.Lending
             Media loadedMedia = DomainRegistry.Repository.Load<Media>(modifiedMediaCopy.Id);
 
             return ServiceResult<Media>
-                .Return(loadedMedia.OwningLibrary.Modify(loadedMedia, modifiedMediaCopy)
+                .Return(loadedMedia.Library.Modify(loadedMedia, modifiedMediaCopy)
                     .Graph().Copy());
         }
 
@@ -61,7 +61,7 @@ namespace Atlanta.Application.Services.Lending
                                     Media   mediaCopy)
         {
             Media loadedMedia = DomainRegistry.Repository.Load<Media>(mediaCopy.Id);
-            loadedMedia.OwningLibrary.Delete(loadedMedia);
+            loadedMedia.Library.Delete(loadedMedia);
             return ServiceResult.Void;
         }
 

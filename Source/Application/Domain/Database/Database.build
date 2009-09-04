@@ -39,11 +39,14 @@
             <property name="hbm2ddl.Dialect"            value="NHibernate.Dialect.FirebirdDialect" />
             <property name="hbm2ddl.ConnectionDriver"   value="NHibernate.Driver.FirebirdClientDriver" />
             <property name="hbm2ddl.ConnectionString"   value="User=SYSDBA;Password=masterkey;Database=${build.dir}/LendingLibrary.fdb;ServerType=1;Pooling=false;" />
+            <property name="hbm2ddl.OutputMappings"     value="${build.dir}/design/Mappings" />
             <property name="hbm2ddl.OutputFileName"     value="${build.dir}/design/Database.ddl" />
+            <mkdir dir="${hbm2ddl.OutputMappings}" />
 
             <script language="C#" >
                 <references>
                     <include name="${build.dir}/bin/NHibernate.dll" />
+                    <include name="${build.dir}/bin/FluentNHibernate.dll" />
                     <include name="${build.dir}/bin/Atlanta.Application.Domain.dll" />
                 </references>
                 <imports>
@@ -51,6 +54,8 @@
                     <import namespace="System.Reflection" />
                     <import namespace="NHibernate.Cfg" />
                     <import namespace="NHibernate.Tool.hbm2ddl" />
+                    <import namespace="NHibernate.Cfg" />
+                    <import namespace="FluentNHibernate.Automapping" />
                     <import namespace="Atlanta.Application.Domain.DomainBase" />
                 </imports>
                 <code>
@@ -67,7 +72,8 @@
                     properties[NHibernate.Cfg.Environment.ConnectionString] = project.Properties["hbm2ddl.ConnectionString"];
                     config.AddProperties(properties);
                     
-                    Repository.ConfigureMapping(config);
+                    AutoPersistenceModel model = Repository.ConfigureMapping(config);
+                    model.WriteMappingsTo(project.Properties["hbm2ddl.OutputMappings"]);
 
                     SchemaExport schemaExport = new SchemaExport(config);
                     schemaExport.SetOutputFile(project.Properties["hbm2ddl.OutputFileName"]);

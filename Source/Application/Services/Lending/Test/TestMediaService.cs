@@ -53,7 +53,7 @@ namespace Atlanta.Application.Services.Lending.Test
                     .Result;
 
             Assert.AreEqual(2, mediaList.Count);
-            Assert.IsNotNull(mediaList[0].OwningLibrary, "OwningLibrary not in return graph");
+            Assert.IsNotNull(mediaList[0].Library, "OwningLibrary not in return graph");
 
             Media media1 = mediaList[0];
 

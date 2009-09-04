@@ -36,6 +36,11 @@ namespace Atlanta.Application.Domain.Lender
         #region Constructors        
         
         /// <summary> constructor </summary>
+        protected Member()
+        {
+        }
+
+        /// <summary> constructor </summary>
         protected Member(   Library         owningLibrary,
                             string          name,
                             DateTime        dateOfBirth,

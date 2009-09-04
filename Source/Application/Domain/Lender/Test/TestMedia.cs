@@ -40,7 +40,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         {
             Media media = Media.InstantiateOrphanedMedia(MediaType.Dvd, "test", "test description");
 
-            Assert.AreEqual(null, media.OwningLibrary);
+            Assert.AreEqual(null, media.Library);
             Assert.AreEqual(MediaType.Dvd, media.Type);
             Assert.AreEqual("test", media.Name);
             Assert.AreEqual("test description", media.Description);
@@ -53,7 +53,7 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             media.ModifyDetails(MediaType.Cd, "new name", "new description");
 
-            Assert.AreEqual(null, media.OwningLibrary);
+            Assert.AreEqual(null, media.Library);
             Assert.AreEqual(MediaType.Cd, media.Type);
             Assert.AreEqual("new name", media.Name);
             Assert.AreEqual("new description", media.Description);
@@ -92,7 +92,7 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             IList<Media> bookMediaInLibrary =
                 Repository.CreateQuery<Media>()
-                    .Add<Media>(m => m.OwningLibrary == library)
+                    .Add<Media>(m => m.Library == library)
                     .Add<Media>(m => m.Type == MediaType.Book)
                     .List<Media>();
 

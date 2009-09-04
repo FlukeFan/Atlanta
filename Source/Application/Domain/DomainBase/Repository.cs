@@ -6,6 +6,8 @@ using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Criterion;
 
+using FluentNHibernate.Automapping;
+
 namespace Atlanta.Application.Domain.DomainBase
 {
 
@@ -57,9 +59,11 @@ namespace Atlanta.Application.Domain.DomainBase
         }
 
         /// <summary> Configure domain mapping </summary>
-        public static void ConfigureMapping(Configuration configuration)
+        public static AutoPersistenceModel ConfigureMapping(Configuration configuration)
         {
-            configuration.AddAssembly(typeof(DomainObjectBase).Assembly);
+            AutoPersistenceModel model = Mapping.CreateMapping();
+            model.Configure(configuration);
+            return model;
         }
 
         /// <summary> Create a query (ICriteria) </summary>

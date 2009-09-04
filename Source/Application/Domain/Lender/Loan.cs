@@ -4,6 +4,7 @@ using Atlanta.Application.Domain.DomainBase;
 
 namespace Atlanta.Application.Domain.Lender
 {
+
     /// <summary>
     /// Class to represent a Loan
     /// </summary>
@@ -21,6 +22,11 @@ namespace Atlanta.Application.Domain.Lender
         
         #region Constructors        
         
+        /// <summary> constructor </summary>
+        protected Loan()
+        {
+        }
+
         /// <summary> constructor </summary>
         protected Loan(Member loaningMember, Media loanedMedia, DateTime startDate, DateTime endDate)
         {

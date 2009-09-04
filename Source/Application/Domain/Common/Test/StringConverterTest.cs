@@ -17,7 +17,7 @@ namespace Atlanta.Application.Domain.Common.Test
         public void Convert_OrphanedMedia()
         {
             string received = StringConverter.Convert(Media.InstantiateOrphanedMedia(MediaType.Book, "LA Confidential","Crime Fiction"));
-            string expected = "Description=<Crime Fiction>,Id=<0>,Name=<LA Confidential>,OwningLibrary=<null>,Type=<Book>";
+            string expected = "Description=<Crime Fiction>,Id=<0>,Library=<null>,Name=<LA Confidential>,Type=<Book>";
             
             Assert.AreEqual(expected, received);            
         }
@@ -28,7 +28,7 @@ namespace Atlanta.Application.Domain.Common.Test
             Library library = Library.InstantiateLibrary();
             Media media = library.Create(Media.InstantiateOrphanedMedia(MediaType.Book, "Refactoring", "Programming"));
             string received = StringConverter.Convert(media);
-            string expected = "Description=<Programming>,Id=<0>,Name=<Refactoring>,OwningLibrary=<Id=<" + library.Id.ToString() + ">>,Type=<Book>";
+            string expected = "Description=<Programming>,Id=<0>,Library=<Id=<" + library.Id.ToString() + ">>,Name=<Refactoring>,Type=<Book>";
             
             Assert.AreEqual(expected, received);            
         }        

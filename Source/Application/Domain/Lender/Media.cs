@@ -34,7 +34,7 @@ namespace Atlanta.Application.Domain.Lender
     {
         #region Fields
 
-        private Library     _owningLibrary;
+        private Library     _library;
         private MediaType   _type;
         private string      _name;
         private string      _description;
@@ -69,7 +69,7 @@ namespace Atlanta.Application.Domain.Lender
                                                 string      description)
         {
             Media media = InstantiateOrphanedMedia(type, name, description);
-            media.OwningLibrary = owningLibrary;
+            media.Library = owningLibrary;
             return media;
         }        
         
@@ -78,10 +78,10 @@ namespace Atlanta.Application.Domain.Lender
         #region Properties            
 
         /// <summary> Library </summary>     
-        public virtual Library OwningLibrary
+        public virtual Library Library
         {
-            get { return _owningLibrary; }
-            protected set { _owningLibrary = value; }
+            get { return _library; }
+            protected set { _library = value; }
         }
 
         /// <summary> Type </summary>
