@@ -11,31 +11,14 @@ using NHibernate.LambdaExtensions;
 namespace Atlanta.Application.Domain.Lender
 {
 
-    /// <summary>
-    /// Class to represent a Library
-    /// </summary>
     [Serializable]
     public partial class Library : DomainObjectBase
     {
 
-        private IList<Media> _ownedMedia;
+        private IList<Media> _ownedMedia = new List<Media>();
 
-        /// <summary> constructor </summary>
-        protected Library()
-        {
-            OwnedMedia = new List<Media>();
-        }
+        protected Library() { }
 
-
-        /// <summary> factory method </summary>
-        public static Library InstantiateLibrary()
-        {
-            Library library = new Library();
-            DomainRegistry.Repository.Insert(library);
-            return library;
-        }
-
-        /// <summary> Read-only wrapper of list </summary>
         [StringVisible(false)]
         public virtual IEnumerable<Media> OwnedMedia
         {
@@ -63,10 +46,17 @@ namespace Atlanta.Application.Domain.Lender
         }
 
 
+        public static Library InstantiateLibrary()
+        {
+            Library library = new Library();
+            DomainRegistry.Repository.Insert(library);
+            return library;
+        }
+
         /// <summary>
         ///  Get a list of Media in the Library using the specified criteria.
         /// </summary>
-        virtual public IList<Media> GetMediaList(DetachedCriteria mediaCriteria)
+        public virtual IList<Media> GetMediaList(DetachedCriteria mediaCriteria)
         {
             return
                 DomainRegistry.Repository.CreateQuery(mediaCriteria)

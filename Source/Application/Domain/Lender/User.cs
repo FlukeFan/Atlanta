@@ -8,38 +8,24 @@ using Atlanta.Application.Domain.DomainBase;
 namespace Atlanta.Application.Domain.Lender
 {
 
-    /// <summary>
-    /// Class to represent a User of the application
-    /// </summary>
     [Serializable]
     public class User : DomainObjectBase
     {
 
-        private string      _login;
+        protected User() { }
 
-        /// <summary> constructor </summary>
-        protected User()
-        {
-        }
-
-        /// <summary> constructor </summary>
         protected User(string login)
         {
             Login = login;
         }
 
-        /// <summary> factory method </summary>
+        [StringVisible(true)]
+        public virtual string   Login   { get; protected set; }
+
+
         public static User InstantiateUser(string login)
         {
             return new User(login);
-        }
-
-        /// <summary> Login </summary>
-        [StringVisible(true)]
-        public virtual string Login
-        {
-            get { return _login; }
-            protected set { _login = value; }
         }
 
     }

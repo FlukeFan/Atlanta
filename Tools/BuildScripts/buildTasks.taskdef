@@ -22,6 +22,10 @@
                     output="${build.dir}/bin/__output__.dll"
                     warnaserror="true"
                     doc="${build.dir}/bin/__output__.xml">
+                
+                <nowarn>
+                    <warning number="1591"/> <!-- Ignore missing XML comments -->
+                </nowarn>
 
                 <references>
                     <__references__/>

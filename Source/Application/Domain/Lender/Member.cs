@@ -4,43 +4,21 @@ using Atlanta.Application.Domain.DomainBase;
 
 namespace Atlanta.Application.Domain.Lender
 {
-    /// <summary></summary>
+
     public enum MemberStatus
     {
-        /// <summary></summary>
         None,
-    
-        /// <summary></summary>
         Active,
-
-        /// <summary></summary>
         Suspended,
     }
 
 
-    /// <summary>
-    /// Class to represent Media
-    /// </summary>
     [Serializable]
     public class Member : DomainObjectBase
     {
-        #region Fields
 
-        private Library         _owningLibrary;
-        private string          _name;
-        private DateTime        _dateOfBirth;
-        private MemberStatus    _status;
+        protected Member() { }
 
-        #endregion
-        
-        #region Constructors        
-        
-        /// <summary> constructor </summary>
-        protected Member()
-        {
-        }
-
-        /// <summary> constructor </summary>
         protected Member(   Library         owningLibrary,
                             string          name,
                             DateTime        dateOfBirth,
@@ -50,67 +28,29 @@ namespace Atlanta.Application.Domain.Lender
             Name = name;
             DateOfBirth = dateOfBirth;
             Status = status;
-        }           
-        
-        #endregion
-        
-        #region Factory Methods
-        
-        /// <summary> factory method </summary>
+        }
+
+        public virtual Library      OwningLibrary   { get; protected set; }
+        public virtual string       Name            { get; protected set; }
+        public virtual DateTime     DateOfBirth     { get; protected set; }
+        public virtual MemberStatus Status          { get; protected set; }
+
+
         public static Member InstantiateOrphanedMember(string  name, DateTime dateOfBirth, MemberStatus status)
         {
             return new Member(null, name, dateOfBirth, status);
         }         
         
-        /// <summary> factory method </summary>
         public static Member InstantiateMember(Library owningLibrary, string  name, DateTime dateOfBirth, MemberStatus status)
         {
             return new Member(owningLibrary, name, dateOfBirth, status);
         }        
         
-        #endregion
-              
-        #region Properties            
-              
-        /// <summary></summary>
-        public virtual Library OwningLibrary
-        {
-            get { return _owningLibrary; }
-            protected set { _owningLibrary = value; }
-        }
-        
-        /// <summary></summary>        
-        public virtual string Name
-        {
-            get { return _name; }
-            protected set { _name = value; }        
-        }
-        
-        /// <summary></summary>           
-        public virtual DateTime DateOfBirth
-        {
-            get { return _dateOfBirth; }
-            protected set { _dateOfBirth = value; }          
-        }
-        
-        /// <summary></summary>           
-        public virtual MemberStatus Status
-        {
-            get { return _status; }
-            protected set { _status = value; }
-        }
-        
-        #endregion
-        
-        #region Business Methods
-        
-        /// <summary></summary>           
         public virtual void Suspend()
         {
             Status = MemberStatus.Suspended;
         }
 
-        /// <summary></summary>           
         public virtual void Activate()
         {
             Status = MemberStatus.Active;
@@ -122,7 +62,7 @@ namespace Atlanta.Application.Domain.Lender
             Name = newName;
             DateOfBirth = newDateOfBirth;
         }
-        
-        #endregion
+
     }
+
 }    
