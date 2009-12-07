@@ -6,6 +6,7 @@
     <property name="nant.settings.currentframework"     value="net-3.5" />
 
     <property name="project.version" value="0.0.0.1" overwrite="false" />
+    <property name="operatingSystem" value="${environment::get-operating-system()}" />
 
     <property name="project.dir"            value="${project::get-base-directory()}" />
     <property name="build.includes.dir"     value="${project::get-base-directory()}/Tools/BuildScripts"/>

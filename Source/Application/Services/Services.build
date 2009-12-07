@@ -8,12 +8,9 @@
 
           <servicecontroller action="Start" service="w3svc" />
 
-          <property name="operatingSystem" value="${environment::get-operating-system()}" />
           <if test="${not string::contains(operatingSystem, 'NT 5.')}">
-
             <exec program="CScript.exe" commandline="c:\inetpub\AdminScripts\adsutil.vbs create w3svc/AppPools/AtlantaAppPool IIsApplicationPool" />
             <exec program="CScript.exe" commandline="c:\inetpub\AdminScripts\adsutil.vbs set w3svc/AppPools/AtlantaAppPool/Enable32BitAppOnWin64 True" />
-
           </if>
 
           <mkiisdir   dirpath="${build.dir}"
@@ -126,7 +123,10 @@
 
         <deliisdir vdirname="atlanta"               failonerror="false" />
         <deliisdir vdirname="atlantaVisualStudio"   failonerror="false" />
-        <exec program="CScript.exe" commandline="c:\inetpub\AdminScripts\adsutil.vbs delete w3svc/AppPools/AtlantaAppPool" />
+
+        <if test="${not string::contains(operatingSystem, 'NT 5.')}">
+          <exec program="CScript.exe" commandline="c:\inetpub\AdminScripts\adsutil.vbs delete w3svc/AppPools/AtlantaAppPool" />
+        </if>
 
     </target>
 
