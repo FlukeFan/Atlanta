@@ -31,7 +31,7 @@ namespace Atlanta.Application.Services.Lending.Test
             AtlantaServices.AddAdvisedService<IMediaService>(new MediaService(), new AopAroundTestAdvice());
 
             Library library = Library.InstantiateLibrary();
-            Repository.Insert(library);
+            Repository.Add(library);
 
             library.Create(Media.InstantiateOrphanedMedia(MediaType.Book,  "Book 1",   "A test book"));
             library.Create(Media.InstantiateOrphanedMedia(MediaType.Cd, "CD", "A test cd"));

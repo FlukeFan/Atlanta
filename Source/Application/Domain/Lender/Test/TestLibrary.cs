@@ -195,7 +195,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         {
             Library library = Library.InstantiateLibrary();
 
-            Repository.Insert(library);
+            Repository.Add(library);
             Assert.IsTrue(library.Id != 0);
 
             Repository.Flush();
@@ -219,7 +219,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         public void LibraryRegistry_FailMissingLibrary()
         {
             Library library = Repository.Load<Library>(_libraryId);
-            Repository.Delete(library);
+            Repository.Remove(library);
 
             try
             {
@@ -236,7 +236,7 @@ namespace Atlanta.Application.Domain.Lender.Test
         public void LibraryRegistry_FailTooManyLibrary()
         {
             Library library = Library.InstantiateLibrary();
-            Repository.Insert(library);
+            Repository.Add(library);
 
             Repository.Flush();
             Repository.Clear();

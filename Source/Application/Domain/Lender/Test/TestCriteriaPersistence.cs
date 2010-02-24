@@ -24,7 +24,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             base.SetUp();
 
             Library library = Library.InstantiateLibrary();
-            Repository.Insert(library);
+            Repository.Add(library);
 
             library.Create(Media.InstantiateOrphanedMedia(MediaType.Book,  "Book", "A test book"));
             library.Create(Media.InstantiateOrphanedMedia(MediaType.Cd, "CD", "A test cd"));

@@ -100,14 +100,12 @@ namespace Atlanta.Application.Domain.DomainBase
             return _session.Load<T>(identifier);
         }
 
-        /// <summary> Insert an object into the repository </summary>
-        public void Insert(object newObject)
+        public void Add<T>(T newObject)
         {
             _session.Save(newObject);
         }
 
-        /// <summary> Delete an object from the repository </summary>
-        public void Delete(object existingObject)
+        public void Remove<T>(T existingObject)
         {
             _session.Delete(existingObject);
         }

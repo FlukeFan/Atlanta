@@ -49,7 +49,7 @@ namespace Atlanta.Application.Domain.Lender
         public static Library InstantiateLibrary()
         {
             Library library = new Library();
-            DomainRegistry.Repository.Insert(library);
+            DomainRegistry.Repository.Add(library);
             return library;
         }
 

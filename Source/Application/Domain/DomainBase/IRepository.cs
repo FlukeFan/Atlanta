@@ -53,14 +53,14 @@ namespace Atlanta.Application.Domain.DomainBase
         T Load<T>(long identifier);
 
         /// <summary>
-        /// Insert a new instance into the repository
+        /// Add (insert) a new instance into the repository
         /// </summary>
-        void Insert(object newObject);
+        void Add<T>(T newObject);
 
         /// <summary>
-        /// Delete an instance from the repository
+        /// Remove (delete) an instance from the repository
         /// </summary>
-        void Delete(object existingObject);
+        void Remove<T>(T existingObject);
 
         /// <summary>
         /// Flush any pending changes to the repository

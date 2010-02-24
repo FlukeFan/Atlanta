@@ -23,7 +23,7 @@ namespace Atlanta.Application.Domain.Lender.Test
             base.SetUp();
 
             Library library = Library.InstantiateLibrary();
-            Repository.Insert(library);
+            Repository.Add(library);
 
             library.Create(Media.InstantiateOrphanedMedia(MediaType.Book,  "Book", "A test book"));
             library.Create(Media.InstantiateOrphanedMedia(MediaType.Cd, "CD", "A test cd"));
@@ -72,7 +72,7 @@ namespace Atlanta.Application.Domain.Lender.Test
 
             Media media = library.Create(Media.InstantiateOrphanedMedia(MediaType.Dvd, "test", "test description"));
 
-            Repository.Insert(media);
+            Repository.Add(media);
             Assert.IsTrue(media.Id != 0);
 
             Repository.Flush();
